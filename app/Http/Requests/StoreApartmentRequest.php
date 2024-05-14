@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Mail\Events\MessageSent;
 
 class StoreApartmentRequest extends FormRequest
 {
@@ -22,7 +23,17 @@ class StoreApartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'cover_image'=>'file|max:1024|nullable|mimes:jpg,bmp,png',
         ];
     }
+
+    public function messages():array
+    {
+        
+        return [
+            'cover_image.mimes' => "Il file deve essere un'immagine",
+            'cover_image.max' => "La dimensione del file non deve superare i 1024 KB",
+        ];
+
+     }
 }
