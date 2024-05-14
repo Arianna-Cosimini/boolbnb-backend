@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('apartments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->string('name');
+            $table->text('image');
+            $table->tinyInteger('room_number');
+            $table->tinyInteger('bed_number');
+            $table->tinyInteger('bathroom_number');
+            $table->smallInteger('square_meters');
+            $table->string('address');
+            $table->decimal('latitude' ,8, 6);
+            $table->decimal('longitude', 9, 6);
             $table->timestamps();
         });
     }
