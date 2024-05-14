@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ApartmentController extends Controller
 {
@@ -13,7 +14,7 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::all();
+        $apartments = Apartment::where('user_id', Auth::id())->get();
         return view('admin.apartments.index', compact('apartments'));
     }
 
@@ -22,7 +23,7 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.apartments.create');
     }
 
     /**
@@ -30,7 +31,15 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-        //
+        $request->validated();
+        $newApartment = new Apartment();
+
+
+        $newApartment->fill($request->all());
+        $newApartment->user_id = Auth::id();
+
+        $newApartment->save();
+        return redirect()->route('admin.apartments.index');
     }
 
     /**
@@ -38,7 +47,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        //
+
     }
 
     /**
