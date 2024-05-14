@@ -35,6 +35,10 @@ class ApartmentController extends Controller
         $newApartment = new Apartment();
 
 
+        // DA ELIMINARE IL PRIMA POSSIBILE
+        $newApartment->latitude = '44.494750';
+        $newApartment->longitude = '44.494340';
+
         $newApartment->fill($request->all());
         $newApartment->user_id = Auth::id();
 
@@ -47,7 +51,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-
+        return view('admin.apartments.show', compact('apartment'));
     }
 
     /**
@@ -71,6 +75,8 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        //
+        $apartment->delete();
+
+        return redirect()->route('admin.apartments.index');
     }
 }

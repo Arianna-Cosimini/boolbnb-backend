@@ -1,6 +1,15 @@
 @import "~bootstrap/scss/bootstrap";
 @import "partials/variables";
+$fa-font-path: "~fontawesome/webfonts";
+@import "~fontawesome/scss/fontawesome";
+@import "~fontawesome/scss/brands";
+@import "~fontawesome/scss/regular";
+@import "~fontawesome/scss/solid";
 
 .button-red {
     background-color: $primaryColor;
+}
+
+.text-color {
+    color: $primaryColor !important;
 }
