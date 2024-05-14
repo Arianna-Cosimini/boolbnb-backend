@@ -29,6 +29,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/admin',[DashboardController::class,'index']);
+Route::middleware(['auth', 'verified'])
+    ->name('admin.')
+    ->prefix('admin')
+    ->group(
+        function () {
 
-require __DIR__.'/auth.php';
+            // Route::get('/admin',[DashboardController::class,'index'])->name('admin');
+            // Route::get('/users',[DashboardController::class,'users'])->name('users');
+
+            Route::get('/', [DashboardController::class, 'index'])->name('admin');
+            Route::get('/users', [DashboardController::class, 'users'])->name('users');
+        }
+    );
+
+
+
+require __DIR__ . '/auth.php';

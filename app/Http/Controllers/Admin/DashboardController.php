@@ -13,4 +13,8 @@ class DashboardController extends Controller
 
         return view('admin.index',compact('user'));
     }
+
+    public function users(){
+        return view('admin.users');
+    }
 }
