@@ -22,7 +22,17 @@ class UpdateApartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'cover_image'=>'file|max:1024|nullable|mimes:jpg,bmp,png',
         ];
     }
+
+    public function messages():array
+    {
+        
+        return [
+            'cover_image.mimes' => "Il file deve essere un'immagine",
+            'cover_image.max' => "La dimensione del file non deve superare i 1024 KB",
+        ];
+
+     }
 }
