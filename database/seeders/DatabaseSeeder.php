@@ -15,13 +15,15 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ApartmentSeeder::class,
 
-            // Message Seeder
             MessageSeeder::class,
 
             ServiceSeeder::class,
 
             CategorySeeder::class,
-            
+
+            SponsorshipSeeder::class,
+
+            ApartmentSponsorshipSeeder::class,
         ]);
     }
 }

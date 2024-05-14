@@ -24,4 +24,8 @@ class Apartment extends Model
     public function categories() {
         return $this->belongsToMany(Category::class);
     }
+
+    public function sponsorships() {
+        return $this->belongsToMany(Sponsorship::class);
+    }
 }
