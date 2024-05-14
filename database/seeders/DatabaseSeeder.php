@@ -13,10 +13,19 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            
             ApartmentSeeder::class,
 
             // Message Seeder
             MessageSeeder::class,
+        ,
+        
+             //  call for the View seeder
+            
+             ViewSeeder::class,
         ]);
+         
+       
+
     }
 }

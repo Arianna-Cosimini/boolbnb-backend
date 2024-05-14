@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +42,8 @@ Route::middleware(['auth', 'verified'])
 
             Route::get('/', [DashboardController::class, 'index'])->name('admin');
             Route::get('/users', [DashboardController::class, 'users'])->name('users');
+
+            Route::resource('views', ViewController::class);
 
             Route::resource('messages', MessageController::class);
         }
