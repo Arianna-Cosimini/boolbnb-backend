@@ -12,6 +12,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([ApartmentSeeder::class]);
+        $this->call([
+            ApartmentSeeder::class,
+        
+             //  call for the View seeder
+            
+             ViewSeeder::class,
+        ]);
+         
+       
+
     }
 }
