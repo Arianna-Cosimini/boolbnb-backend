@@ -18,7 +18,7 @@ class ApartmentSeeder extends Seeder
         $numberOfApartments = 10;
         $location = "Bologna";
 
-        $response = Http::get('https://api.tomtom.com/search/2/geocode/' . urlencode($location) . '.json', [
+        $response = Http::withOptions(['verify' => false])->get('https://api.tomtom.com/search/2/geocode/' . urlencode($location) . '.json', [
             'key' => 'RrNofIXHXhCLSto2sM1SEfvmA1AamCSs',
         ]);
 
