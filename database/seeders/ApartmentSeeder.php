@@ -26,6 +26,10 @@ class ApartmentSeeder extends Seeder
         $longitude = $response['results'][0]['position']['lon'];
 
         for ($i = 0; $i < $numberOfApartments; $i++) {
+
+            $apartmentLatitude = $latitude + mt_rand(-100, 100) * 0.00001;
+            $apartmentLongitude = $longitude + mt_rand(-100, 100) * 0.00001;
+
             $apartment = new Apartment();
             $apartment->user_id = 1;
             $apartment->name = "Appartamento " . ($i + 1);
@@ -35,8 +39,8 @@ class ApartmentSeeder extends Seeder
             $apartment->bathroom_number = rand(1, 3);
             $apartment->square_meters = rand(50, 200);
             $apartment->address = "Indirizzo " . ($i + 1) . ", " . $location;
-            $apartment->latitude = $latitude;
-            $apartment->longitude = $longitude;
+            $apartment->latitude = $apartmentLatitude;
+            $apartment->longitude = $apartmentLongitude;
             $apartment->save();
         }
     }
