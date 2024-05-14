@@ -20,4 +20,8 @@ class Apartment extends Model
     public function services() {
         return $this->belongsToMany(Service::class);
     }
+
+    public function categories() {
+        return $this->belongsToMany(Category::class);
+    }
 }
