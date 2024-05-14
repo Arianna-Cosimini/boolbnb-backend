@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ViewController;
@@ -31,6 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+require __DIR__ . '/auth.php';
+
 Route::middleware(['auth', 'verified'])
     ->name('admin.')
     ->prefix('admin')
@@ -39,9 +42,11 @@ Route::middleware(['auth', 'verified'])
 
             // Route::get('/admin',[DashboardController::class,'index'])->name('admin');
             // Route::get('/users',[DashboardController::class,'users'])->name('users');
+        
+            Route::get('/', [DashboardController::class, 'index'])->name('index');
+            Route::resource('apartments', ApartmentController::class);
 
-            Route::get('/', [DashboardController::class, 'index'])->name('admin');
-            Route::get('/users', [DashboardController::class, 'users'])->name('users');
+            Route::get('users', [DashboardController::class, 'users'])->name('users');
 
             Route::resource('views', ViewController::class);
 
@@ -49,6 +54,6 @@ Route::middleware(['auth', 'verified'])
         }
     );
 
-    
+
 
 require __DIR__ . '/auth.php';
