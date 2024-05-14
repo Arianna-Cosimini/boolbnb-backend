@@ -8,13 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index(){
-        $user=Auth::user();
+    public function index()
+    {
+        $user = Auth::user();
 
-        return view('admin.index',compact('user'));
+        return view('admin.index', compact('user'));
     }
 
-    public function users(){
+    public function users()
+    {
         return view('admin.users');
     }
 }
