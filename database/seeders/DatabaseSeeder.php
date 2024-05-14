@@ -20,9 +20,7 @@ class DatabaseSeeder extends Seeder
             MessageSeeder::class,
         
         
-             //  call for the View seeder
-            
-             ViewSeeder::class,
+             
         ]);
          
        
