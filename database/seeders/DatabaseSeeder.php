@@ -16,11 +16,15 @@ class DatabaseSeeder extends Seeder
             
             ApartmentSeeder::class,
 
-            // Message Seeder
             MessageSeeder::class,
-        
-        
-             
+
+            ServiceSeeder::class,
+
+            CategorySeeder::class,
+
+            SponsorshipSeeder::class,
+
+            ApartmentSponsorshipSeeder::class,
         ]);
          
        
