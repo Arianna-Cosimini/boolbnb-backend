@@ -49,7 +49,7 @@
 
                 <div id="menuAutoComplete" class="card position-absolute w-100 radius d-none" style="z-index: 1000;">
                     <ul class="list">
-                        {{-- Aggiungi qui i suggerimenti --}}
+                     
                     </ul>
                 </div>
             </div>

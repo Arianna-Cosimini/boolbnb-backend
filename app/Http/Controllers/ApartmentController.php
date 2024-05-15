@@ -35,7 +35,7 @@ class ApartmentController extends Controller
         $request->validated();
         $newApartment = new Apartment();
 
-
+        // dd($request);
         // DA ELIMINARE IL PRIMA POSSIBILE
         // $newApartment->latitude = '44.494750';
         // $newApartment->longitude = '44.494340';
@@ -82,6 +82,8 @@ class ApartmentController extends Controller
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
         $apartment->fill($request->all());
+
+        dd($request->all());
 
         if ($request->hasFile('cover_image')) {
 
