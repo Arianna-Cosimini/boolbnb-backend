@@ -43,5 +43,6 @@ class ApartmentSeeder extends Seeder
             $apartment->longitude = $apartmentLongitude;
             $apartment->save();
         }
+        
     }
 }

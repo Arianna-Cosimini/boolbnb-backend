@@ -15,11 +15,49 @@ class UserDatasSeeder extends Seeder
     {
         //
         $user_datas = [
-            "name" => 'Gian Marco',
-            "surname" => 'Pimentel',
-            "birth_date" => '1996/12/11'
+            [
+
+                "name" => 'Gian Marco',
+                "surname" => 'Pimentel',
+                "birth_date" => '1996/12/11',
+                "photo" => "",
+
+            ],
+            [
+
+                "name" => 'Vincenzo',
+                "surname" => 'Sergi',
+                "birth_date" => '1996/12/11',
+                "photo" => "",
+
+            ],
+            [
+
+                "name" => 'Arianna',
+                "surname" => 'Cosimini',
+                "birth_date" => '1996/12/11',
+                "photo" => "",
+
+            ],
+            [
+
+                "name" => 'Federico',
+                "surname" => 'Di Bitonto',
+                "birth_date" => '1996/12/11',
+                "photo" => "",
+
+            ],
 
         ];
         
+        foreach($user_datas as $user_data) {
+            $newUser_data = new User_datas();
+
+            $newUser_data->name = $user_data['name'];
+            $newUser_data->surname = $user_data['surname'];
+            $newUser_data->birth_date = $user_data['birth_date'];
+
+            $newUser_data->save();
+        }
     }
 }
