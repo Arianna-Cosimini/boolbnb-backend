@@ -51,6 +51,11 @@ class ApartmentController extends Controller
         $newApartment->user_id = Auth::id();
 
         $newApartment->save();
+
+        $newApartment->services()->attach($request->services);
+        $newApartment->categories()->attach($request->categories);
+        $newApartment->sponsorships()->attach($request->sponsorships);
+
         return redirect()->route('admin.apartments.index');
     }
 
@@ -82,6 +87,11 @@ class ApartmentController extends Controller
 
             $apartment->cover_image = $path;
         }
+
+        $apartment->services()->sync($request->services);
+        $apartment->categories()->sync($request->categories);
+        $apartment->sponsorships()->sync($request->sponsorships);
+
     }
 
     /**
