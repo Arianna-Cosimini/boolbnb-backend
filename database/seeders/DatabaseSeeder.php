@@ -18,6 +18,15 @@ class DatabaseSeeder extends Seeder
 
             MessageSeeder::class,
 
+            //View Seeder
+            ViewSeeder::class,
+
+            //User_datas Seeder
+            UserDatasSeeder::class,
+        
+        
+             
+
             ServiceSeeder::class,
 
             CategorySeeder::class,

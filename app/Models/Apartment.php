@@ -15,6 +15,12 @@ class Apartment extends Model
     
     //connection one-to many :
 
+    //with users
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
     //with messages
     public function message() {
 
