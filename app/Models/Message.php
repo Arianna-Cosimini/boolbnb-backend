@@ -9,6 +9,15 @@ class Message extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'surname',
+        'message',
+        'address',
+        'send_date',
+        'apartment_id',
+    ];
+
     public function apartment(){
 
         return $this->belongsTo(Apartment::class);

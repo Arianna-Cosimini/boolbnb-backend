@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreViewRequest;
-use App\Http\Requests\UpdateViewRequest;
-use App\Models\View;
+use App\Http\Requests\StoreUser_datasRequest;
+use App\Http\Requests\UpdateUser_datasRequest;
+use App\Models\User_datas;
 
-class ViewController extends Controller
+class UserDatasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,9 @@ class ViewController extends Controller
     public function index()
     {
         //
-        return view('admin.views.index');
+
+        $user_datas = new User_datas();
+        return view('admin.user_datas.index', compact('user_datas'));
     }
 
     /**
@@ -28,7 +30,7 @@ class ViewController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreViewRequest $request)
+    public function store(StoreUser_datasRequest $request)
     {
         //
     }
@@ -36,7 +38,7 @@ class ViewController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(View $view)
+    public function show(User_datas $user_datas)
     {
         //
     }
@@ -44,7 +46,7 @@ class ViewController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(View $view)
+    public function edit(User_datas $user_datas)
     {
         //
     }
@@ -52,7 +54,7 @@ class ViewController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateViewRequest $request, View $view)
+    public function update(UpdateUser_datasRequest $request, User_datas $user_datas)
     {
         //
     }
@@ -60,7 +62,7 @@ class ViewController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(View $view)
+    public function destroy(User_datas $user_datas)
     {
         //
     }

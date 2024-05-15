@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreViewRequest;
-use App\Http\Requests\UpdateViewRequest;
-use App\Models\View;
+use App\Models\Category;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 
-class ViewController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,6 @@ class ViewController extends Controller
     public function index()
     {
         //
-        return view('admin.views.index');
     }
 
     /**
@@ -28,7 +27,7 @@ class ViewController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreViewRequest $request)
+    public function store(StoreCategoryRequest $request)
     {
         //
     }
@@ -36,7 +35,7 @@ class ViewController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(View $view)
+    public function show(Category $category)
     {
         //
     }
@@ -44,7 +43,7 @@ class ViewController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(View $view)
+    public function edit(Category $category)
     {
         //
     }
@@ -52,7 +51,7 @@ class ViewController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateViewRequest $request, View $view)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
         //
     }
@@ -60,7 +59,7 @@ class ViewController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(View $view)
+    public function destroy(Category $category)
     {
         //
     }
