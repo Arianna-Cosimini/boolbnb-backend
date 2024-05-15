@@ -32,13 +32,6 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-        if($request->hasFile('cover_image')) {
-            
-            $path = Storage::disk('public')->put('apartment_images', $request->cover_image);
-    
-           
-            $newApartment->cover_image = $path;
-        }
         $request->validated();
         $newApartment = new Apartment();
 
@@ -47,6 +40,13 @@ class ApartmentController extends Controller
         $newApartment->latitude = '44.494750';
         $newApartment->longitude = '44.494340';
 
+        if ($request->hasFile('cover_image')) {
+
+            $path = Storage::disk('public')->put('apartment_images', $request->cover_image);
+
+
+            $newApartment->cover_image = $path;
+        }
         $newApartment->fill($request->all());
         $newApartment->user_id = Auth::id();
 
@@ -75,12 +75,12 @@ class ApartmentController extends Controller
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
-        if($request->hasFile('cover_image')) {
-            
+        if ($request->hasFile('cover_image')) {
+
             $path = Storage::disk('public')->put('apartment_images', $request->cover_image);
-    
-           
-            $newApartment->cover_image = $path;
+
+
+            $apartment->cover_image = $path;
         }
     }
 
