@@ -37,8 +37,8 @@ class ApartmentController extends Controller
 
 
         // DA ELIMINARE IL PRIMA POSSIBILE
-        $newApartment->latitude = '44.494750';
-        $newApartment->longitude = '44.494340';
+        // $newApartment->latitude = '44.494750';
+        // $newApartment->longitude = '44.494340';
 
         if ($request->hasFile('cover_image')) {
 
