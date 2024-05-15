@@ -4,15 +4,19 @@
 
 <div class="container py-5">
       
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{url('admin')}}" class="text-black">Dashboard</a></li>
-          <li class="breadcrumb-item active" aria-current="page">I tuoi appartamenti</li>
-        </ol>
-      </nav>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{url('admin')}}" class="text-black">Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">I tuoi appartamenti</li>
+      </ol>
+    </nav>
 
-      <h1 class="mb-4">I tuoi appartamenti</h1>
-      <a href="{{ route('admin.apartments.create') }}" class="btn btn-danger button-red text-white mb-5">
+    <h1 class="mb-4">I tuoi appartamenti</h1>
+   
+
+    @if (count($apartments) > 0)
+
+    <a href="{{ route('admin.apartments.create') }}" class="btn btn-danger button-red text-white mb-5">
         <i class="fas fa-plus"></i> Aggiungi
       </a>
 
@@ -37,6 +41,21 @@
         </div>
       @endforeach
     </div>
+
+    @else
+    <div class="no-apartments d-flex flex-column justify-content-center align-items-center">
+        <div class="d-flex flex-column justify-content-center gap-2 align-items-center fs-4 mt-5 mb-4">
+            <i class="fa-solid fa-house"></i> 
+            <p class="m-0">Non ci sono appartamenti registrati</p>
+        </div>
+    
+        <div class="add-button">
+            <a href="{{ route('admin.apartments.create') }}" class="btn btn-danger button-red text-white">
+               <i class="fas fa-plus"></i> Aggiungi
+            </a>
+        </div>
+    </div>
+    @endif
 
 </div>
 

@@ -93,7 +93,7 @@
                             @enderror
                         </div>
 
-                        <div class="mb-4 row mb-0">
+                        <div class="mb-4 row mb-0 d-flex justify-content-center">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-danger button-red">
                                     {{ __('Registrati') }}
