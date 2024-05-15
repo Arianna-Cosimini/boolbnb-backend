@@ -15,7 +15,7 @@
     <h1 class="mb-3">Affitta appartamento</h1>
 
     {{-- form --}}
-    <form action="{{ route('admin.apartments.store')}}" method="POST" class="py-5">
+    <form action="{{ route('admin.apartments.store')}}" method="POST" enctype="multipart/form-data" class="py-5">
         @csrf
 
         {{-- nome appartamento--}}
