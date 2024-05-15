@@ -102,6 +102,82 @@
             <label for="image" class="form-label">Immagine di copertina</label>
         </div> --}}
 
+        <div class="mb-3">
+            <label class="mb-2" for="">Servizi</label>
+            <div class="d-flex flex-wrap gap-4">
+
+                @foreach($services as $service)
+                <div class="form-check d-flex flex-column justify-content-center align-items-center">
+                    <label for="service-{{$service->id}}" class="form-check-label"><i class="{{$service->icon}}"></i></label>
+                    <label for="service-{{$service->id}}" class="form-check-label"><div class="text-nowrap">{{$service->title}}</div></label>
+                    <input type="checkbox" name="services[]" value="{{$service->id}}" class="form-check-input" id="service-{{$service->id}}"
+                        
+                        @if($errors->any())
+
+                        {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}
+
+                        @else 
+
+                        {{ $apartment->services->contains($service) ? 'checked' : '' }}
+                        
+                        @endif
+                    > 
+                </div>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="mb-2" for="">Categorie</label>
+            <div class="d-flex gap-4">
+
+                @foreach($categories as $category)
+                <div class="form-check d-flex flex-column justify-content-center align-items-center">
+                    <label for="category-{{$category->id}}" class="form-check-label"><i class="{{$category->icon}}"></i></label>
+                    <label for="category-{{$category->id}}" class="form-check-label">{{$category->title}}</label>
+                    <input type="checkbox" name="categories[]" value="{{$category->id}}" class="form-check-input" id="category-{{$category->id}}"
+                        
+                        @if($errors->any())
+
+                        {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
+
+                        @else 
+
+                        {{ $apartment->categories->contains($category) ? 'checked' : '' }}
+                        
+                        @endif
+                    > 
+                
+                </div>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- <div class="mb-3">
+            <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
+            <div class="d-flex gap-4">
+
+                @foreach($sponsorships as $sponsorship)
+                <div class="form-check ">
+                    <input type="checkbox" name="sponsorships[]" value="{{$sponsorship->id}}" class="form-check-input" id="sponsorship-{{$sponsorship->id}}"
+                        
+                        @if($errors->any())
+
+                        {{ in_array($sponsorship->id, old('sponsorships', [])) ? 'checked' : '' }}
+
+                        @else 
+
+                        {{ $apartment->sponsorships->contains($sponsorship) ? 'checked' : '' }}
+                        
+                        @endif
+                    > 
+                    
+                    <label for="sponsorship-{{$sponsorship->id}}" class="form-check-label">{{$sponsorship->title}}</label>
+                </div>
+                @endforeach
+            </div>
+        </div> -->
+
         <button type="submit" class="btn btn-danger button-red mt-3">Salva modifiche</button>
 
     </form>

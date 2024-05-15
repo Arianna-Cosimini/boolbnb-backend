@@ -14,15 +14,25 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            "Casa indipendente",
-            "Appartamento",
-            "Pensione",
-            "Hotel",
+            [
+                "title"=> "Casa indipendente",
+                "icon"=> "fa-solid fa-house",
+            ],
+            [
+                "title"=> "Appartamento",
+                "icon"=> "fa-solid fa-building",
+            ],
+            [
+                "title"=> "Hotel",
+                "icon"=> "fa-solid fa-hotel",
+            ],
+ 
         ];
 
         foreach($categories as $category) {
             $newCategory = new Category();
-            $newCategory->title = $category;
+            $newCategory->title = $category['title'];
+            $newCategory->icon = $category['icon'];
             $newCategory->save();
         }
     }

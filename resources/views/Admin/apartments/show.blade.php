@@ -62,7 +62,30 @@
         {{ $apartment['bed_number'] }} {{ $apartment['bed_number'] == 1 ? 'letto' : 'letti' }} &middot; 
         {{ $apartment['bathroom_number'] }} {{ $apartment['bathroom_number'] == 1 ? 'bagno' : 'bagni' }}
       </p>      
-      <p class="fw-bold">Servizi</p>   
+      <p class="fw-bold">Servizi</p> 
+      <div class="d-flex gap-2 mb-5 justify-content-center">
+          @foreach ($apartment->services as $service)
+          <div class="d-flex flex-column justify-content-center align-items-center p-3 border border-black rounded-2">
+            <i class="{{$service->icon}}"></i>
+            <span>{{$service->title}}</span>
+          </div>
+          @endforeach
+      </div>  
+      <p class="fw-bold">Categorie</p> 
+      <div class="d-flex gap-2 mb-5 justify-content-center">
+          @foreach ($apartment->categories as $category)
+              <div class="d-flex flex-column justify-content-center align-items-center p-3 border border-black rounded-2">
+                <i class="{{$category->icon}}"></i>
+                <span>{{$category->title}}</span>
+              </div>  
+          @endforeach
+      </div> 
+      <!-- <p class="fw-bold">Pacchetto Sponsorizzata</p> 
+      <div class="d-flex gap-2 mb-5 justify-content-center">
+          @foreach ($apartment->sponsorships as $sponsorship)
+              <span>{{$sponsorship->title}}</span>
+          @endforeach
+      </div>  -->
     </div>
 
     
