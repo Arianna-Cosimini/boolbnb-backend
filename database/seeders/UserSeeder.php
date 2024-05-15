@@ -14,50 +14,64 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         //
-       /*  $users = [
+        $users = [
             [
-
-                "name" => 'Gian Marco',
-                "surname" => 'Pimentel',
-                "birth_date" => '1996/12/11',
-                "photo" => "",
+                'name' => 'Gian Marco',
+                'surname' => 'Pimentel',
+                'email' => 'gian@gmail.com',
+                'photo' => '',
+                'birth_date' => '1996/12/11',
+                'password' => '$2y$10$XoHFKD0.f4e83Cb.HPemcea1M13wrqV12cq0Yt8cLCSk4OO96lt4e',
+                // pass=>12345678
 
             ],
             [
 
-                "name" => 'Vincenzo',
-                "surname" => 'Sergi',
-                "birth_date" => '1996/12/11',
-                "photo" => "",
+                'name' => 'Vincenzo',
+                'surname' => 'Sergi',
+                'email' => 'vin@gmail.com',
+                'photo' => '',
+                'birth_date' => '1996/12/11',
+                'password' => '$2y$10$XoHFKD0.f4e83Cb.HPemcea1M13wrqV12cq0Yt8cLCSk4OO96lt4e',
+                // pass=>12345678
 
             ],
             [
 
-                "name" => 'Arianna',
-                "surname" => 'Cosimini',
-                "birth_date" => '1996/12/11',
-                "photo" => "",
+                'name' => 'Arianna',
+                'surname' => 'Cosimini',
+                'email' => 'ari@gmail.com',
+                'photo' => '',
+                'birth_date' => '1996/12/11',
+                'password' => '$2y$10$XoHFKD0.f4e83Cb.HPemcea1M13wrqV12cq0Yt8cLCSk4OO96lt4e',
+                // pass=>12345678
 
             ],
             [
 
-                "name" => 'Federico',
-                "surname" => 'Di Bitonto',
-                "birth_date" => '1996/12/11',
-                "photo" => "",
+                'name' => 'Federico',
+                'surname' => 'Dibitonto',
+                'email' => 'fe@gmail.com',
+                'photo' => '',
+                'birth_date' => '1996/12/11',
+                'password' => '$2y$10$XoHFKD0.f4e83Cb.HPemcea1M13wrqV12cq0Yt8cLCSk4OO96lt4e',
+                // pass=>12345678
 
             ],
 
         ];
         
         foreach($users as $user) {
-            $newUser_data = new User();
+            $newUser = new User();
 
-            $newUser_data->name = $user['name'];
-            $newUser_data->surname = $user['surname'];
-            $newUser_data->birth_date = $user['birth_date'];
+            $newUser->name = $user['name'];
+            $newUser->surname = $user['surname'];
+            $newUser->email = $user['email'];
+            $newUser->photo = $user['photo'];
+            $newUser->birth_date = $user['birth_date'];
+            $newUser->password = $user['password'];
 
-            $newUser_data->save();
-        } */
+            $newUser->save();
+        } 
     }
 }

@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
             SponsorshipSeeder::class,
 
             ApartmentSponsorshipSeeder::class,
+
+            UserSeeder::class,
         ]);
          
        
