@@ -51,9 +51,11 @@
     <div class="img-container w-100 mb-4">
       <img src="{{ $apartment['image'] }}" alt="{{ $apartment['name'] }}" class="w-100 object-fit-cover rounded-3" style="height: 600px">
     </div>
-    <div class="left-container mb-5">
+
+    <div class="left-container">
       <h2 class="mb-0 fs-4">Appartamento in {{ $apartment['address'] }}</h2>
-      <p class="mb-0">{{ $apartment['room_number'] }} camere 	&middot; {{ $apartment['bed_number'] }} letti &middot; {{ $apartment['bathroom_number'] }} bagni</p>
+      <p class="mb-5">{{ $apartment['room_number'] }} camere 	&middot; {{ $apartment['bed_number'] }} letti &middot; {{ $apartment['bathroom_number'] }} bagni</p>
+      <p class="fw-bold">Servizi</p>   
     </div>
 
     
