@@ -14,23 +14,45 @@ class ServiceSeeder extends Seeder
     public function run(): void
     {
         $services = [
-            "Self check-in",
-            "Wi-Fi",
-            "TV",
-            "Netflix o altri servizi di streaming",
-            "Cucina completamente attrezzata",
-            "Parcheggio gratuito in struttura",
-            "Piscina condivisa",
-            "Ascensore",
-            "Aria condizionata",
-            "Vasca da bagno",
-            "Asciugacapelli",
-            "Vista mare"
+            [
+                "title"=> "Wi-Fi",
+                "icon"=> "fa-solid fa-wifi",
+            ],
+            [
+                "title"=> "TV",
+                "icon"=> "fa-solid fa-tv",
+            ],
+            [
+                "title"=> "Cucina",
+                "icon"=> "fa-solid fa-kitchen-set",
+            ],
+            [
+                "title"=> "Parcheggio",
+                "icon"=> "fa-solid fa-square-parking",
+            ],
+            [
+                "title"=> "Piscina",
+                "icon"=> "fa-solid fa-water-ladder",
+            ],
+            [
+                "title"=> "Ascensore",
+                "icon"=> "fa-solid fa-elevator",
+            ],
+            [
+                "title"=> "Aria condizionata",
+                "icon"=> "fa-solid fa-temperature-arrow-down",
+            ],
+            [
+                "title"=> "Vasca da bagno",
+                "icon"=> "fa-solid fa-bath",
+            ],
+ 
         ];
 
         foreach($services as $service) {
             $newService = new Service();
-            $newService->title = $service;
+            $newService->title = $service['title'];
+            $newService->icon = $service['icon'];
             $newService->save();
         }
     }

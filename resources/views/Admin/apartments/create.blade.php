@@ -109,13 +109,15 @@
 
             <div class="mb-3">
                 <label class="mb-2" for="">Servizi</label>
-                <div class="d-flex gap-4">
+                <div class="d-flex flex-wrap gap-4">
                     @foreach($services as $service)
-                    <div class="form-check ">
+                    <div class="form-check d-flex flex-column justify-content-center align-items-center">
+                        <label for="service-{{$service->id}}" class="form-check-label"><i class="{{$service->icon}}"></i></label>
+                        <label for="service-{{$service->id}}" class="form-check-label"><div class="text-nowrap">{{$service->title}}</div></label>
+
                         <input type="checkbox" name="services[]" value="{{$service->id}}" class="form-check-input" id="service-{{$service->id}}"
                             {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}> 
                         
-                        <label for="service-{{$service->id}}" class="form-check-label">{{$service->title}}</label>
                     </div>
                     @endforeach
                 </div>

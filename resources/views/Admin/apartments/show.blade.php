@@ -65,7 +65,10 @@
       <p class="fw-bold">Servizi</p> 
       <div class="d-flex gap-2 mb-5 justify-content-center">
           @foreach ($apartment->services as $service)
-              <span>{{$service->title}}</span>
+          <div class="d-flex flex-column justify-content-center p-3 border border-black rounded-2">
+            <i class="{{$service->icon}}"></i>
+            <span>{{$service->title}}</span>
+          </div>
           @endforeach
       </div>  
       <p class="fw-bold">Categorie</p> 
