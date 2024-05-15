@@ -74,12 +74,12 @@
               <span>{{$category->title}}</span>
           @endforeach
       </div> 
-      <p class="fw-bold">Pacchetto Sponsorizzata</p> 
+      <!-- <p class="fw-bold">Pacchetto Sponsorizzata</p> 
       <div class="d-flex gap-2 mb-5 justify-content-center">
           @foreach ($apartment->sponsorships as $sponsorship)
               <span>{{$sponsorship->title}}</span>
           @endforeach
-      </div> 
+      </div>  -->
     </div>
 
     

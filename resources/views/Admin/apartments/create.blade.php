@@ -135,7 +135,7 @@
                 </div>
             </div>
 
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
                 <div class="d-flex gap-4">
                     @foreach($sponsorships as $sponsorship)
@@ -147,7 +147,7 @@
                     </div>
                     @endforeach
                 </div>
-            </div>
+            </div> -->
 
             <button type="submit" class="btn btn-danger button-red mt-3">Affitta appartamento</button>
 

@@ -15,7 +15,7 @@ return new class extends Migration
 
             $table->foreignId('apartment_id')->constrained()->cascadeOnDelete();
             $table->foreignId('sponsorship_id')->constrained()->cascadeOnDelete();
-            $table->date('start_date');
+            $table->date('start_date')->useCurrent();
             $table->date('end_date');
             $table->primary(['apartment_id', 'sponsorship_id']);
 
