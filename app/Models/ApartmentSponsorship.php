@@ -9,5 +9,8 @@ class ApartmentSponsorship extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['start_date','end_date'];
+    protected $table = 'apartment_sponsorship';
+
+    protected $fillable = ['apartment_id','sponsorship_id','start_date','end_date'];
+    
 }

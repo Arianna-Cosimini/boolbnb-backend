@@ -33,7 +33,7 @@ class ApartmentSeeder extends Seeder
             $apartment = new Apartment();
             $apartment->user_id = 1;
             $apartment->name = "Appartamento " . ($i + 1);
-            $apartment->image = "https://a0.muscache.com/im/pictures/miso/Hosting-881808599061267756/original/b16970cf-1d55-4edd-bb1f-e1735d0a228e.jpeg?im_w=2560&im_q=highq";
+            // $apartment->image = "https://a0.muscache.com/im/pictures/miso/Hosting-881808599061267756/original/b16970cf-1d55-4edd-bb1f-e1735d0a228e.jpeg?im_w=2560&im_q=highq";
             $apartment->room_number = rand(1, 5);
             $apartment->bed_number = rand(1, 10);
             $apartment->bathroom_number = rand(1, 3);
