@@ -50,8 +50,7 @@ Route::middleware(['auth', 'verified'])
             Route::get('users', [DashboardController::class, 'users'])->name('users');
 
             
-            //rotta per gli users_data
-            Route::resource('user_datas', UserDatasController::class);
+        
             //rotta per le views
             Route::resource('views', ViewController::class);
 

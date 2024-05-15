@@ -27,6 +27,16 @@
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
+            {{-- immagine principale --}}
+            <div class="mb-3">
+                <label for="cover_image" class="form-label @error('cover_image') text-danger @enderror">Immagine di copertina</label>
+                <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image">
+                @error('cover_image')
+                    <div class="text-danger">
+                        {{$message}}
+                    </div> 
+                @enderror
+            </div>
 
             {{-- indirizzo --}}
             <div class="form-floating mb-3 position-relative">
@@ -91,11 +101,11 @@
             </div>
 
             {{-- immagine provvisoria --}}
-            <div class="form-floating mb-3">
+            {{-- <div class="form-floating mb-3">
                 <input type="string" class="form-control" id="image" name="image" value="{{ old('image') }}"
                     placeholder="https://bollbnb.com/img-default">
                 <label for="image" class="form-label">Immagine di copertina</label>
-            </div>
+            </div> --}}
 
             <button type="submit" class="btn btn-danger button-red mt-3">Affitta appartamento</button>
 
