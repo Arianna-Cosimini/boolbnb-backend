@@ -107,6 +107,20 @@
                 <label for="image" class="form-label">Immagine di copertina</label>
             </div> --}}
 
+            <div class="mb-3">
+                <label class="mb-2" for="">Servizi</label>
+                <div class="d-flex gap-4">
+                    @foreach($services as $service)
+                    <div class="form-check ">
+                        <input type="checkbox" name="services[]" value="{{$service->id}}" class="form-check-input" id="service-{{$service->id}}"
+                            {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}> 
+                        
+                        <label for="service-{{$service->id}}" class="form-check-label">{{$service->title}}</label>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+
             <button type="submit" class="btn btn-danger button-red mt-3">Affitta appartamento</button>
 
         </form>

@@ -62,7 +62,12 @@
         {{ $apartment['bed_number'] }} {{ $apartment['bed_number'] == 1 ? 'letto' : 'letti' }} &middot; 
         {{ $apartment['bathroom_number'] }} {{ $apartment['bathroom_number'] == 1 ? 'bagno' : 'bagni' }}
       </p>      
-      <p class="fw-bold">Servizi</p>   
+      <p class="fw-bold">Servizi</p> 
+      <div class="d-flex gap-2 mb-5 justify-content-center">
+          @foreach ($apartment->services as $service)
+              <span>{{$service->title}}</span>
+          @endforeach
+      </div>  
     </div>
 
     
