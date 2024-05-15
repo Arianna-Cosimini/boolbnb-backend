@@ -87,7 +87,7 @@ class ApartmentController extends Controller
         }
 
         $apartment->save();
-        return redirect()->route('admin.apartments.show');
+        return redirect()->route('admin.apartments.show', compact('apartment'));
 
     }
 
