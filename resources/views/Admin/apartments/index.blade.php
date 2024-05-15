@@ -15,7 +15,30 @@
       <a href="{{ route('admin.apartments.create') }}" class="btn btn-danger button-red text-white mb-5">
         <i class="fas fa-plus"></i> Aggiungi
       </a>
-      <div class="d-flex flex-wrap gap-4 row-gap-5">
+
+      <div class="apartments-container d-flex flex-column gap-3">
+      @foreach ($apartments as $apartment)
+        <div class="apartment-card d-flex justify-content-between align-items-center p-3 rounded-4">
+            <div class="left d-flex gap-3 align-items-center w-50">
+                <img src="{{$apartment['image']}}" class="rounded-3" style="width: 64px; height:64px" alt="{{ $apartment->name }}">
+                <div class="apartment-info">
+                    <h6 class="mb-0">{{ $apartment['name'] }}</h6>
+                    <p class="mb-0">{{ $apartment['address'] }}</p>
+                </div>
+            </div>
+
+            <p class="mb-0 w-25">{{ $apartment['room_number'] }} camere 	&middot; {{ $apartment['bed_number'] }} letti &middot; {{ $apartment['bathroom_number'] }} bagni</p>
+            <p class="mb-0 w-25">{{ $apartment['square_meters'] }} metri quadri</p>
+            <a href="{{route('admin.apartments.show', $apartment)}}" class="btn btn-secondary bg-black border border-2 text-white border-black">Dettagli</a>
+            
+
+
+        </div>
+      @endforeach
+    </div>
+
+
+      {{-- <div class="d-flex flex-wrap gap-4 row-gap-5">
         <table class="table">
             <thead>
                 <th>
@@ -60,7 +83,9 @@
                         <a href="{{route('admin.apartments.show', $apartment)}}" class="btn text-color" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-trash-can"></i></a>
                     </td>
 
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                    {{-- Modale eliminazione --}}
+                    {{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered ">
                           <div class="modal-content">
                 
@@ -95,7 +120,7 @@
                 </tr>
                 @endforeach
             </tbody>
-        </table>
+        </table> --}}
 
 
         {{-- <a href="{{route('admin.apartments.show', $apartment)}}" class="card-link text-decoration-none">
