@@ -41,8 +41,9 @@ class ApartmentSeeder extends Seeder
             $apartment->address = "Indirizzo " . ($i + 1) . ", " . $location;
             $apartment->latitude = $apartmentLatitude;
             $apartment->longitude = $apartmentLongitude;
+            $apartment->visible = true;
             $apartment->save();
         }
-        
+
     }
 }
