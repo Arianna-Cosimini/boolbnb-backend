@@ -57,7 +57,11 @@
 
     <div class="left-container">
       <h2 class="mb-0 fs-4">Appartamento in {{ $apartment['address'] }}</h2>
-      <p class="mb-5">{{ $apartment['room_number'] }} camere 	&middot; {{ $apartment['bed_number'] }} letti &middot; {{ $apartment['bathroom_number'] }} bagni</p>
+      <p class="mb-5">
+        {{ $apartment['room_number'] }} {{ $apartment['room_number'] == 1 ? 'camera' : 'camere' }} &middot; 
+        {{ $apartment['bed_number'] }} {{ $apartment['bed_number'] == 1 ? 'letto' : 'letti' }} &middot; 
+        {{ $apartment['bathroom_number'] }} {{ $apartment['bathroom_number'] == 1 ? 'bagno' : 'bagni' }}
+      </p>      
       <p class="fw-bold">Servizi</p>   
     </div>
 

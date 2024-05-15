@@ -27,7 +27,11 @@
                 </div>
             </div>
 
-            <p class="mb-0 w-25">{{ $apartment['room_number'] }} camere &middot; {{ $apartment['bed_number'] }} letti &middot; {{ $apartment['bathroom_number'] }} bagni</p>
+            <p class="mb-0 w-25">
+                {{ $apartment['room_number'] }} {{ $apartment['room_number'] == 1 ? 'camera' : 'camere' }} &middot; 
+                {{ $apartment['bed_number'] }} {{ $apartment['bed_number'] == 1 ? 'letto' : 'letti' }} &middot; 
+                {{ $apartment['bathroom_number'] }} {{ $apartment['bathroom_number'] == 1 ? 'bagno' : 'bagni' }}
+            </p>            
             <p class="mb-0 w-25">{{ $apartment['square_meters'] }} metri quadri</p>
             <a href="{{route('admin.apartments.show', $apartment)}}" class="btn btn-secondary bg-black border border-2 text-white border-black">Dettagli</a>
         </div>
