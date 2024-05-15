@@ -42,7 +42,7 @@
 
         {{-- indirizzo --}}
         <div class="form-floating mb-3">
-            <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" placeholder="Indirizzo" value="{{ old('address') ?? $apartment->address }}" autocomplete="off">
+            <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" placeholder="Indirizzo" {{-- value="{{ old('address') ?? $apartment->address }}" --}} autocomplete="off">
             <label for="address" class="@error('address') text-danger @enderror">Indirizzo</label>
             @error('address')
             <p class="text-danger">{{ $message }}</p>
