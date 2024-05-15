@@ -83,7 +83,7 @@ class ApartmentController extends Controller
     {
         $apartment->fill($request->all());
 
-        dd($request->all());
+        /* dd($request->all()); */
 
         if ($request->hasFile('cover_image')) {
 
