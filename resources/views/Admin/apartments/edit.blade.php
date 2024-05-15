@@ -23,7 +23,7 @@
         {{-- nome appartamento--}}
         <div class="form-floating mb-3">
             <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Nome appartamento" value="{{ old('name') ?? $apartment->name }}">
-            <label for="name" class="@error('name') text-danger @enderror">Nome appartamento</label>
+            <label for="name">Nome appartamento</label>
             @error('name')
             <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -31,10 +31,10 @@
 
         {{-- immagine principale --}}
         <div class="mb-3">
-            <label for="cover_image" class="form-label @error('cover_image') text-danger @enderror">Immagine di copertina</label>
-            <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image">
+            <label for="cover_image" class="form-label">Immagine di copertina</label>
+            <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image" value="{{ old('cover_image') ?? $apartment->cover_image }}">
             @error('cover_image')
-                <div class="text-danger">
+                <div class="invalid-feedback">
                     {{$message}}
                 </div>
             @enderror
@@ -43,7 +43,7 @@
         {{-- indirizzo --}}
         <div class="form-floating mb-3">
             <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" placeholder="Indirizzo" {{-- value="{{ old('address') ?? $apartment->address }}" --}} autocomplete="off">
-            <label for="address" class="@error('address') text-danger @enderror">Indirizzo</label>
+            <label for="address">Indirizzo</label>
             @error('address')
             <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -63,7 +63,7 @@
         {{-- numero di stanze --}}
         <div class="form-floating mb-3">
             <input type="number" class="form-control @error('room_number') is-invalid @enderror" id="room_number" name="room_number" placeholder="0" min="0" max="10" value="{{ old('room_number') ?? $apartment->room_number }}">
-            <label for="room_number" class="@error('address') text-danger @enderror">Numero di stanze</label>
+            <label for="room_number">Numero di stanze</label>
             @error('room_number')
             <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -72,7 +72,7 @@
         {{-- numero di letti --}}
         <div class="form-floating mb-3">
             <input type="number" class="form-control @error('bed_number') is-invalid @enderror" id="bed_number" name="bed_number" placeholder="0" min="0" max="20" value="{{ old('bed_number') ?? $apartment->bed_number }}">
-            <label for="bed_number" class="@error('address') text-danger @enderror">Numero di posti letto</label>
+            <label for="bed_number">Numero di posti letto</label>
             @error('bed_number')
             <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -81,7 +81,7 @@
         {{-- numero di bagni --}}
         <div class="form-floating mb-3">
             <input type="number" class="form-control @error('bathroom_number') is-invalid @enderror" id="bathroom_number" name="bathroom_number" placeholder="0" min="0" max="5" value="{{ old('bathroom_number') ?? $apartment->bathroom_number }}">
-            <label for="bathroom_number" class="@error('address') text-danger @enderror">Numero di bagni</label>
+            <label for="bathroom_number">Numero di bagni</label>
             @error('bathroom_number')
             <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -90,7 +90,7 @@
         {{-- metri quadri --}}
         <div class="form-floating mb-3">
             <input type="number" class="form-control @error('square_meters') is-invalid @enderror" id="square_meters" name="square_meters" placeholder="0" min="0" max="500" value="{{ old('square_meters')  ?? $apartment->square_meters}}">
-            <label for="square_meters" class="@error('address') text-danger @enderror">Metri quadrati</label>
+            <label for="square_meters">Metri quadrati</label>
             @error('square_meters')
             <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -102,32 +102,33 @@
             <label for="image" class="form-label">Immagine di copertina</label>
         </div> --}}
 
-        <div class="mb-3">
-            <label class="mb-2" for="">Servizi</label>
-            <div class="d-flex flex-wrap gap-4">
-
+        <div class="mb-4">
+            <label class="mb-3 fw-bold fs-4">Servizi</label>
+            <div class="d-flex flex-column gap-2">
                 @foreach($services as $service)
-                <div class="form-check d-flex flex-column justify-content-center align-items-center">
-                    <label for="service-{{$service->id}}" class="form-check-label"><i class="{{$service->icon}}"></i></label>
-                    <label for="service-{{$service->id}}" class="form-check-label"><div class="text-nowrap">{{$service->title}}</div></label>
-                    <input type="checkbox" name="services[]" value="{{$service->id}}" class="form-check-input" id="service-{{$service->id}}"
-                        
-                        @if($errors->any())
+                 <div class="form-check">
+                    <label for="service-{{ $service->id }}" class="form-check-label"><div class="text-nowrap">{{ $service->title }}</div></label>
+                    <input type="checkbox" name="services[]" value="{{ $service->id }}" class="form-check-input" id="service-{{ $service->id }}" {{ in_array($service->id, old('services', $apartment->services->pluck('id')->toArray())) ? 'checked' : '' }}> 
+                 </div>
+                @endforeach
+            </div>
+        </div>
 
-                        {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}
-
-                        @else 
-
-                        {{ $apartment->services->contains($service) ? 'checked' : '' }}
-                        
-                        @endif
-                    > 
+        <div class="mt-5">
+            <label class="mb-3 fw-bold fs-4">Categoria</label>
+            <div class="d-flex gap-4">
+                @foreach($categories as $category)
+                <div class="form-check d-flex ps-0">
+                    <input type="radio" class="btn-check" name="category_id" id="{{ $category->id }}" autocomplete="off" value="{{ $category->id }}" {{ old('$category_id', $apartment->category_id) == $category->id ? 'checked' : '' }}>
+                    <label class="btn btn-outline-dark" for="{{ $category->id }}"><i class="{{ $category->icon }} me-2"></i>{{ $category->title }}</label>
                 </div>
                 @endforeach
             </div>
         </div>
 
-        <div class="mb-3">
+        
+
+        {{-- <div class="mb-3">
             <label class="mb-2" for="">Categorie</label>
             <div class="d-flex gap-4">
 
@@ -151,7 +152,7 @@
                 </div>
                 @endforeach
             </div>
-        </div>
+        </div> --}}
 
         <!-- <div class="mb-3">
             <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
@@ -178,7 +179,7 @@
             </div>
         </div> -->
 
-        <button type="submit" class="btn btn-danger button-red mt-3">Salva modifiche</button>
+        <button type="submit" class="btn btn-danger button-red mt-5">Salva modifiche</button>
 
     </form>
     

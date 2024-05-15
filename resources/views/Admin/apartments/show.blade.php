@@ -61,8 +61,27 @@
         {{ $apartment['room_number'] }} {{ $apartment['room_number'] == 1 ? 'camera' : 'camere' }} &middot; 
         {{ $apartment['bed_number'] }} {{ $apartment['bed_number'] == 1 ? 'letto' : 'letti' }} &middot; 
         {{ $apartment['bathroom_number'] }} {{ $apartment['bathroom_number'] == 1 ? 'bagno' : 'bagni' }}
-      </p>      
-      <p class="fw-bold">Servizi</p> 
+      </p>    
+      
+      <div class="mb-4">
+        <label class="mb-3 fw-bold fs-4">Cosa troverai</label>
+        <div class="row row-cols-1 d-flex gap-3">
+            @foreach($apartment->services as $key => $service)
+                <div class="col-2 d-flex flex-wrap gap-2 align-items-center">
+                    <i class="{{ $service->icon }} fs-5"></i>
+                    <span>{{ $service->title }}</span>
+                </div>
+    
+                @if(($key + 1) % 2 == 0)
+                    {{-- Aggiungi un div con classe w-100 per andare a capo --}}
+                    <div class="w-100"></div>
+                @endif
+            @endforeach
+        </div>
+    </div>
+
+
+      {{-- <p class="fw-bold">Servizi</p> 
       <div class="d-flex gap-2 mb-5 justify-content-center">
           @foreach ($apartment->services as $service)
           <div class="d-flex flex-column justify-content-center align-items-center p-3 border border-black rounded-2">
@@ -79,7 +98,7 @@
                 <span>{{$category->title}}</span>
               </div>  
           @endforeach
-      </div> 
+      </div>  --}}
       <!-- <p class="fw-bold">Pacchetto Sponsorizzata</p> 
       <div class="d-flex gap-2 mb-5 justify-content-center">
           @foreach ($apartment->sponsorships as $sponsorship)

@@ -42,3 +42,19 @@ ul.list li:last-child {
 ul.list li:hover {
     background-color: #f7f7f7;
 }
+
+.form-check-input:checked {
+    background-color: #ff385c !important;
+    border: 0;
+}
+
+.form-check-input:focus,
+.label::after,
+label.form-check-label:focus,
+.form-check-input::after,
+.form-check-input:not(:disabled):not(.disabled):active:focus {
+    color: black;
+    outline: 0;
+    border: 0;
+    box-shadow: 0 0 0 0.1rem #ffa6b6 !important;
+}
