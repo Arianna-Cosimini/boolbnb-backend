@@ -42,11 +42,22 @@
 
         {{-- indirizzo --}}
         <div class="form-floating mb-3">
-            <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" placeholder="Indirizzo" value="{{ old('address') ?? $apartment->address }}">
+            <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" placeholder="Indirizzo" value="{{ old('address') ?? $apartment->address }}" autocomplete="off">
             <label for="address" class="@error('address') text-danger @enderror">Indirizzo</label>
             @error('address')
             <p class="text-danger">{{ $message }}</p>
             @enderror
+
+            <div id="menuAutoComplete" class="card position-absolute w-100 radius d-none" style="z-index: 1000;">
+                <ul class="list">
+                    {{-- Aggiungi qui i suggerimenti --}}
+                </ul>
+            </div>
+        </div>
+
+        <div class="d-none">
+            <input type="text" id="latitude" name="latitude">
+            <input type="text" id="longitude" name="longitude">
         </div>
 
         {{-- numero di stanze --}}
@@ -97,4 +108,71 @@
     
 </div>
 
+@endsection
+
+@section('javascript')
+    <script>
+        const keyApi = 'RrNofIXHXhCLSto2sM1SEfvmA1AamCSs';
+        const lat = '44.4949';
+        const lon = '11.3426';
+        const radius = '20000';
+
+        const search = document.getElementById('address');
+        const menuAutoComplete = document.getElementById('menuAutoComplete');
+        const menuAutoCompleteClass = menuAutoComplete.classList;
+        const ulList = document.querySelector('ul.list');
+
+        const latitude = document.getElementById('latitude');
+        const longitude = document.getElementById('longitude');
+
+
+        search.addEventListener('input', function() {
+            if (search.value != '')
+                getApiProjects(search.value);
+            addRemoveClass();
+
+        })
+
+        // aggiunge e rimuove classi 
+        function addRemoveClass() {
+            console.log(menuAutoCompleteClass);
+            if (search.value == '')
+                menuAutoCompleteClass.add('d-none');
+            else
+                menuAutoCompleteClass.remove('d-none');
+        }
+
+        function getApiProjects(address) {
+            fetch(
+                    `https://api.tomtom.com/search/2/search/${address}.json?key=${keyApi}&countrySet=IT&limit=5&lat=${lat}&lon=${lon}&radius=${radius}`
+                )
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log(data.results);
+
+
+                    ulList.innerHTML = '';
+                    if (data.results != undefined)
+                        data.results.forEach(function(currentValue, index, array) {
+                            const li = document.createElement('li');
+                            li.append(currentValue.address.freeformAddress);
+                            li.addEventListener('click',
+                                () => {
+                                    search.value = currentValue.address.freeformAddress;
+                                    menuAutoCompleteClass.add('d-none');
+                                    ulList.innerHTML = '';
+                                    latitude.value = currentValue.position.lat;
+                                    longitude.value = currentValue.position.lon;
+                                    console.log(latitude.value, 'lat');
+                                    console.log(longitude.value, 'lon');
+                                }
+                            )
+
+
+                            ulList.appendChild(li);
+                        });
+                });
+        }
+    </script>
 @endsection
