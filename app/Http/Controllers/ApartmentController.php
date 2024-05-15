@@ -44,9 +44,10 @@ class ApartmentController extends Controller
 
             $path = Storage::disk('public')->put('apartment_images', $request->cover_image);
 
-
             $newApartment->cover_image = $path;
         }
+
+
         $newApartment->fill($request->all());
         $newApartment->user_id = Auth::id();
 
@@ -72,7 +73,7 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        //
+        return view('admin.apartments.edit', compact('apartment'));   //
     }
 
     /**
@@ -80,6 +81,8 @@ class ApartmentController extends Controller
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
+        $apartment->fill($request->all());
+
         if ($request->hasFile('cover_image')) {
 
             $path = Storage::disk('public')->put('apartment_images', $request->cover_image);
@@ -91,6 +94,10 @@ class ApartmentController extends Controller
         $apartment->services()->sync($request->services);
         $apartment->categories()->sync($request->categories);
         $apartment->sponsorships()->sync($request->sponsorships);
+
+
+        $apartment->save();
+        return redirect()->route('admin.apartments.show', compact('apartment'));
 
     }
 
