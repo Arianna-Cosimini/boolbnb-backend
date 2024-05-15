@@ -19,7 +19,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
+        'photo',
+        'birth_date',
         'password',
     ];
 
@@ -43,6 +46,7 @@ class User extends Authenticatable
     ];
 
     // INSERIRE FILLABLE
+    
 
     //conncetion one-to-many with apartments_table
 
