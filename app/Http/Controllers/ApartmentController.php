@@ -7,6 +7,7 @@ use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Category;
 use App\Models\Service;
+use App\Models\Sponsorship;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,8 @@ class ApartmentController extends Controller
     {
         $services = Service::all();
         $categories = Category::all();
-        return view('admin.apartments.create', compact('services', 'categories'));
+        $sponsorships = Sponsorship::all();
+        return view('admin.apartments.create', compact('services', 'categories', 'sponsorships'));
     }
 
     /**
@@ -79,7 +81,8 @@ class ApartmentController extends Controller
     {
         $services = Service::all();
         $categories = Category::all();
-        return view('admin.apartments.edit', compact('apartment','services', 'categories'));
+        $sponsorships = Sponsorship::all();
+        return view('admin.apartments.edit', compact('apartment','services', 'categories', 'sponsorships'));
     }
 
     /**
