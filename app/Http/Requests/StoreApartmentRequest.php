@@ -23,27 +23,19 @@ class StoreApartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cover_image'=>'file|max:1024|nullable|mimes:jpg,bmp,png',
-        ];
-    }
-
-    public function messages():array
-    {
-        
-        return [
-            'cover_image.mimes' => "Il file deve essere un'immagine",
-            'cover_image.max' => "La dimensione del file non deve superare i 1024 KB",
             'name' => 'required | max:255',
             'address' => 'required | max:5000',
             'room_number' => 'required | integer | between:0,10',
             'bed_number' => 'required | integer | between:0,20',
             'bathroom_number' => 'required | integer | between:0,5',
             'square_meters' => 'required | integer | between:0,500',
+            'cover_image' => 'file|max:1024|nullable|mimes:jpg,bmp,png',
         ];
     }
 
     public function messages(): array
     {
+
         return [
             'name.required' => 'Il campo nome è obbligatorio',
             'name.max' => 'Il nome supera il numero di caratteri consentiti (:max)',
@@ -65,7 +57,22 @@ class StoreApartmentRequest extends FormRequest
             'square_meters.integer' => 'Il numero di metri quadri deve essere intero',
             'square_meters.min' => 'Il numero di metri quadri deve essere almeno :min',
             'square_meters.max' => 'Il numero di metri quadri non può essere superiore a :max',
-        ];
+            'cover_image.mimes' => "Il file deve essere un'immagine",
+            'cover_image.max' => "La dimensione del file non deve superare i 1024 KB",
 
-     }
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'name' => 'nome',
+            'address' => 'indirizzo',
+            'room_number' => 'numero di stanze',
+            'bed_number' => 'numero di letti',
+            'bathroom_number' => 'numero di bagni',
+            'square_meters' => 'metri quadrati',
+            'cover_image' => 'immagine di copertina',
+        ];
+    }
 }
