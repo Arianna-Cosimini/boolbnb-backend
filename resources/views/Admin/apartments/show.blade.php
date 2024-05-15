@@ -68,6 +68,12 @@
               <span>{{$service->title}}</span>
           @endforeach
       </div>  
+      <p class="fw-bold">Categorie</p> 
+      <div class="d-flex gap-2 mb-5 justify-content-center">
+          @foreach ($apartment->categories as $category)
+              <span>{{$category->title}}</span>
+          @endforeach
+      </div> 
     </div>
 
     

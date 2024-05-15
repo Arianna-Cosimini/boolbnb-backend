@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use App\Models\Category;
 use App\Models\Service;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,8 @@ class ApartmentController extends Controller
     public function create()
     {
         $services = Service::all();
-        return view('admin.apartments.create', compact('services'));
+        $categories = Category::all();
+        return view('admin.apartments.create', compact('services', 'categories'));
     }
 
     /**
@@ -76,7 +78,8 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         $services = Service::all();
-        return view('admin.apartments.edit', compact('apartment','services'));
+        $categories = Category::all();
+        return view('admin.apartments.edit', compact('apartment','services', 'categories'));
     }
 
     /**

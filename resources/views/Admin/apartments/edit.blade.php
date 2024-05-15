@@ -127,6 +127,31 @@
             </div>
         </div>
 
+        <div class="mb-3">
+            <label class="mb-2" for="">Categorie</label>
+            <div class="d-flex gap-4">
+
+                @foreach($categories as $category)
+                <div class="form-check ">
+                    <input type="checkbox" name="categories[]" value="{{$category->id}}" class="form-check-input" id="category-{{$category->id}}"
+                        
+                        @if($errors->any())
+
+                        {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
+
+                        @else 
+
+                        {{ $apartment->categories->contains($category) ? 'checked' : '' }}
+                        
+                        @endif
+                    > 
+                    
+                    <label for="category-{{$category->id}}" class="form-check-label">{{$category->title}}</label>
+                </div>
+                @endforeach
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-danger button-red mt-3">Salva modifiche</button>
 
     </form>
