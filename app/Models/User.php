@@ -42,12 +42,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
-    //connection one-to-one with users_data_table
-
-    public function user_datas() {
-        return $this->hasOne(User_datas::class);
-    }
+    // INSERIRE FILLABLE
 
     //conncetion one-to-many with apartments_table
 

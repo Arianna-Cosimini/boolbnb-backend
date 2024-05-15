@@ -20,11 +20,6 @@ class DatabaseSeeder extends Seeder
 
             //View Seeder
             ViewSeeder::class,
-
-            //User_datas Seeder
-            UserDatasSeeder::class,
-        
-        
              
 
             ServiceSeeder::class,
