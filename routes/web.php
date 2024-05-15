@@ -19,9 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/admin', 301);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -49,15 +47,15 @@ Route::middleware(['auth', 'verified'])
 
             Route::get('users', [DashboardController::class, 'users'])->name('users');
 
-            
-        
+
+
             //rotta per le views
             Route::resource('views', ViewController::class);
 
             //rotta per i messagges
             Route::resource('messages', MessageController::class);
 
-            
+
 
         }
     );
