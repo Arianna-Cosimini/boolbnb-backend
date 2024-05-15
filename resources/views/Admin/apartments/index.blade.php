@@ -21,25 +21,27 @@
       </a>
 
       <div class="apartments-container d-flex flex-column gap-3">
-      @foreach ($apartments as $apartment)
-        <div class="apartment-card d-flex justify-content-between align-items-center p-3 rounded-4">
-            <div class="left d-flex gap-3 align-items-center w-50">
-                <img src="{{asset('storage/' . $apartment->cover_image)}}"  class="rounded-3" style="width: 64px; height:64px" alt="{{ $apartment->name }}">
-                <div class="apartment-info">
-                    <h6 class="mb-0">{{ $apartment['name'] }}</h6>
-                    <p class="mb-0">{{ $apartment['address'] }}</p>
+        @foreach ($apartments as $apartment)
+            <div class="apartment-card d-flex justify-content-between align-items-center p-3 rounded-4">
+                <div class="left d-flex gap-3 align-items-center w-50">
+                    <div class="img-container">
+                        <img src="{{ asset('storage/' . $apartment->cover_image) }}" class="cover-img rounded-3" style="max-width: 64px; height: 64px;" alt="{{ $apartment->name }}">
+                    </div>
+                    <div class="apartment-info">
+                        <h6 class="mb-0">{{ $apartment->name }}</h6>
+                        <p class="mb-0">{{ $apartment->address }}</p>
+                    </div>
                 </div>
+    
+                <p class="mb-0 w-25">
+                    {{ $apartment->room_number }} {{ $apartment->room_number == 1 ? 'camera' : 'camere' }} &middot; 
+                    {{ $apartment->bed_number }} {{ $apartment->bed_number == 1 ? 'letto' : 'letti' }} &middot; 
+                    {{ $apartment->bathroom_number }} {{ $apartment->bathroom_number == 1 ? 'bagno' : 'bagni' }}
+                </p>            
+                <p class="mb-0 w-25">{{ $apartment->square_meters }} metri quadri</p>
+                <a href="{{ route('admin.apartments.show', $apartment) }}" class="btn btn-secondary bg-black border border-2 text-white border-black">Dettagli</a>
             </div>
-
-            <p class="mb-0 w-25">
-                {{ $apartment['room_number'] }} {{ $apartment['room_number'] == 1 ? 'camera' : 'camere' }} &middot; 
-                {{ $apartment['bed_number'] }} {{ $apartment['bed_number'] == 1 ? 'letto' : 'letti' }} &middot; 
-                {{ $apartment['bathroom_number'] }} {{ $apartment['bathroom_number'] == 1 ? 'bagno' : 'bagni' }}
-            </p>            
-            <p class="mb-0 w-25">{{ $apartment['square_meters'] }} metri quadri</p>
-            <a href="{{route('admin.apartments.show', $apartment)}}" class="btn btn-secondary bg-black border border-2 text-white border-black">Dettagli</a>
-        </div>
-      @endforeach
+        @endforeach
     </div>
 
     @else

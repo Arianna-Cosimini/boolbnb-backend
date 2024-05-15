@@ -58,3 +58,8 @@ label.form-check-label:focus,
     border: 0;
     box-shadow: 0 0 0 0.1rem #ffa6b6 !important;
 }
+
+.cover-img {
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
