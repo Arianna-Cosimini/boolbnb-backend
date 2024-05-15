@@ -8,6 +8,7 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{url('admin')}}" class="text-black">Dashboard</a></li>
         <li class="breadcrumb-item"><a href="{{route('admin.apartments.index')}}" class="text-black">I tuoi appartamenti</a></li>
+        <li class="breadcrumb-item"><a href="{{route('admin.apartments.show', $apartment)}}" class="text-black">{{ $apartment->name }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">Modifica appartamento</li>
       </ol>
     </nav>

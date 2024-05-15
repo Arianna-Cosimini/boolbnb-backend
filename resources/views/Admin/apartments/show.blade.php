@@ -17,7 +17,7 @@
           <a href="{{ route('admin.apartments.edit', $apartment) }}" class="btn bg-black text-white">
             <i class="fa-solid fa-pen-to-square text-white"></i> Modifica
           </a>
-          <a href="{{route('admin.apartments.show', $apartment)}}" class="btn text-color" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-trash-can"></i></a>
+          <a href="{{route('admin.apartments.show', $apartment)}}" class="btn bg-white text-black border border-2 border-black" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-trash-can text-color me-1"></i>Elimina</a>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered ">
