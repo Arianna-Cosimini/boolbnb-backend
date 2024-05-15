@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 class ApartmentController extends Controller
@@ -31,6 +32,13 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
+        if($request->hasFile('cover_image')) {
+            
+            $path = Storage::disk('public')->put('apartment_images', $request->cover_image);
+    
+           
+            $newApartment->cover_image = $path;
+        }
         $request->validated();
         $newApartment = new Apartment();
 
@@ -67,7 +75,13 @@ class ApartmentController extends Controller
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
-        //
+        if($request->hasFile('cover_image')) {
+            
+            $path = Storage::disk('public')->put('apartment_images', $request->cover_image);
+    
+           
+            $newApartment->cover_image = $path;
+        }
     }
 
     /**
