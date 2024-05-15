@@ -20,14 +20,14 @@
       @foreach ($apartments as $apartment)
         <div class="apartment-card d-flex justify-content-between align-items-center p-3 rounded-4">
             <div class="left d-flex gap-3 align-items-center w-50">
-                <img src="{{$apartment['image']}}" class="rounded-3" style="width: 64px; height:64px" alt="{{ $apartment->name }}">
+                <img src="{{asset('storage/' . $apartment->cover_image)}}"  class="rounded-3" style="width: 64px; height:64px" alt="{{ $apartment->name }}">
                 <div class="apartment-info">
                     <h6 class="mb-0">{{ $apartment['name'] }}</h6>
                     <p class="mb-0">{{ $apartment['address'] }}</p>
                 </div>
             </div>
 
-            <p class="mb-0 w-25">{{ $apartment['room_number'] }} camere 	&middot; {{ $apartment['bed_number'] }} letti &middot; {{ $apartment['bathroom_number'] }} bagni</p>
+            <p class="mb-0 w-25">{{ $apartment['room_number'] }} camere &middot; {{ $apartment['bed_number'] }} letti &middot; {{ $apartment['bathroom_number'] }} bagni</p>
             <p class="mb-0 w-25">{{ $apartment['square_meters'] }} metri quadri</p>
             <a href="{{route('admin.apartments.show', $apartment)}}" class="btn btn-secondary bg-black border border-2 text-white border-black">Dettagli</a>
             
