@@ -52,7 +52,7 @@
       </div>
 
     <div class="img-container w-100 mb-4">
-      <img src="{{ $apartment['image'] }}" alt="{{ $apartment['name'] }}" class="w-100 object-fit-cover rounded-3" style="height: 600px">
+      <img src="{{ asset('storage/' . $apartment->cover_image) }}" alt="{{ $apartment['name'] }}" class="w-100 object-fit-cover rounded-3" style="height: 600px">
     </div>
 
     <div class="left-container">
