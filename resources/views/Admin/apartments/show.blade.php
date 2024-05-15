@@ -65,7 +65,7 @@
       <p class="fw-bold">Servizi</p> 
       <div class="d-flex gap-2 mb-5 justify-content-center">
           @foreach ($apartment->services as $service)
-          <div class="d-flex flex-column justify-content-center p-3 border border-black rounded-2">
+          <div class="d-flex flex-column justify-content-center align-items-center p-3 border border-black rounded-2">
             <i class="{{$service->icon}}"></i>
             <span>{{$service->title}}</span>
           </div>
@@ -74,7 +74,10 @@
       <p class="fw-bold">Categorie</p> 
       <div class="d-flex gap-2 mb-5 justify-content-center">
           @foreach ($apartment->categories as $category)
-              <span>{{$category->title}}</span>
+              <div class="d-flex flex-column justify-content-center align-items-center p-3 border border-black rounded-2">
+                <i class="{{$category->icon}}"></i>
+                <span>{{$category->title}}</span>
+              </div>  
           @endforeach
       </div> 
       <!-- <p class="fw-bold">Pacchetto Sponsorizzata</p> 

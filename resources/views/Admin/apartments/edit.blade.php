@@ -132,7 +132,9 @@
             <div class="d-flex gap-4">
 
                 @foreach($categories as $category)
-                <div class="form-check ">
+                <div class="form-check d-flex flex-column justify-content-center align-items-center">
+                    <label for="category-{{$category->id}}" class="form-check-label"><i class="{{$category->icon}}"></i></label>
+                    <label for="category-{{$category->id}}" class="form-check-label">{{$category->title}}</label>
                     <input type="checkbox" name="categories[]" value="{{$category->id}}" class="form-check-input" id="category-{{$category->id}}"
                         
                         @if($errors->any())
@@ -145,8 +147,7 @@
                         
                         @endif
                     > 
-                    
-                    <label for="category-{{$category->id}}" class="form-check-label">{{$category->title}}</label>
+                
                 </div>
                 @endforeach
             </div>
