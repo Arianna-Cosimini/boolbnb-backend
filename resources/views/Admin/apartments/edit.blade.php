@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 @extends('layouts.app')
 
 @section('content')
@@ -49,6 +47,8 @@
         <div class="form-floating mb-3">
             <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" placeholder="Indirizzo" {{-- value="{{ old('address') ?? $apartment->address }}" --}} autocomplete="off">
             <label for="address">Indirizzo<span class="required">*</span></label>
+            {{-- mostro messaggio di errore --}}
+            <span id="address-error" class="text-danger"></span>
             @error('address')
             <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -251,4 +251,3 @@
         }
     </script>
 @endsection
->>>>>>> 617805ded88feaf1efdc5545c79b238aa9ffa6cb
