@@ -119,8 +119,8 @@
             <div class="d-flex gap-4">
                 @foreach($categories as $category)
                 <div class="form-check d-flex ps-0">
-                    <input type="radio" class="btn-check" name="category_id" id="{{ $category->id }}" autocomplete="off" value="{{ $category->id }}" {{ old('$category_id', $apartment->category_id) == $category->id ? 'checked' : '' }}>
-                    <label class="btn btn-outline-dark" for="{{ $category->id }}"><i class="{{ $category->icon }} me-2"></i>{{ $category->title }}</label>
+                <input type="radio" class="btn-check" name="category_id" id="{{ $category->id }}" autocomplete="off" value="{{ $category->id }}" {{ old('category_id', $apartment->category_id) == $category->id ? 'checked' : '' }}>
+                <label class="btn btn-outline-dark" for="{{ $category->id }}"><i class="{{ $category->icon }} me-2"></i>{{ $category->title }}</label>
                 </div>
                 @endforeach
             </div>
@@ -128,7 +128,7 @@
 
         
 
-        {{-- <div class="mb-3">
+        <!-- <div class="mb-3">
             <label class="mb-2" for="">Categorie</label>
             <div class="d-flex gap-4">
 
@@ -152,9 +152,9 @@
                 </div>
                 @endforeach
             </div>
-        </div> --}}
+        </div> -->
 
-        <!-- <div class="mb-3">
+        <div class="mb-3">
             <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
             <div class="d-flex gap-4">
 
@@ -177,7 +177,7 @@
                 </div>
                 @endforeach
             </div>
-        </div> -->
+        </div>
 
         <button type="submit" class="btn btn-danger button-red mt-5">Salva modifiche</button>
 
