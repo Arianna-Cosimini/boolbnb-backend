@@ -18,7 +18,7 @@
 
         {{-- form --}}
         <form action="{{ route('admin.apartments.update', $apartment) }}" method="POST" class="py-5"
-            enctype="multipart/form-data">
+            enctype="multipart/form-data" onsubmit="return validateForm()">
             @csrf
             @method('PUT')
 
