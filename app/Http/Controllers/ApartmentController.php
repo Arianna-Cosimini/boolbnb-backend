@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Category;
 use App\Models\Service;
 use App\Models\Sponsorship;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -77,6 +78,10 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
+        if (Auth::user()->id != $apartment->user_id)
+        abort(401);
+
+        $user = User::where('user_id', $apartment->user_id);
 
         return view('admin.apartments.show', compact('apartment'));
     }
@@ -86,6 +91,10 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
+        if (Auth::user()->id != $apartment->user_id)
+        abort(401);
+
+        $user = User::where('user_id', $apartment->user_id);
         $services = Service::all();
         $categories = Category::all();
         $sponsorships = Sponsorship::all();
