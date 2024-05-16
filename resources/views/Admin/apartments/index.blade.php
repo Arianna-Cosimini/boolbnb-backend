@@ -47,13 +47,15 @@
     @else
     <div class="no-apartments d-flex flex-column justify-content-center align-items-center">
         <div class="d-flex flex-column justify-content-center gap-2 align-items-center fs-4 mt-5 mb-4">
-            <i class="fa-solid fa-house"></i> 
-            <p class="m-0">Non ci sono appartamenti registrati</p>
+            {{-- <i class="fa-solid fa-house"></i>  --}}
+            <img src="https://a0.muscache.com/pictures/87444596-1857-4437-9667-4f9cb4f5baf2.jpg" class="w-25" alt="">
+            <p class="m-0 fw-semibold fs-6">Non hai ancora annunci</p>
+            <p class="fs-6 text-black-50">Crea un annuncio con Airbnb Start e inizia a ricevere prenotazioni.</p>
         </div>
     
         <div class="add-button">
-            <a href="{{ route('admin.apartments.create') }}" class="btn btn-danger button-red text-white">
-               <i class="fas fa-plus"></i> Aggiungi
+            <a href="{{ route('admin.apartments.create') }}" class="btn btn-lg border border-black  text-black">
+               Inizia
             </a>
         </div>
     </div>
