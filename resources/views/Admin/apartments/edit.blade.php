@@ -151,26 +151,26 @@
 
 
             <!-- <div class="mb-3">
-                                    <label class="mb-2" for="">Categorie</label>
-                                    <div class="d-flex gap-4">
+                                        <label class="mb-2" for="">Categorie</label>
+                                        <div class="d-flex gap-4">
 
-                                        @foreach ($categories as $category)
+                                            @foreach ($categories as $category)
     <div class="form-check d-flex flex-column justify-content-center align-items-center">
-                                            <label for="category-{{ $category->id }}" class="form-check-label"><i class="{{ $category->icon }}"></i></label>
-                                            <label for="category-{{ $category->id }}" class="form-check-label">{{ $category->title }}</label>
-                                            <input type="checkbox" name="categories[]" value="{{ $category->id }}" class="form-check-input" id="category-{{ $category->id }}"
-                                                
-                                                @if ($errors->any()) {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
+                                                <label for="category-{{ $category->id }}" class="form-check-label"><i class="{{ $category->icon }}"></i></label>
+                                                <label for="category-{{ $category->id }}" class="form-check-label">{{ $category->title }}</label>
+                                                <input type="checkbox" name="categories[]" value="{{ $category->id }}" class="form-check-input" id="category-{{ $category->id }}"
+                                                    
+                                                    @if ($errors->any()) {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
 
                         @else 
 
                         {{ $apartment->categories->contains($category) ? 'checked' : '' }} @endif
-                                            >
-                                        
-                                        </div>
+                                                >
+                                            
+                                            </div>
     @endforeach
-                                    </div>
-                                </div> -->
+                                        </div>
+                                    </div> -->
 
             <div class="mb-3">
                 <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
@@ -334,5 +334,15 @@
             // Se l'indirizzo corrisponde invio il modulo
             return true;
         }
+
+        document.addEventListener('click', function(event) {
+            // Verifica se il clic è avvenuto all'interno del menu
+            const isClickInsideMenu = menuAutoComplete.contains(event.target);
+
+            // Se il clic non è avvenuto all'interno del menu, chiudi il menu
+            if (!isClickInsideMenu) {
+                menuAutoCompleteClass.add('d-none');
+            }
+        });
     </script>
 @endsection
