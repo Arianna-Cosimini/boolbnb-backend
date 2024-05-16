@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 @extends('layouts.app')
 
 @section('content')
@@ -32,7 +30,8 @@
             {{-- immagine principale --}}
             <div class="mb-3">
                 <label for="cover_image" class="form-label">Immagine di copertina</label>
-                <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image">
+                <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image"
+                    name="cover_image">
                 @error('cover_image')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -44,14 +43,17 @@
             <div class="form-floating mb-3 position-relative">
                 <input type="text" class="form-control @error('address') is-invalid @enderror" id="address"
                     name="address" placeholder="Indirizzo" {{-- value="{{ old('address') }}" --}} autocomplete="off">
-                <label for="address" class="@error('address') text-danger @enderror">Indirizzo<span class="required">*</span></label>
+                <label for="address" class="@error('address') text-danger @enderror">Indirizzo<span
+                        class="required">*</span></label>
+                {{-- mostro messaggio di errore --}}
+                <span id="address-error" class="text-danger"></span>
                 @error('address')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
 
                 <div id="menuAutoComplete" class="card position-absolute w-100 radius d-none" style="z-index: 1000;">
                     <ul class="list">
-                     
+
                     </ul>
                 </div>
             </div>
@@ -95,7 +97,8 @@
             {{-- metri quadri --}}
             <div class="form-floating mb-5">
                 <input type="number" class="form-control @error('square_meters') is-invalid @enderror" id="square_meters"
-                    name="square_meters" placeholder="0" min="0" max="500" value="{{ old('square_meters') }}">
+                    name="square_meters" placeholder="0" min="0" max="500"
+                    value="{{ old('square_meters') }}">
                 <label for="square_meters">Metri quadrati<span class="required">*</span></label>
                 @error('square_meters')
                     <p class="text-danger">{{ $message }}</p>
@@ -113,32 +116,42 @@
                 <label class="fw-bold fs-4">Servizi</label>
                 <p class="mb-3">Almeno un servizio</p>
                 <div class="d-flex flex-column gap-2">
-                    @foreach($services as $service)
-                     <div class="form-check">
-                        <label for="service-{{ $service->id }}" class="form-check-label"><div class="text-nowrap">{{ $service->title }}</div></label>
-                        <input type="checkbox" name="services[]" value="{{ $service->id }}" class="form-check-input" id="service-{{ $service->id }}" {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}> 
-                    </div>
+                    @foreach ($services as $service)
+                        <div class="form-check">
+                            <label for="service-{{ $service->id }}" class="form-check-label">
+                                <div class="text-nowrap">{{ $service->title }}</div>
+                            </label>
+                            <input type="checkbox" name="services[]" value="{{ $service->id }}"
+                                class="form-check-input" id="service-{{ $service->id }}"
+                                {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}>
+                        </div>
                     @endforeach
                 </div>
                 @error('services')
-                     <p class="text-danger mt-3">{{ $message }}</p>
+                    <p class="text-danger mt-3">{{ $message }}</p>
                 @enderror
             </div>
 
             <div class="mt-5">
                 <label class="mb-3 fw-bold fs-4">Categoria</label>
                 <div class="row">
-                    
-                    @foreach($categories as $category)
-                    <div class="form-check d-flex flex-column justify-content-center align-items-center col-4">
-                        <button class="btn btn-outline-dark w-100 pb-5 position-relative my-button-categories" type="button">
-                            <label class="form-check-label d-flex flex-column justify-content-center align-items-center fs-1" for="category-{{ $category->id }}">
-                                <i class="{{ $category->icon }} me-2"></i>
-                                <div class="fs-3">{{$category->title}}</div>
-                                <input type="radio" name="categories[]" value="{{ $category->id }}" class="form-check-input position-absolute my-input-form fs-5" id="category-{{ $category->id }}" {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}>
-                            </label>
-                        </button>
-                    </div>
+
+                    @foreach ($categories as $category)
+                        <div class="form-check d-flex flex-column justify-content-center align-items-center col-4">
+                            <button class="btn btn-outline-dark w-100 pb-5 position-relative my-button-categories"
+                                type="button">
+                                <label
+                                    class="form-check-label d-flex flex-column justify-content-center align-items-center fs-1"
+                                    for="category-{{ $category->id }}">
+                                    <i class="{{ $category->icon }} me-2"></i>
+                                    <div class="fs-3">{{ $category->title }}</div>
+                                    <input type="radio" name="categories[]" value="{{ $category->id }}"
+                                        class="form-check-input position-absolute my-input-form fs-5"
+                                        id="category-{{ $category->id }}"
+                                        {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}>
+                                </label>
+                            </button>
+                        </div>
                     @endforeach
 
                 </div>
@@ -147,7 +160,7 @@
             {{-- <div class="mb-3">
                 <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
                 <div class="d-flex gap-4">
-                    @foreach($sponsorships as $sponsorship)
+                    @foreach ($sponsorships as $sponsorship)
                     <div class="form-check ">
                         <input type="radio" name="sponsorships[]" value="{{$sponsorship->id}}" class="form-check-input" id="sponsorship-{{$sponsorship->id}}"
                             {{ in_array($sponsorship->id, old('sponsorships', [])) ? 'checked' : '' }}> 
@@ -204,32 +217,78 @@
                 )
                 .then(response => response.json())
                 .then(data => {
-
-                    console.log(data.results);
-
-
                     ulList.innerHTML = '';
-                    if (data.results != undefined)
+
+                    if (data.results) {
                         data.results.forEach(function(currentValue, index, array) {
                             const li = document.createElement('li');
                             li.append(currentValue.address.freeformAddress);
-                            li.addEventListener('click',
-                                () => {
-                                    search.value = currentValue.address.freeformAddress;
-                                    menuAutoCompleteClass.add('d-none');
-                                    ulList.innerHTML = '';
-                                    latitude.value = currentValue.position.lat;
-                                    longitude.value = currentValue.position.lon;
+
+                            li.addEventListener('click', () => {
+                                search.value = currentValue.address.freeformAddress;
+                                // Al click sul suggerimento il menu scompare
+                                menuAutoCompleteClass.add('d-none');
+
+                                // Controllo se l'indirizzo corrisponde a un suggerimento
+                                const indirizzoSelezionato = currentValue.address.freeformAddress;
+                                const risultatoCorrispondente = data.results.find(result => result
+                                    .address.freeformAddress === indirizzoSelezionato);
+
+                                if (risultatoCorrispondente) {
+                                    latitude.value = risultatoCorrispondente.position.lat;
+                                    longitude.value = risultatoCorrispondente.position.lon;
+
                                     console.log(latitude.value, 'lat');
                                     console.log(longitude.value, 'lon');
                                 }
-                            )
-
+                            });
 
                             ulList.appendChild(li);
                         });
-                });
+                    } else {
+                        console.log("Nessun risultato trovato per", address);
+                    }
+                })
         }
+
+
+        // function per controllare che l'utente scelga uno dei suggerimenti
+        function validateForm() {
+            const inputAddress = document.getElementById("address").value;
+            const suggestions = document.querySelectorAll("#menuAutoComplete ul.list li");
+
+            // Controllo che l'indirizzo corrisponda a uno dei suggerimenti
+            const addressMatched = false;
+            suggestions.forEach(function(suggestion) {
+                const suggestionText = suggestion.textContent.trim().toLowerCase();
+                const inputAddressTrimmed = inputAddress.trim().toLowerCase();
+                if (suggestionText === inputAddressTrimmed) {
+                    addressMatched = true;
+                    return;
+                }
+            });
+            // Se l'indirizzo inserito non corrisponde mostro un messaggio di errore
+            if (!addressMatched) {
+                const errorMessage = "L'indirizzo inserito non corrisponde a uno dei suggerimenti.";
+                document.getElementById('address-error').textContent = errorMessage;
+                return false;
+            } else {
+                document.getElementById('address-error').textContent = "";
+            }
+
+
+            // Se l'indirizzo corrisponde invio il modulo
+            return true;
+        }
+
+        document.addEventListener('click', function(event) {
+            // Verifica se il clic è avvenuto all'interno del menu
+            const isClickInsideMenu = menuAutoComplete.contains(event.target);
+
+            // Se il clic non è avvenuto all'interno del menu, chiudi il menu
+            if (!isClickInsideMenu) {
+                menuAutoCompleteClass.add('d-none');
+            }
+        });
     </script>
 @endsection
->>>>>>> 617805ded88feaf1efdc5545c79b238aa9ffa6cb
