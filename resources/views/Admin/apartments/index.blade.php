@@ -39,7 +39,7 @@
                     {{ $apartment->bathroom_number }} {{ $apartment->bathroom_number == 1 ? 'bagno' : 'bagni' }}
                 </p>            
                 <p class="mb-0 w-25">{{ $apartment->square_meters }} metri quadri</p>
-                <a href="{{ route('admin.apartments.show', $apartment) }}" class="btn btn-secondary bg-black border border-2 text-white border-black">Dettagli</a>
+                <a href="{{ route('admin.apartments.show', $apartment->slug) }}" class="btn btn-secondary bg-black border border-2 text-white border-black">Dettagli</a>
             </div>
         @endforeach
     </div>

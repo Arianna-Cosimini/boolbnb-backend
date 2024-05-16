@@ -43,7 +43,7 @@ Route::middleware(['auth', 'verified'])
             // Route::get('/users',[DashboardController::class,'users'])->name('users');
         
             Route::get('/', [DashboardController::class, 'index'])->name('index');
-            Route::resource('apartments', ApartmentController::class)->parameters(['apartments' =>'apartments:slug']);
+            Route::resource('apartments', ApartmentController::class)->parameters(['apartments' =>'apartment:slug']);
 
             Route::get('users', [DashboardController::class, 'users'])->name('users');
 
