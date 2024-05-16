@@ -7,7 +7,7 @@
       </ol>
       
     <h1 class="mb-4">Dashboard</h1>
-    <a href="{{route('admin.apartments.index')}}" class="btn btn-danger button-red text-white">I tuoi appartamenti</a>
+    <a href="{{route('admin.apartments.index')}}" class="btn btn-danger button-red text-white">I tuoi annunci</a>
 
 </div>
 @endsection

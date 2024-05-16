@@ -7,11 +7,11 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{url('admin')}}" class="text-black">Dashboard</a></li>
-        <li class="breadcrumb-item active" aria-current="page">I tuoi appartamenti</li>
+        <li class="breadcrumb-item active" aria-current="page">I tuoi annunci</li>
       </ol>
     </nav>
 
-    <h1 class="mb-4">I tuoi appartamenti</h1>
+    <h1 class="mb-4">I tuoi annunci</h1>
    
 
     @if (count($apartments) > 0)
