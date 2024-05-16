@@ -262,27 +262,28 @@
                 });
         }
 
+        // function per controllare che l'utente scelga uno dei suggerimenti
         function validateForm() {
-            var inputAddress = document.getElementById("address").value;
-            var suggestions = document.querySelectorAll("#menuAutoComplete ul.list li");
+            const inputAddress = document.getElementById("address").value;
+            const suggestions = document.querySelectorAll("#menuAutoComplete ul.list li");
 
-            // Controlla se l'indirizzo inserito corrisponde a uno dei suggerimenti
-            var addressMatched = false;
+            // Controllo che l'indirizzo corrisponda a uno dei suggerimenti
+            const addressMatched = false;
             suggestions.forEach(function(suggestion) {
-                var suggestionText = suggestion.textContent.trim().toLowerCase();
-                var inputAddressTrimmed = inputAddress.trim().toLowerCase();
+                const suggestionText = suggestion.textContent.trim().toLowerCase();
+                const inputAddressTrimmed = inputAddress.trim().toLowerCase();
                 if (suggestionText === inputAddressTrimmed) {
                     addressMatched = true;
                     return;
                 }
             });
-            // Se l'indirizzo inserito non corrisponde a uno dei suggerimenti, mostra un messaggio di errore
+            // Se l'indirizzo inserito non corrisponde mostro un messaggio di errore
             if (!addressMatched) {
                 alert("L'indirizzo inserito non corrisponde a uno dei suggerimenti.");
                 return false;
             }
 
-            // Se l'indirizzo inserito corrisponde a uno dei suggerimenti, restituisci true per consentire l'invio del modulo
+            // Se l'indirizzo corrisponde invio il modulo
             return true;
         }
     </script>
