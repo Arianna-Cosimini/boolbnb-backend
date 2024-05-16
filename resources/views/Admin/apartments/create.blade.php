@@ -297,9 +297,6 @@
                 menuAutoCompleteClass.add('d-none');
             }
         });
-                });
-        }
 
-        function visbile()
     </script>
 @endsection
