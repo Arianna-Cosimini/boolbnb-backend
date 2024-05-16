@@ -57,7 +57,7 @@ class ApartmentController extends Controller
         }
 
         // save slug
-        $newApartment->slug = Str::slug($request->name);
+        $newApartment->slug = Str::slug($request->name = Str::random(10));
 
         $newApartment->fill($request->all());
         
@@ -109,7 +109,7 @@ class ApartmentController extends Controller
             $apartment->cover_image = $path;
         }
         // save slug
-        $apartment->slug = Str::slug($request->name);
+        $apartment->slug = Str::slug($request->name = Str::random(10));
         $apartment->services()->sync($request->services);
         $apartment->categories()->sync($request->categories);
         $apartment->sponsorships()->sync($request->sponsorships);
