@@ -57,10 +57,10 @@ class ApartmentController extends Controller
         }
 
         // save slug
-        $newApartment->slug = Str::slug($request->name = Str::random(10));
+        $newApartment->slug = Str::slug($request->name . Str::random(10));
 
         $newApartment->fill($request->all());
-        
+
         $newApartment->user_id = Auth::id();
 
         $newApartment->save();
@@ -77,7 +77,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        
+
         return view('admin.apartments.show', compact('apartment'));
     }
 
@@ -89,7 +89,7 @@ class ApartmentController extends Controller
         $services = Service::all();
         $categories = Category::all();
         $sponsorships = Sponsorship::all();
-        return view('admin.apartments.edit', compact('apartment','services', 'categories', 'sponsorships'));
+        return view('admin.apartments.edit', compact('apartment', 'services', 'categories', 'sponsorships'));
     }
 
     /**
@@ -109,7 +109,7 @@ class ApartmentController extends Controller
             $apartment->cover_image = $path;
         }
         // save slug
-        $apartment->slug = Str::slug($request->name = Str::random(10));
+        $apartment->slug = Str::slug($request->name . Str::random(10));
         $apartment->services()->sync($request->services);
         $apartment->categories()->sync($request->categories);
         $apartment->sponsorships()->sync($request->sponsorships);
