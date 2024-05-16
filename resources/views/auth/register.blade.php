@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Registrati') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" id="my-form" action="{{ route('register') }}">
                         @csrf
 
                         <div class="mb-4 row">
@@ -77,11 +77,16 @@
 
                         <div class="mb-4 row">
                             <label for="birth_date" class="col-md-4 col-form-label text-md-right">{{ __('Data di nascita') }}</label>
-
                             <div class="col-md-6">
-                                <input id="birth_date" type="date" class="form-control" name="birth_date"  value="{{ old('birth_date') }}" autocomplete="birth_date">
+                                <input id="birth_date" type="date" class="form-control @error('birth_date') is-invalid @enderror" name="birth_date" value="{{ old('birth_date') }}" autocomplete="birth_date">
+                                @error('birth_date')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
+                        
 
                         <div class="mb-3">
                             <label for="photo" class="form-label @error('photo') text-danger @enderror">Immagine del profilo</label>
@@ -106,4 +111,27 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('javascript')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const birthDateInput = document.getElementById('birth_date');
+        const today = new Date();
+        const eighteenYearsAgoDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+
+        birthDateInput.setAttribute('max', eighteenYearsAgoDate.toISOString().split('T')[0]);
+    });
+</script>
+<script>
+    document.getElementById("my-form").addEventListener("submit", function(event) {
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("password-confirm").value;
+
+        if (password !== confirmPassword) {
+            alert("Le password non corrispondono!");
+            event.preventDefault(); // Previene l'invio del modulo se le password non corrispondono
+        }
+    });
+</script>
 @endsection
