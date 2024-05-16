@@ -11,6 +11,9 @@ use App\Models\Sponsorship;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
+//import library Str for 
+use Illuminate\Support\Str;
+
 class ApartmentController extends Controller
 {
     /**
@@ -53,8 +56,11 @@ class ApartmentController extends Controller
             $newApartment->cover_image = $path;
         }
 
+        // save slug
+        $newApartment->slug = Str::slug($request->name);
 
         $newApartment->fill($request->all());
+        
         $newApartment->user_id = Auth::id();
 
         $newApartment->save();
@@ -71,6 +77,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
+        
         return view('admin.apartments.show', compact('apartment'));
     }
 
@@ -101,7 +108,8 @@ class ApartmentController extends Controller
 
             $apartment->cover_image = $path;
         }
-
+        // save slug
+        $apartment->slug = Str::slug($request->name);
         $apartment->services()->sync($request->services);
         $apartment->categories()->sync($request->categories);
         $apartment->sponsorships()->sync($request->sponsorships);
