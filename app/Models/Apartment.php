@@ -5,10 +5,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Apartment extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $fillable = ['name','room_number','bed_number','bathroom_number','square_meters','address','latitude','longitude','visible'];
 
     //chance to read the connected tables:
