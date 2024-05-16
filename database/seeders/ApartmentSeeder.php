@@ -7,6 +7,9 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Http;
 
+use Illuminate\Support\Str;
+
+
 class ApartmentSeeder extends Seeder
 {
     /**
@@ -33,6 +36,7 @@ class ApartmentSeeder extends Seeder
             $apartment = new Apartment();
             $apartment->user_id = rand(1, 4);
             $apartment->name = "Appartamento " . ($i + 1);
+            $apartment->slug = Str::slug($apartment->name . Str::random(10));       
             // $apartment->image = "https://a0.muscache.com/im/pictures/miso/Hosting-881808599061267756/original/b16970cf-1d55-4edd-bb1f-e1735d0a228e.jpeg?im_w=2560&im_q=highq";
             $apartment->room_number = rand(1, 5);
             $apartment->bed_number = rand(1, 10);
