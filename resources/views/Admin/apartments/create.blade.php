@@ -157,6 +157,13 @@
                 </div>
             </div>
 
+            <div class="mt-5">
+                <div class="form-check form-switch">
+                    <label class="form-check-label" for="flexSwitchCheckDefault"> Visibile </label>
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                </div>
+            </div>
+
             {{-- <div class="mb-3">
                 <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
                 <div class="d-flex gap-4">
@@ -290,5 +297,9 @@
                 menuAutoCompleteClass.add('d-none');
             }
         });
+                });
+        }
+
+        function visbile()
     </script>
 @endsection
