@@ -29,6 +29,14 @@ class UpdateApartmentRequest extends FormRequest
             'bathroom_number' => 'required | integer | between:0,5',
             'square_meters' => 'required | integer | between:0,500',
             'cover_image' => 'file|max:1024|nullable|mimes:jpg,bmp,png',
+            'services' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (empty ($value)) {
+                        $fail('È necessario selezionare almeno un servizio.');
+                    }
+                },
+            ],
         ];
     }
 
@@ -58,6 +66,7 @@ class UpdateApartmentRequest extends FormRequest
             'square_meters.max' => 'Il numero di metri quadri non può essere superiore a :max',
             'cover_image.mimes' => "Il file deve essere un'immagine",
             'cover_image.max' => "La dimensione del file non deve superare i 1024 KB",
+            'services.required' => "È necessario selezionare almeno un servizio",
         ];
 
     }
@@ -72,6 +81,7 @@ class UpdateApartmentRequest extends FormRequest
             'bathroom_number' => 'numero di bagni',
             'square_meters' => 'metri quadrati',
             'cover_image' => 'immagine di copertina',
+            'services' => 'servizio',
         ];
     }
 }

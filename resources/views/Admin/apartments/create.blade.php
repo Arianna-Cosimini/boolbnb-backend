@@ -29,7 +29,7 @@
             </div>
             {{-- immagine principale --}}
             <div class="mb-3">
-                <label for="cover_image" class="form-label">Immagine di copertina<span class="required">*</span></label>
+                <label for="cover_image" class="form-label">Immagine di copertina</label>
                 <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image">
                 @error('cover_image')
                     <div class="invalid-feedback">
@@ -109,7 +109,7 @@
 
             <div class="mb-4">
                 <label class="fw-bold fs-4">Servizi</label>
-                <p class="mb-3">È necessario indicare almeno un servizio</p>
+                <p class="mb-3">Almeno un servizio</p>
                 <div class="d-flex flex-column gap-2">
                     @foreach($services as $service)
                      <div class="form-check">
@@ -118,6 +118,9 @@
                     </div>
                     @endforeach
                 </div>
+                @error('services')
+                     <p class="text-danger mt-3">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="mt-5">
@@ -146,7 +149,7 @@
                 </div>
             </div> --}}
 
-            <button type="submit" class="btn btn-danger button-red mt-5">Affitta appartamento</button>
+            <button type="submit" class="btn btn-danger button-red mt-5">Aggiungi</button>
 
         </form>
 
