@@ -79,7 +79,7 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         if (Auth::user()->id != $apartment->user_id)
-        abort(401);
+        return redirect()->route('admin.apartments.index', compact('apartment'));
 
         $user = User::where('user_id', $apartment->user_id);
 
@@ -92,7 +92,7 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         if (Auth::user()->id != $apartment->user_id)
-        abort(401);
+        return redirect()->route('admin.apartments.index', compact('apartment'));
 
         $user = User::where('user_id', $apartment->user_id);
         $services = Service::all();
