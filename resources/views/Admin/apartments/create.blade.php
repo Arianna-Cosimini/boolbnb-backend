@@ -15,7 +15,7 @@
         <h1 class="mb-3">Affitta appartamento</h1>
 
         {{-- form --}}
-        <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data" class="py-5">
+        <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data" class="py-5" onsubmit="return validateForm()>
             @csrf
 
             {{-- nome appartamento --}}
@@ -30,7 +30,8 @@
             {{-- immagine principale --}}
             <div class="mb-3">
                 <label for="cover_image" class="form-label">Immagine di copertina</label>
-                <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image">
+                <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image"
+                    name="cover_image">
                 @error('cover_image')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -43,13 +44,15 @@
                 <input type="text" class="form-control @error('address') is-invalid @enderror" id="address"
                     name="address" placeholder="Indirizzo" {{-- value="{{ old('address') }}" --}} autocomplete="off">
                 <label for="address" class="@error('address') text-danger @enderror">Indirizzo</label>
+                {{-- mostro messaggio di errore --}}
+                <span id="address-error" class="text-danger"></span>
                 @error('address')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
 
                 <div id="menuAutoComplete" class="card position-absolute w-100 radius d-none" style="z-index: 1000;">
                     <ul class="list">
-                     
+
                     </ul>
                 </div>
             </div>
@@ -110,11 +113,15 @@
             <div class="mb-4">
                 <label class="mb-3 fw-bold fs-4">Servizi</label>
                 <div class="d-flex flex-column gap-2">
-                    @foreach($services as $service)
-                     <div class="form-check">
-                        <label for="service-{{ $service->id }}" class="form-check-label"><div class="text-nowrap">{{ $service->title }}</div></label>
-                        <input type="checkbox" name="services[]" value="{{ $service->id }}" class="form-check-input" id="service-{{ $service->id }}" {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}> 
-                    </div>
+                    @foreach ($services as $service)
+                        <div class="form-check">
+                            <label for="service-{{ $service->id }}" class="form-check-label">
+                                <div class="text-nowrap">{{ $service->title }}</div>
+                            </label>
+                            <input type="checkbox" name="services[]" value="{{ $service->id }}"
+                                class="form-check-input" id="service-{{ $service->id }}"
+                                {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}>
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -122,11 +129,13 @@
             <div class="mt-5">
                 <label class="mb-3 fw-bold fs-4">Categoria</label>
                 <div class="d-flex gap-4">
-                    @foreach($categories as $key => $category)
-                    <div class="form-check d-flex ps-0">
-                        <input type="radio" class="btn-check" name="options-outlined" id="{{ $category->id }}" autocomplete="off" {{ $key == 0 ? 'checked' : '' }}>
-                        <label class="btn btn-outline-dark" for="{{ $category->id }}"><i class="{{ $category->icon }} me-2"></i>{{ $category->title }}</label>
-                    </div>
+                    @foreach ($categories as $key => $category)
+                        <div class="form-check d-flex ps-0">
+                            <input type="radio" class="btn-check" name="options-outlined" id="{{ $category->id }}"
+                                autocomplete="off" {{ $key == 0 ? 'checked' : '' }}>
+                            <label class="btn btn-outline-dark" for="{{ $category->id }}"><i
+                                    class="{{ $category->icon }} me-2"></i>{{ $category->title }}</label>
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -134,13 +143,15 @@
             <div class="mb-3">
                 <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
                 <div class="d-flex gap-4">
-                    @foreach($sponsorships as $sponsorship)
-                    <div class="form-check ">
-                        <input type="checkbox" name="sponsorships[]" value="{{$sponsorship->id}}" class="form-check-input" id="sponsorship-{{$sponsorship->id}}"
-                            {{ in_array($sponsorship->id, old('sponsorships', [])) ? 'checked' : '' }}> 
-                        
-                        <label for="sponsorship-{{$sponsorship->id}}" class="form-check-label">{{$sponsorship->title}}</label>
-                    </div>
+                    @foreach ($sponsorships as $sponsorship)
+                        <div class="form-check ">
+                            <input type="checkbox" name="sponsorships[]" value="{{ $sponsorship->id }}"
+                                class="form-check-input" id="sponsorship-{{ $sponsorship->id }}"
+                                {{ in_array($sponsorship->id, old('sponsorships', [])) ? 'checked' : '' }}>
+
+                            <label for="sponsorship-{{ $sponsorship->id }}"
+                                class="form-check-label">{{ $sponsorship->title }}</label>
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -191,31 +202,77 @@
                 )
                 .then(response => response.json())
                 .then(data => {
-
-                    console.log(data.results);
-
-
                     ulList.innerHTML = '';
-                    if (data.results != undefined)
+
+                    if (data.results) {
                         data.results.forEach(function(currentValue, index, array) {
                             const li = document.createElement('li');
                             li.append(currentValue.address.freeformAddress);
-                            li.addEventListener('click',
-                                () => {
-                                    search.value = currentValue.address.freeformAddress;
-                                    menuAutoCompleteClass.add('d-none');
-                                    ulList.innerHTML = '';
-                                    latitude.value = currentValue.position.lat;
-                                    longitude.value = currentValue.position.lon;
+
+                            li.addEventListener('click', () => {
+                                search.value = currentValue.address.freeformAddress;
+                                // Al click sul suggerimento il menu scompare
+                                menuAutoCompleteClass.add('d-none');
+
+                                // Controllo se l'indirizzo corrisponde a un suggerimento
+                                const indirizzoSelezionato = currentValue.address.freeformAddress;
+                                const risultatoCorrispondente = data.results.find(result => result
+                                    .address.freeformAddress === indirizzoSelezionato);
+
+                                if (risultatoCorrispondente) {
+                                    latitude.value = risultatoCorrispondente.position.lat;
+                                    longitude.value = risultatoCorrispondente.position.lon;
+
                                     console.log(latitude.value, 'lat');
                                     console.log(longitude.value, 'lon');
                                 }
-                            )
-
+                            });
 
                             ulList.appendChild(li);
                         });
-                });
+                    } else {
+                        console.log("Nessun risultato trovato per", address);
+                    }
+                })
         }
+
+        // function per controllare che l'utente scelga uno dei suggerimenti
+        function validateForm() {
+            const inputAddress = document.getElementById("address").value;
+            const suggestions = document.querySelectorAll("#menuAutoComplete ul.list li");
+
+            // Controllo che l'indirizzo corrisponda a uno dei suggerimenti
+            const addressMatched = false;
+            suggestions.forEach(function(suggestion) {
+                const suggestionText = suggestion.textContent.trim().toLowerCase();
+                const inputAddressTrimmed = inputAddress.trim().toLowerCase();
+                if (suggestionText === inputAddressTrimmed) {
+                    addressMatched = true;
+                    return;
+                }
+            });
+            // Se l'indirizzo inserito non corrisponde mostro un messaggio di errore
+            if (!addressMatched) {
+                const errorMessage = "L'indirizzo inserito non corrisponde a uno dei suggerimenti.";
+                document.getElementById('address-error').textContent = errorMessage;
+                return false;
+            } else {
+                document.getElementById('address-error').textContent = "";
+            }
+
+
+            // Se l'indirizzo corrisponde invio il modulo
+            return true;
+        }
+
+        document.addEventListener('click', function(event) {
+            // Verifica se il clic è avvenuto all'interno del menu
+            const isClickInsideMenu = menuAutoComplete.contains(event.target);
+
+            // Se il clic non è avvenuto all'interno del menu, chiudi il menu
+            if (!isClickInsideMenu) {
+                menuAutoCompleteClass.add('d-none');
+            }
+        });
     </script>
 @endsection

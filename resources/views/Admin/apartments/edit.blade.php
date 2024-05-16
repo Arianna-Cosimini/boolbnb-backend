@@ -49,6 +49,7 @@
                 <input type="text" class="form-control @error('address') is-invalid @enderror" id="address"
                     name="address" placeholder="Indirizzo" {{-- value="{{ old('address') ?? $apartment->address }}" --}} autocomplete="off">
                 <label for="address">Indirizzo</label>
+                {{-- mostro messaggio di errore --}}
                 <span id="address-error" class="text-danger"></span>
                 @error('address')
                     <p class="text-danger">{{ $message }}</p>
@@ -151,26 +152,26 @@
 
 
             <!-- <div class="mb-3">
-                                        <label class="mb-2" for="">Categorie</label>
-                                        <div class="d-flex gap-4">
+                                            <label class="mb-2" for="">Categorie</label>
+                                            <div class="d-flex gap-4">
 
-                                            @foreach ($categories as $category)
+                                                @foreach ($categories as $category)
     <div class="form-check d-flex flex-column justify-content-center align-items-center">
-                                                <label for="category-{{ $category->id }}" class="form-check-label"><i class="{{ $category->icon }}"></i></label>
-                                                <label for="category-{{ $category->id }}" class="form-check-label">{{ $category->title }}</label>
-                                                <input type="checkbox" name="categories[]" value="{{ $category->id }}" class="form-check-input" id="category-{{ $category->id }}"
-                                                    
-                                                    @if ($errors->any()) {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
+                                                    <label for="category-{{ $category->id }}" class="form-check-label"><i class="{{ $category->icon }}"></i></label>
+                                                    <label for="category-{{ $category->id }}" class="form-check-label">{{ $category->title }}</label>
+                                                    <input type="checkbox" name="categories[]" value="{{ $category->id }}" class="form-check-input" id="category-{{ $category->id }}"
+                                                        
+                                                        @if ($errors->any()) {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
 
                         @else 
 
                         {{ $apartment->categories->contains($category) ? 'checked' : '' }} @endif
-                                                >
-                                            
-                                            </div>
+                                                    >
+                                                
+                                                </div>
     @endforeach
-                                        </div>
-                                    </div> -->
+                                            </div>
+                                        </div> -->
 
             <div class="mb-3">
                 <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
@@ -232,38 +233,6 @@
                 menuAutoCompleteClass.remove('d-none');
         }
 
-        // function getApiProjects(address) {
-        //     fetch(
-        //             `https://api.tomtom.com/search/2/search/${address}.json?key=${keyApi}&countrySet=IT&limit=5&lat=${lat}&lon=${lon}&radius=${radius}`
-        //         )
-        //         .then(response => response.json())
-        //         .then(data => {
-
-        //             console.log(data.results);
-
-
-        //             ulList.innerHTML = '';
-        //             if (data.results != undefined)
-        //                 data.results.forEach(function(currentValue, index, array) {
-        //                     const li = document.createElement('li');
-        //                     li.append(currentValue.address.freeformAddress);
-        //                     li.addEventListener('click',
-        //                         () => {
-        //                             search.value = currentValue.address.freeformAddress;
-        //                             menuAutoCompleteClass.add('d-none');
-        //                             ulList.innerHTML = '';
-        //                             latitude.value = currentValue.position.lat;
-        //                             longitude.value = currentValue.position.lon;
-        //                             console.log(latitude.value, 'lat');
-        //                             console.log(longitude.value, 'lon');
-        //                         }
-        //                     )
-
-
-        //                     ulList.appendChild(li);
-        //                 });
-        //         });
-        // }
 
         function getApiProjects(address) {
             fetch(
