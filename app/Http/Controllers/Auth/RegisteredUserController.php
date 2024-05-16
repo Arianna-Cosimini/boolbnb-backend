@@ -40,6 +40,9 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'birth_date' => ['nullable', 'date_format:Y-m-d', 'before_or_equal:' . $minCurrentDate],
+        ], [
+            'birth_date.date_format' => 'Il formato della data di nascita non è valido.',
+            'birth_date.before_or_equal' => 'Devi avere almeno 18 anni per registrarti.',
         ]);
 
         $user = User::create([
