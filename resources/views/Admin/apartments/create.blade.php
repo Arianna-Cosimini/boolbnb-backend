@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 @extends('layouts.app')
 
 @section('content')
@@ -232,4 +230,3 @@
         }
     </script>
 @endsection
->>>>>>> 617805ded88feaf1efdc5545c79b238aa9ffa6cb
