@@ -32,6 +32,9 @@
         {{-- immagine principale --}}
         <div class="mb-3">
             <label for="cover_image" class="form-label">Immagine di copertina</label>
+            <div class="rounded-2 overflow-hidden mb-2">
+                <img class="w-100" src="{{asset('storage/' . $apartment->cover_image)}}" alt="Copertina immagine">
+            </div>
             <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image" value="{{ old('cover_image') ?? $apartment->cover_image }}">
             @error('cover_image')
                 <div class="invalid-feedback">
@@ -118,45 +121,34 @@
             @enderror
         </div>
 
-        <div class="mt-5">
-            <label class="mb-3 fw-bold fs-4">Categoria</label>
-            <div class="d-flex gap-4">
+        <div class="mb-3">
+            <label class="mb-2" for="">Categorie</label>
+            <div class="row">
+
                 @foreach($categories as $category)
-                <div class="form-check d-flex ps-0">
-                <input type="radio" class="btn-check" name="category_id" id="{{ $category->id }}" autocomplete="off" value="{{ $category->id }}" {{ old('category_id', $apartment->category_id) == $category->id ? 'checked' : '' }}>
-                <label class="btn btn-outline-dark" for="{{ $category->id }}"><i class="{{ $category->icon }} me-2"></i>{{ $category->title }}</label>
+                <div class="form-check d-flex flex-column justify-content-center align-items-center col-4">
+                    <button class="btn btn-outline-dark w-100 pb-5 position-relative my-button-categories" type="button">
+                        <label for="category-{{$category->id}}" class="d-flex flex-column justify-content-center align-items-center fs-1">
+                            <i class="{{$category->icon}}"></i>
+                            <div class="fs-3">{{$category->title}}</div>
+                            <input type="radio" name="categories[]" value="{{$category->id}}" class="form-check-input position-absolute my-input-form fs-5" id="category-{{$category->id}}"
+                            
+                                @if($errors->any())
+    
+                                {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
+    
+                                @else 
+    
+                                {{ $apartment->categories->contains($category) ? 'checked' : '' }}
+                                
+                                @endif
+                            > 
+                        </label>
+                    </button>
                 </div>
                 @endforeach
             </div>
         </div>
-
-        
-
-        <!-- <div class="mb-3">
-            <label class="mb-2" for="">Categorie</label>
-            <div class="d-flex gap-4">
-
-                @foreach($categories as $category)
-                <div class="form-check d-flex flex-column justify-content-center align-items-center">
-                    <label for="category-{{$category->id}}" class="form-check-label"><i class="{{$category->icon}}"></i></label>
-                    <label for="category-{{$category->id}}" class="form-check-label">{{$category->title}}</label>
-                    <input type="checkbox" name="categories[]" value="{{$category->id}}" class="form-check-input" id="category-{{$category->id}}"
-                        
-                        @if($errors->any())
-
-                        {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
-
-                        @else 
-
-                        {{ $apartment->categories->contains($category) ? 'checked' : '' }}
-                        
-                        @endif
-                    > 
-                
-                </div>
-                @endforeach
-            </div>
-        </div> -->
 
         {{-- <div class="mb-3">
             <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
@@ -164,7 +156,7 @@
 
                 @foreach($sponsorships as $sponsorship)
                 <div class="form-check ">
-                    <input type="checkbox" name="sponsorships[]" value="{{$sponsorship->id}}" class="form-check-input" id="sponsorship-{{$sponsorship->id}}"
+                    <input type="radio" name="sponsorships[]" value="{{$sponsorship->id}}" class="form-check-input" id="sponsorship-{{$sponsorship->id}}"
                         
                         @if($errors->any())
 

@@ -125,13 +125,20 @@
 
             <div class="mt-5">
                 <label class="mb-3 fw-bold fs-4">Categoria</label>
-                <div class="d-flex gap-4">
-                    @foreach($categories as $key => $category)
-                    <div class="form-check d-flex ps-0">
-                        <input type="radio" class="btn-check" name="options-outlined" id="{{ $category->id }}" autocomplete="off" {{ $key == 0 ? 'checked' : '' }}>
-                        <label class="btn btn-outline-dark" for="{{ $category->id }}"><i class="{{ $category->icon }} me-2"></i>{{ $category->title }}</label>
+                <div class="row">
+                    
+                    @foreach($categories as $category)
+                    <div class="form-check d-flex flex-column justify-content-center align-items-center col-4">
+                        <button class="btn btn-outline-dark w-100 pb-5 position-relative my-button-categories" type="button">
+                            <label class="form-check-label d-flex flex-column justify-content-center align-items-center fs-1" for="category-{{ $category->id }}">
+                                <i class="{{ $category->icon }} me-2"></i>
+                                <div class="fs-3">{{$category->title}}</div>
+                                <input type="radio" name="categories[]" value="{{ $category->id }}" class="form-check-input position-absolute my-input-form fs-5" id="category-{{ $category->id }}" {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}>
+                            </label>
+                        </button>
                     </div>
                     @endforeach
+
                 </div>
             </div>
 
@@ -140,7 +147,7 @@
                 <div class="d-flex gap-4">
                     @foreach($sponsorships as $sponsorship)
                     <div class="form-check ">
-                        <input type="checkbox" name="sponsorships[]" value="{{$sponsorship->id}}" class="form-check-input" id="sponsorship-{{$sponsorship->id}}"
+                        <input type="radio" name="sponsorships[]" value="{{$sponsorship->id}}" class="form-check-input" id="sponsorship-{{$sponsorship->id}}"
                             {{ in_array($sponsorship->id, old('sponsorships', [])) ? 'checked' : '' }}> 
                         
                         <label for="sponsorship-{{$sponsorship->id}}" class="form-check-label">{{$sponsorship->title}}</label>

@@ -78,6 +78,15 @@
                 @endif
             @endforeach
         </div>
+        <p class="fw-bold">Categorie</p> 
+        <div class="d-flex gap-2 mb-5 justify-content-center">
+            @foreach ($apartment->categories as $category)
+                <div class="d-flex flex-column justify-content-center align-items-center p-3 border border-black rounded-2">
+                  <i class="{{$category->icon}}"></i>
+                  <span>{{$category->title}}</span>
+                </div>  
+            @endforeach
+        </div>
     </div>
 
 
@@ -90,6 +99,8 @@
           </div>
           @endforeach
       </div>  
+  --}}
+      <p class="fw-bold">Pacchetto Sponsorizzata</p> 
       <p class="fw-bold">Categorie</p> 
       <div class="d-flex gap-2 mb-5 justify-content-center">
           @foreach ($apartment->categories as $category)
