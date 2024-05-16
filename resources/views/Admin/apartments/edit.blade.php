@@ -32,6 +32,9 @@
         {{-- immagine principale --}}
         <div class="mb-3">
             <label for="cover_image" class="form-label">Immagine di copertina</label>
+            <div class="rounded-2 overflow-hidden mb-2">
+                <img class="w-100" src="{{asset('storage/' . $apartment->cover_image)}}" alt="Copertina immagine">
+            </div>
             <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image" value="{{ old('cover_image') ?? $apartment->cover_image }}">
             @error('cover_image')
                 <div class="invalid-feedback">
