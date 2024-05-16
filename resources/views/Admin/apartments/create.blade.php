@@ -22,14 +22,14 @@
             <div class="form-floating mb-3 position-relative">
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
                     placeholder="Nome appartamento" value="{{ old('name') }}">
-                <label for="name">Nome appartamento</label>
+                <label for="name">Nome appartamento<span class="required">*</span></label>
                 @error('name')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
             {{-- immagine principale --}}
             <div class="mb-3">
-                <label for="cover_image" class="form-label">Immagine di copertina</label>
+                <label for="cover_image" class="form-label">Immagine di copertina<span class="required">*</span></label>
                 <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image">
                 @error('cover_image')
                     <div class="invalid-feedback">
@@ -42,7 +42,7 @@
             <div class="form-floating mb-3 position-relative">
                 <input type="text" class="form-control @error('address') is-invalid @enderror" id="address"
                     name="address" placeholder="Indirizzo" {{-- value="{{ old('address') }}" --}} autocomplete="off">
-                <label for="address" class="@error('address') text-danger @enderror">Indirizzo</label>
+                <label for="address" class="@error('address') text-danger @enderror">Indirizzo<span class="required">*</span></label>
                 @error('address')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -63,7 +63,7 @@
             <div class="form-floating mb-3">
                 <input type="number" class="form-control @error('room_number') is-invalid @enderror" id="room_number"
                     name="room_number" placeholder="0" min="0" max="10" value="{{ old('room_number') }}">
-                <label for="room_number">Numero di stanze</label>
+                <label for="room_number">Numero di stanze<span class="required">*</span></label>
                 @error('room_number')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -73,7 +73,7 @@
             <div class="form-floating mb-3">
                 <input type="number" class="form-control @error('bed_number') is-invalid @enderror" id="bed_number"
                     name="bed_number" placeholder="0" min="0" max="20" value="{{ old('bed_number') }}">
-                <label for="bed_number">Numero di posti letto</label>
+                <label for="bed_number">Numero di posti letto<span class="required">*</span></label>
                 @error('bed_number')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -84,7 +84,7 @@
                 <input type="number" class="form-control @error('bathroom_number') is-invalid @enderror"
                     id="bathroom_number" name="bathroom_number" placeholder="0" min="0" max="5"
                     value="{{ old('bathroom_number') }}">
-                <label for="bathroom_number">Numero di bagni</label>
+                <label for="bathroom_number">Numero di bagni<span class="required">*</span></label>
                 @error('bathroom_number')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -94,7 +94,7 @@
             <div class="form-floating mb-5">
                 <input type="number" class="form-control @error('square_meters') is-invalid @enderror" id="square_meters"
                     name="square_meters" placeholder="0" min="0" max="500" value="{{ old('square_meters') }}">
-                <label for="square_meters">Metri quadrati</label>
+                <label for="square_meters">Metri quadrati<span class="required">*</span></label>
                 @error('square_meters')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -108,7 +108,8 @@
             </div> --}}
 
             <div class="mb-4">
-                <label class="mb-3 fw-bold fs-4">Servizi</label>
+                <label class="fw-bold fs-4">Servizi</label>
+                <p class="mb-3">È necessario indicare almeno un servizio</p>
                 <div class="d-flex flex-column gap-2">
                     @foreach($services as $service)
                      <div class="form-check">
@@ -131,7 +132,7 @@
                 </div>
             </div>
 
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
                 <div class="d-flex gap-4">
                     @foreach($sponsorships as $sponsorship)
@@ -143,7 +144,7 @@
                     </div>
                     @endforeach
                 </div>
-            </div>
+            </div> --}}
 
             <button type="submit" class="btn btn-danger button-red mt-5">Affitta appartamento</button>
 
