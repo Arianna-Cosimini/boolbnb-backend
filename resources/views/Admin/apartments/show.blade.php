@@ -50,6 +50,17 @@
             </div>
           </div>
       </div>
+      <div class="d-flex justify-content-end ">
+        @if ($apartment->visible == 1)
+        <p class="button-red text-white rounded-3 p-2">
+        Acquistabile
+        </p>
+        @elseif ($apartment->visible == 0)
+        <p class="button-red text-white rounded-3 p-2">
+        Non Acquistabile
+       </p> 
+        @endif
+      </div>
 
     <div class="img-container w-100 mb-4">
       <img src="{{ asset('storage/' . $apartment->cover_image) }}" alt="{{ $apartment['name'] }}" class="w-100 object-fit-cover rounded-3" style="height: 600px">
@@ -78,6 +89,14 @@
                 @endif
             @endforeach
         </div>
+    </div>
+
+    <div class="mt-5">
+      @if ($apartment->visible == 1)
+          Acquistabile
+      @elseif ($apartment->visible == 0)
+          Non Acquistabile
+      @endif
     </div>
 
 

@@ -136,10 +136,24 @@
             </div>
 
             <div class="mt-5">
-                <div class="form-check form-switch">
-                    <label class="form-check-label" for="flexSwitchCheckDefault"> Visibile </label>
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                
+                <div class="form-check me-3">
+                    <input class="form-check-input  @error('services') is-invalid @enderror" type="radio"
+                        name="visible" id="visible" value="1"
+                        {{ old('visible') == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label  @error('visible') text-danger @enderror" for="visible">
+                        Visibile
+                    </label>
                 </div>
+                <div class="form-check">
+                    <input class="form-check-input  @error('services') is-invalid @enderror" type="radio"
+                        name="visible" id="visible" value="0"
+                        {{ old('visible') == 0 ? 'checked' : '' }}>
+                    <label class="form-check-label  @error('visible') text-danger @enderror" for="visible">
+                        Non Visibile
+                    </label>
+                </div>
+
             </div>
 
             {{-- <div class="mb-3">
