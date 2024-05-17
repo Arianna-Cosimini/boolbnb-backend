@@ -11,7 +11,7 @@
       </ol>
     </nav>
 
-    <h1 class="mb-4">I tuoi annunci</h1>
+    <h1 class="mb-4 fs-2">I tuoi annunci</h1>
    
 
     @if (count($apartments) > 0)

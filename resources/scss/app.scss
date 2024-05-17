@@ -64,12 +64,44 @@ label.form-check-label:focus,
     object-fit: cover;
 }
 
-.my-button-categories{
+.my-button-categories {
+    width: 100%;
+    background-color: transparent !important;
+}
 
-    height: 200px;
+.my-button-categories:hover {
+    cursor: pointer;
+    border: 2px solid black !important;
+}
 
-    .my-input-form{
-        top: 70%;
-        left: 58%;
+.my-radio-label {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.my-radio {
+    display: none;
+}
+
+.selected-category {
+    background-color: #f7f7f7 !important;
+    border: 2px solid black !important;
+}
+
+@keyframes scale-up {
+    0% {
+        transform: scale(1);
     }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animate-scale {
+    animation: scale-up 0.3s;
 }

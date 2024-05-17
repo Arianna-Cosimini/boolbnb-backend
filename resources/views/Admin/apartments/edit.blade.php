@@ -14,7 +14,7 @@
             </ol>
         </nav>
 
-        <h1 class="mb-3">Modifica appartamento</h1>
+        <h1 class="mb-3 fs-2">Modifica appartamento</h1>
 
         {{-- form --}}
         <form action="{{ route('admin.apartments.update', $apartment) }}" method="POST" class="py-5"
@@ -104,7 +104,7 @@
             </div>
 
             {{-- metri quadri --}}
-            <div class="form-floating mb-3">
+            <div class="form-floating mb-5">
                 <input type="number" class="form-control @error('square_meters') is-invalid @enderror"
                     id="square_meters" name="square_meters" placeholder="0" min="0" max="500"
                     value="{{ old('square_meters') ?? $apartment->square_meters }}">
@@ -121,7 +121,7 @@
         </div> --}}
 
             <div class="mb-4">
-                <label class="fw-bold fs-4">Servizi</label>
+                <label class="fw-medium fs-3">Servizi</label>
                 <p class="mb-3">Almeno un servizio</p>
                 <div class="d-flex flex-column gap-2">
                     @foreach ($services as $service)
@@ -140,29 +140,32 @@
                 @enderror
             </div>
 
-            <div class="mb-3">
-                <label class="mb-2" for="">Categorie</label>
+            <div class="mt-5">
+                <label class="mb-4 fw-medium fs-3">Quale di queste opzioni descrive meglio il tuo alloggio?</label>
                 <div class="row">
-
                     @foreach ($categories as $category)
-                        <div class="form-check d-flex flex-column justify-content-center align-items-center col-4">
-                            <button class="btn btn-outline-dark w-100 pb-5 position-relative my-button-categories"
-                                type="button">
-                                <label for="category-{{ $category->id }}"
-                                    class="d-flex flex-column justify-content-center align-items-center fs-1">
-                                    <i class="{{ $category->icon }}"></i>
-                                    <div class="fs-3">{{ $category->title }}</div>
-                                    <input type="radio" name="categories[]" value="{{ $category->id }}"
-                                        class="form-check-input position-absolute my-input-form fs-5"
-                                        id="category-{{ $category->id }}"
-                                        @if ($errors->any()) {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
-    
-                                @else 
-    
-                                {{ $apartment->categories->contains($category) ? 'checked' : '' }} @endif>
-                                </label>
-                            </button>
-                        </div>
+                    <div class="form-check col-3">
+                        <button class="btn border border-2 border-secondary-subtle rounded-4 px-3 py-4 my-button-categories
+                            @if ($errors->any())
+                                {{ in_array($category->id, old('categories', [])) ? 'selected-category' : '' }}
+                            @else
+                                {{ $apartment->categories->contains($category) ? 'selected-category' : '' }}
+                            @endif"
+                            type="button"
+                            onclick="selectCategory('{{ $category->id }}')">
+                            <label class="d-flex flex-column align-items-center gap-2 my-radio-label form-check-label"
+                                for="category-{{ $category->id }}">
+                                <i class="{{ $category->icon }} fs-3"></i>
+                                <div class="fs-5">{{ $category->title }}</div>
+                                <input type="radio" name="categories[]" value="{{ $category->id }}"
+                                    class="my-radio form-check-input my-input-form fs-5"
+                                    id="category-{{ $category->id }}"
+                                    @if ($errors->any()) {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
+                                    @else
+                                    {{ $apartment->categories->contains($category) ? 'checked' : '' }} @endif>
+                            </label>
+                        </button>
+                    </div>
                     @endforeach
                 </div>
             </div>
@@ -310,5 +313,43 @@
                 menuAutoCompleteClass.add('d-none');
             }
         });
+    </script>
+
+    <script>
+  function selectCategory(categoryId) {
+    // Rimuovi la classe 'selected-category' da tutti i pulsanti
+    document.querySelectorAll('.my-button-categories').forEach(button => {
+        button.classList.remove('selected-category');
+        button.querySelector('i').classList.remove('animate-scale');
+    });
+
+    // Aggiungi la classe 'selected-category' al pulsante cliccato
+    const selectedButton = document.getElementById('category-' + categoryId).closest('.my-button-categories');
+    selectedButton.classList.add('selected-category');
+
+    // Aggiungi la classe 'animate-scale' solo all'icona <i>
+    const icon = selectedButton.querySelector('i');
+    icon.classList.add('animate-scale');
+
+    // Rimuovi la classe 'animate-scale' dopo 1 secondo
+    setTimeout(() => {
+        icon.classList.remove('animate-scale');
+    }, 1000);
+
+    // Seleziona il radio button corrispondente
+    document.getElementById('category-' + categoryId).checked = true;
+}
+
+// Imposta il pulsante selezionato al caricamento della pagina
+window.onload = function() {
+    document.querySelectorAll('.my-radio').forEach(radio => {
+        if (radio.checked) {
+            const button = radio.closest('.my-button-categories');
+            button.classList.add('selected-category');
+            button.querySelector('i').classList.add('animate-scale');
+        }
+    });
+}
+
     </script>
 @endsection

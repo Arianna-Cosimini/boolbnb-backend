@@ -6,7 +6,7 @@
         <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
       </ol>
       
-    <h1 class="mb-4">Dashboard</h1>
+    <h1 class="mb-4 fs-2">Dashboard</h1>
     <a href="{{route('admin.apartments.index')}}" class="btn btn-danger button-red text-white">I tuoi annunci</a>
 
 </div>

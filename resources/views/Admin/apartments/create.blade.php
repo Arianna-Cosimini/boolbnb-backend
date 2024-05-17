@@ -12,7 +12,7 @@
             </ol>
         </nav>
 
-        <h1 class="mb-3">Affitta appartamento</h1>
+        <h1 class="mb-3 fs-2">Affitta appartamento</h1>
 
         {{-- form --}}
         <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data" class="py-5" onsubmit="return validateForm()">
@@ -113,7 +113,7 @@
             </div> --}}
 
             <div class="mb-4">
-                <label class="fw-bold fs-4">Servizi</label>
+                <label class="fw-medium fs-3">Servizi</label>
                 <p class="mb-3">Almeno un servizio</p>
                 <div class="d-flex flex-column gap-2">
                     @foreach ($services as $service)
@@ -133,27 +133,26 @@
             </div>
 
             <div class="mt-5">
-                <label class="mb-3 fw-bold fs-4">Categoria</label>
+                <label class="mb-4 fw-medium fs-3">Quale di queste opzioni descrive meglio il tuo alloggio?</label>
                 <div class="row">
-
                     @foreach ($categories as $category)
-                        <div class="form-check d-flex flex-column justify-content-center align-items-center col-4">
-                            <button class="btn btn-outline-dark w-100 pb-5 position-relative my-button-categories"
-                                type="button">
-                                <label
-                                    class="form-check-label d-flex flex-column justify-content-center align-items-center fs-1"
-                                    for="category-{{ $category->id }}">
-                                    <i class="{{ $category->icon }} me-2"></i>
-                                    <div class="fs-3">{{ $category->title }}</div>
-                                    <input type="radio" name="categories[]" value="{{ $category->id }}"
-                                        class="form-check-input position-absolute my-input-form fs-5"
-                                        id="category-{{ $category->id }}"
-                                        {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}>
-                                </label>
-                            </button>
-                        </div>
+                    <div class="form-check col-3">
+                        <button class="btn border border-2 border-secondary-subtle rounded-4 px-3 py-4 my-button-categories"
+                            type="button"
+                            onclick="selectCategory('{{ $category->id }}')">
+                            <label class="d-flex flex-column align-items-center gap-2 my-radio-label form-check-label"
+                                for="category-{{ $category->id }}">
+                                <i class="{{ $category->icon }} fs-3"></i>
+                                <div class="fs-5">{{ $category->title }}</div>
+                                <input type="radio" name="categories[]" value="{{ $category->id }}"
+                                    class="my-radio form-check-input my-input-form fs-5"
+                                    id="category-{{ $category->id }}"
+                                    {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
+                                    {{ $loop->first ? 'checked' : '' }}>
+                            </label>
+                        </button>
+                    </div>
                     @endforeach
-
                 </div>
             </div>
 
@@ -299,4 +298,42 @@
         });
 
     </script>
+
+<script>
+    function selectCategory(categoryId) {
+    // Rimuovi la classe 'selected-category' da tutti i pulsanti
+    document.querySelectorAll('.my-button-categories').forEach(button => {
+        button.classList.remove('selected-category');
+        button.querySelector('i').classList.remove('animate-scale');
+    });
+
+    // Aggiungi la classe 'selected-category' al pulsante cliccato
+    const selectedButton = document.getElementById('category-' + categoryId).closest('.my-button-categories');
+    selectedButton.classList.add('selected-category');
+
+    // Aggiungi la classe 'animate-scale' solo all'icona <i>
+    const icon = selectedButton.querySelector('i');
+    icon.classList.add('animate-scale');
+
+    // Rimuovi la classe 'animate-scale' dopo 1 secondo
+    setTimeout(() => {
+        icon.classList.remove('animate-scale');
+    }, 1000);
+
+    // Seleziona il radio button corrispondente
+    document.getElementById('category-' + categoryId).checked = true;
+}
+
+// Imposta il pulsante selezionato al caricamento della pagina
+window.onload = function() {
+    document.querySelectorAll('.my-radio').forEach(radio => {
+        if (radio.checked) {
+            const button = radio.closest('.my-button-categories');
+            button.classList.add('selected-category');
+            const icon = button.querySelector('i');
+            icon.classList.add('animate-scale');
+        }
+    });
+}
+</script>
 @endsection

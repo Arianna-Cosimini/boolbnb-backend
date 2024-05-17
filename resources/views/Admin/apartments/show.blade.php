@@ -12,7 +12,7 @@
       </nav>
 
       <div class="apartment-title d-flex justify-content-between align-items-end mb-4">
-        <h1 class="fs-2 mb-0">{{ $apartment['name'] }}</h1>
+        <h1 class="fs-3 mb-0">{{ $apartment['name'] }}</h1>
         <div class="button-container d-flex gap-2 align-items-center">
           <a href="{{ route('admin.apartments.edit', $apartment->slug) }}" class="btn bg-black text-white border border-1 border-black">
             <i class="fa-solid fa-pen-to-square text-white"></i> Modifica
@@ -64,7 +64,7 @@
       </p>    
       
       <div class="mb-4">
-        <label class="mb-3 fw-bold fs-4">Cosa troverai</label>
+        <label class="mb-3 fw-medium fs-4">Cosa troverai</label>
         <div class="row row-cols-1 d-flex gap-3">
             @foreach($apartment->services as $key => $service)
                 <div class="col-2 d-flex flex-wrap gap-2 align-items-center">
@@ -77,7 +77,7 @@
                     <div class="w-100"></div>
                 @endif
             @endforeach
-        </div>
+        {{-- </div>
         <p class="fw-bold">Categorie</p> 
         <div class="d-flex gap-2 mb-5 justify-content-center">
             @foreach ($apartment->categories as $category)
@@ -86,7 +86,7 @@
                   <span>{{$category->title}}</span>
                 </div>  
             @endforeach
-        </div>
+        </div> --}}
     </div>
 
       {{-- <p class="fw-bold">Pacchetto Sponsorizzata</p> 
