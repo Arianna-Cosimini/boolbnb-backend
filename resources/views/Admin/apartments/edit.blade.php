@@ -166,8 +166,52 @@
                             </button>
                         </div>
                     @endforeach
-                </div>
+        <div class="mt-5">
+                
+            <div class="form-check me-3">
+                <input class="form-check-input  @error('services') is-invalid @enderror" type="radio"
+                    name="visible" id="visible" value="1"
+                    {{ old('visible') == 1 ? 'checked' : '' }}>
+                <label class="form-check-label  @error('visible') text-danger @enderror" for="visible">
+                    Visibile
+                </label>
             </div>
+            <div class="form-check">
+                <input class="form-check-input  @error('services') is-invalid @enderror" type="radio"
+                    name="visible" id="visible" value="0"
+                    {{ old('visible') == 0 ? 'checked' : '' }}>
+                <label class="form-check-label  @error('visible') text-danger @enderror" for="visible">
+                    Non Visibile
+                </label>
+            </div>
+
+        </div>
+
+        
+
+         {{-- <div class="mb-3">
+            <label class="mb-2" for="">Categorie</label>
+            <div class="d-flex gap-4">
+
+                @foreach($categories as $category)
+                <div class="form-check d-flex flex-column justify-content-center align-items-center">
+                    <label for="category-{{$category->id}}" class="form-check-label"><i class="{{$category->icon}}"></i></label>
+                    <label for="category-{{$category->id}}" class="form-check-label">{{$category->title}}</label>
+                    <input type="checkbox" name="categories[]" value="{{$category->id}}" class="form-check-input" id="category-{{$category->id}}"
+                        
+                        @if($errors->any())
+
+                        {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
+
+                        @else 
+
+                        {{ $apartment->categories->contains($category) ? 'checked' : '' }}
+                        
+                        @endif
+                    > 
+                
+                </div>
+            </div> --}}
 
             {{-- <div class="mb-3">
             <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>

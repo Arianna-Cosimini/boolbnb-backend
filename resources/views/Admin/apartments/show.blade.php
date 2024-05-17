@@ -50,6 +50,17 @@
             </div>
           </div>
       </div>
+      <div class="d-flex justify-content-end ">
+        @if ($apartment->visible == 1)
+        <p class="button-red text-white rounded-3 p-2">
+        Acquistabile
+        </p>
+        @elseif ($apartment->visible == 0)
+        <p class="button-red text-white rounded-3 p-2">
+        Non Acquistabile
+       </p> 
+        @endif
+      </div>
 
     <div class="img-container w-100 mb-4">
       <img src="{{ $apartment->cover_image ? asset('storage/' . $apartment->cover_image) : asset('placeholder/Placeholder.svg') }}" alt="{{ $apartment['name'] }}" class="w-100 object-fit-cover rounded-3" style="height: 600px">
@@ -77,18 +88,28 @@
                     <div class="w-100"></div>
                 @endif
             @endforeach
-        {{-- </div>
-        <p class="fw-bold">Categorie</p> 
-        <div class="d-flex gap-2 mb-5 justify-content-center">
-            @foreach ($apartment->categories as $category)
-                <div class="d-flex flex-column justify-content-center align-items-center p-3 border border-black rounded-2">
-                  <i class="{{$category->icon}}"></i>
-                  <span>{{$category->title}}</span>
-                </div>  
-            @endforeach
-        </div> --}}
+        </div>
     </div>
 
+
+      {{-- <p class="fw-bold">Servizi</p> 
+      <div class="d-flex gap-2 mb-5 justify-content-center">
+          @foreach ($apartment->services as $service)
+          <div class="d-flex flex-column justify-content-center align-items-center p-3 border border-black rounded-2">
+            <i class="{{$service->icon}}"></i>
+            <span>{{$service->title}}</span>
+          </div>
+          @endforeach
+      </div>  
+      <p class="fw-bold">Categorie</p> 
+      <div class="d-flex gap-2 mb-5 justify-content-center">
+          @foreach ($apartment->categories as $category)
+              <div class="d-flex flex-column justify-content-center align-items-center p-3 border border-black rounded-2">
+                <i class="{{$category->icon}}"></i>
+                <span>{{$category->title}}</span>
+              </div>  
+          @endforeach
+      </div>  --}}
       {{-- <p class="fw-bold">Pacchetto Sponsorizzata</p> 
       <div class="d-flex gap-2 mb-5 justify-content-center">
           @foreach ($apartment->sponsorships as $sponsorship)
