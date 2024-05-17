@@ -105,3 +105,14 @@ label.form-check-label:focus,
 .animate-scale {
     animation: scale-up 0.3s;
 }
+
+.visible-banner {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+}
+
+.my-visible-pill {
+    background-color: #f7f7f7a4;
+    user-select: none;
+}

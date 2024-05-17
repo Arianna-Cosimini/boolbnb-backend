@@ -50,20 +50,23 @@
             </div>
           </div>
       </div>
-      <div class="d-flex justify-content-end ">
+    
+
+    <div class="img-container w-100 mb-4 position-relative">
+      <img src="{{ $apartment->cover_image ? asset('storage/' . $apartment->cover_image) : asset('placeholder/Placeholder.svg') }}" alt="{{ $apartment['name'] }}" class="w-100 object-fit-cover rounded-3" style="height: 600px">
+
+      {{-- badge visibilità appartamento --}}
+      <div class="visible-banner d-flex justify-content-end mb-0 ">
         @if ($apartment->visible == 1)
-        <p class="button-red text-white rounded-3 p-2">
+        <p class="my-visible-pill rounded-5 px-4 rounded-3 p-2 text-black mb-0">
         Acquistabile
         </p>
         @elseif ($apartment->visible == 0)
-        <p class="button-red text-white rounded-3 p-2">
+        <p class="my-visible-pill rounded-5 px-4 rounded-3 p-2 text-black mb-0">
         Non Acquistabile
        </p> 
         @endif
       </div>
-
-    <div class="img-container w-100 mb-4">
-      <img src="{{ $apartment->cover_image ? asset('storage/' . $apartment->cover_image) : asset('placeholder/Placeholder.svg') }}" alt="{{ $apartment['name'] }}" class="w-100 object-fit-cover rounded-3" style="height: 600px">
     </div>
 
     <div class="left-container">
