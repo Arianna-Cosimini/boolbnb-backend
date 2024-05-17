@@ -2,6 +2,8 @@
 
 @section('content')
 
+
+
 <div class="container py-5">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -11,8 +13,16 @@
         </ol>
       </nav>
 
+      @if(session('success'))
+      <div class="alert alert-success">
+      {{ session('success') }}
+      </div>
+      @endif
+
       <div class="apartment-title d-flex justify-content-between align-items-end mb-4">
         <h1 class="fs-3 mb-0">{{ $apartment['name'] }}</h1>
+
+
         <div class="button-container d-flex gap-2 align-items-center">
           <a href="{{ route('admin.apartments.edit', $apartment->slug) }}" class="btn bg-black text-white border border-1 border-black">
             <i class="fa-solid fa-pen-to-square text-white"></i> Modifica

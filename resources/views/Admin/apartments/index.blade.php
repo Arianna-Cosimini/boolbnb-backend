@@ -12,6 +12,12 @@
     </nav>
 
     <h1 class="mb-4 fs-2">I tuoi annunci</h1>
+
+    @if(session('success'))
+      <div class="alert alert-success">
+      {{ session('success') }}
+      </div>
+    @endif
    
 
     @if (count($apartments) > 0)

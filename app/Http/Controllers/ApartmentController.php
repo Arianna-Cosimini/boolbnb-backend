@@ -70,7 +70,7 @@ class ApartmentController extends Controller
         $newApartment->categories()->attach($request->categories);
         $newApartment->sponsorships()->attach($request->sponsorships);
 
-        return redirect()->route('admin.apartments.index');
+        return redirect()->route('admin.apartments.index')->with('success', 'Annuncio aggiunto con successo');
     }
 
     /**
@@ -79,7 +79,7 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         if (Auth::user()->id != $apartment->user_id)
-        return redirect()->route('admin.apartments.index', compact('apartment'));
+            return redirect()->route('admin.apartments.index', compact('apartment'));
 
         $user = User::where('user_id', $apartment->user_id);
 
@@ -92,7 +92,7 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         if (Auth::user()->id != $apartment->user_id)
-        return redirect()->route('admin.apartments.index', compact('apartment'));
+            return redirect()->route('admin.apartments.index', compact('apartment'));
 
         $user = User::where('user_id', $apartment->user_id);
         $services = Service::all();
@@ -125,7 +125,7 @@ class ApartmentController extends Controller
 
 
         $apartment->save();
-        return redirect()->route('admin.apartments.show', compact('apartment'));
+        return redirect()->route('admin.apartments.show', compact('apartment'))->with('success', 'Annuncio aggiornato con successo');
 
     }
 
@@ -136,6 +136,6 @@ class ApartmentController extends Controller
     {
         $apartment->delete();
 
-        return redirect()->route('admin.apartments.index');
+        return redirect()->route('admin.apartments.index')->with('success', 'Annuncio eliminato con successo');
     }
 }
