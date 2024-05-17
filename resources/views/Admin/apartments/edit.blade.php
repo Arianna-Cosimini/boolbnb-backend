@@ -10,11 +10,11 @@
                         annunci</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.apartments.show', $apartment) }}"
                         class="text-black">{{ $apartment->name }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Modifica appartamento</li>
+                <li class="breadcrumb-item active" aria-current="page">Modifica annuncio</li>
             </ol>
         </nav>
 
-        <h1 class="mb-3 fs-2">Modifica appartamento</h1>
+        <h1 class="mb-3 fs-2">Modifica annuncio</h1>
 
         {{-- form --}}
         <form action="{{ route('admin.apartments.update', $apartment) }}" method="POST" class="py-5"
@@ -22,11 +22,11 @@
             @csrf
             @method('PUT')
 
-            {{-- nome appartamento --}}
+            {{-- nome struttura --}}
             <div class="form-floating mb-3">
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
                     placeholder="Nome appartamento" value="{{ old('name') ?? $apartment->name }}">
-                <label for="name">Nome appartamento<span class="required">*</span></label>
+                <label for="name">Nome struttura<span class="required">*</span></label>
                 @error('name')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -168,12 +168,13 @@
 
             {{-- visibilità --}}
             <div class="mt-5">
-                <label class="mb-4 fw-medium fs-3">Vuoi rendere questo appartamento visibile?</label>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input @error('visible') is-invalid @enderror" type="checkbox" role="switch" id="visible" name="visible" value="1" {{ (old('visible') ?? (isset($apartment) && $apartment->visible ? 'checked' : '')) }}>
-                        <label class="form-check-label" for="visible">Visibile</label>
-                    </div>
-
+                <label class="mb-4 fw-medium fs-3">Vuoi rendere visibile questo annuncio?</label>
+                <div class="form-check form-switch">
+                    <input class="form-check-input @error('visible') is-invalid @enderror" type="checkbox" role="switch" id="visible" name="visible" value="1" {{ old('visible') ? 'checked' : (isset($apartment) && $apartment->visible ? 'checked' : '') }}>
+                    <label class="form-check-label" for="visible">
+                        <span id="visibleLabel">{{ isset($apartment) && $apartment->visible ? 'Visibile' : 'Non visibile' }}</span>
+                    </label>
+                </div>
             </div>
 
             {{-- sponsorizzazione --}}
@@ -385,4 +386,20 @@
             });
         }
     </script>
+
+{{-- etichetta visibilità annuncio --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkbox = document.getElementById('visible');
+        const label = document.getElementById('visibleLabel');
+
+        checkbox.addEventListener('change', function() {
+            if (checkbox.checked) {
+                label.textContent = 'Visibile';
+            } else {
+                label.textContent = 'Non visibile';
+            }
+        });
+    });
+</script>
 @endsection

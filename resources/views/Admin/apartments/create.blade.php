@@ -8,21 +8,21 @@
                 <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-black">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.apartments.index') }}" class="text-black">I tuoi
                         annunci</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Affitta appartamento</li>
+                <li class="breadcrumb-item active" aria-current="page">Nuovo annuncio</li>
             </ol>
         </nav>
 
-        <h1 class="mb-3 fs-2">Affitta appartamento</h1>
+        <h1 class="mb-3 fs-2">Nuovo annuncio</h1>
 
         {{-- form --}}
         <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data" class="py-5" onsubmit="return validateForm()">
             @csrf
 
-            {{-- nome appartamento --}}
+            {{-- nome struttura --}}
             <div class="form-floating mb-3 position-relative">
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
                     placeholder="Nome appartamento" value="{{ old('name') }}">
-                <label for="name">Nome appartamento<span class="required">*</span></label>
+                <label for="name">Nome struttura<span class="required">*</span></label>
                 @error('name')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
