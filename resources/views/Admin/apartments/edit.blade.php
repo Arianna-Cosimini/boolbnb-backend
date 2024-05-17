@@ -276,6 +276,9 @@
                         callback(data);
                     }
                 })
+                .catch(error => {
+                    console.error('Errore nel fetch:', error);
+                });
         }
 
         function validateForm() {
