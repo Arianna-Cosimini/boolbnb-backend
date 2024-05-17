@@ -27,6 +27,7 @@
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
+
             {{-- immagine principale --}}
             <div class="mb-3">
                 <label for="cover_image" class="form-label">Immagine di copertina</label>
@@ -152,6 +153,7 @@
             </div>
 
             {{-- visibilità --}}
+            
             <div class="mt-5">
                 <label class="mb-4 fw-medium fs-3">Vuoi rendere questo appartamento visibile?</label>
                 <div class="form-check form-switch">

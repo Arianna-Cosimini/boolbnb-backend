@@ -56,7 +56,7 @@ label.form-check-label:focus,
     color: black;
     outline: 0;
     border: 0;
-    box-shadow: 0 0 0 0.1rem #ffa6b6 !important;
+    box-shadow: 0 0 0 0.1rem #ffa6b600 !important;
 }
 
 .cover-img {
@@ -115,4 +115,18 @@ label.form-check-label:focus,
 .my-visible-pill {
     background-color: #f7f7f7a4;
     user-select: none;
+}
+
+#visible:not(:checked) {
+    background-color: white; /* Colore di sfondo nero per lo switch non selezionato */
+    border: 1px solid black;
+}
+/* Aggiustamenti per la maniglia dello switch */
+#visible:not(:checked) + .form-check-label::before {
+    background-color: white; /* Colore della maniglia dello switch non selezionato */
+    border: 1px solid black;
+}
+/* Aggiustamenti per la maniglia dello switch quando è selezionato */
+#visible:checked + .form-check-label::before {
+    background-color: white; /* Colore della maniglia dello switch selezionato */
 }
