@@ -19,6 +19,11 @@
       </div>
     @endif
    
+    @if (session()->has('warning'))
+        <div class="alert alert-warning">
+            {{ session('warning') }}
+        </div>
+    @endif
 
     @if (count($apartments) > 0)
 
