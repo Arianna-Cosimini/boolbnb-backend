@@ -168,8 +168,9 @@
                     @endforeach
                 </div>
             </div>  
-        <div class="mt-5">
-                
+
+
+        <div class="mt-5">    
             <div class="form-check me-3">
                 <input class="form-check-input  @error('services') is-invalid @enderror" type="radio"
                     name="visible" id="visible" value="1"
@@ -186,8 +187,32 @@
                     Non Visibile
                 </label>
             </div>
-
         </div>
+
+        {{-- <div class="mb-3">
+            <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
+            <div class="d-flex gap-4">
+
+                @foreach ($sponsorships as $sponsorship)
+                <div class="form-check ">
+                    <input type="radio" name="sponsorships[]" value="{{$sponsorship->id}}" class="form-check-input" id="sponsorship-{{$sponsorship->id}}"
+                        
+                        @if ($errors->any())
+
+                        {{ in_array($sponsorship->id, old('sponsorships', [])) ? 'checked' : '' }}
+
+                        @else 
+
+                        {{ $apartment->sponsorships->contains($sponsorship) ? 'checked' : '' }}
+                        
+                        @endif
+                    > 
+                    
+                    <label for="sponsorship-{{$sponsorship->id}}" class="form-check-label">{{$sponsorship->title}}</label>
+                </div>
+                @endforeach
+            </div>
+        </div> --}}
 
         <div class="bnt-container">
             <button type="submit" class="btn btn-danger button-red justify mt-5">Salva modifiche</button>
