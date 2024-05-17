@@ -63,6 +63,7 @@ class ApartmentController extends Controller
         $newApartment->fill($request->all());
 
         $newApartment->user_id = Auth::id();
+        $newApartment->visible = $request->has('visible') ? 1 : 0;
 
         $newApartment->save();
 
@@ -119,6 +120,9 @@ class ApartmentController extends Controller
         }
         // save slug
         $apartment->slug = Str::slug($request->name . Str::random(10));
+
+        $apartment->visible = $request->has('visible') ? 1 : 0;
+
         $apartment->services()->sync($request->services);
         $apartment->categories()->sync($request->categories);
         $apartment->sponsorships()->sync($request->sponsorships);

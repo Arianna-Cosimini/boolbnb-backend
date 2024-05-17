@@ -170,7 +170,7 @@
             </div>  
 
 
-        <div class="mt-5">    
+        <!-- <div class="mt-5">    
             <div class="form-check me-3">
                 <input class="form-check-input  @error('services') is-invalid @enderror" type="radio"
                     name="visible" id="visible" value="1"
@@ -187,6 +187,11 @@
                     Non Visibile
                 </label>
             </div>
+        </div> -->
+
+        <div class="form-check form-switch">
+            <input class="form-check-input @error('visible') is-invalid @enderror" type="checkbox" role="switch" id="visible" name="visible" value="1" checked {{ old('visible') ? 'checked' : '' }}>
+            <label class="form-check-label" for="visible">Visibile</label>
         </div>
 
         {{-- <div class="mb-3">
