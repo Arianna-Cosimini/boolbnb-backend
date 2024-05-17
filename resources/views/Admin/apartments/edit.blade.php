@@ -50,7 +50,8 @@
             {{-- indirizzo --}}
             <div class="form-floating mb-3">
                 <input type="text" class="form-control @error('address') is-invalid @enderror" id="address"
-                    name="address" placeholder="Indirizzo" value="{{ old('address') ?? $apartment->address }}" autocomplete="off">
+                    name="address" placeholder="Indirizzo" value="{{ old('address') ?? $apartment->address }}"
+                    autocomplete="off">
                 <label for="address">Indirizzo<span class="required">*</span></label>
                 {{-- mostro messaggio di errore --}}
                 <span id="address-error" class="text-danger"></span>
@@ -144,28 +145,26 @@
                 <label class="mb-4 fw-medium fs-3">Quale di queste opzioni descrive meglio il tuo alloggio?</label>
                 <div class="row">
                     @foreach ($categories as $category)
-                    <div class="form-check col-3">
-                        <button class="btn border border-2 border-secondary-subtle rounded-4 px-3 py-4 my-button-categories
-                            @if ($errors->any())
-                                {{ in_array($category->id, old('categories', [])) ? 'selected-category' : '' }}
+                        <div class="form-check col-3">
+                            <button
+                                class="btn border border-2 border-secondary-subtle rounded-4 px-3 py-4 my-button-categories
+                            @if ($errors->any()) {{ in_array($category->id, old('categories', [])) ? 'selected-category' : '' }}
                             @else
-                                {{ $apartment->categories->contains($category) ? 'selected-category' : '' }}
-                            @endif"
-                            type="button"
-                            onclick="selectCategory('{{ $category->id }}')">
-                            <label class="d-flex flex-column align-items-center gap-2 my-radio-label form-check-label"
-                                for="category-{{ $category->id }}">
-                                <i class="{{ $category->icon }} fs-3"></i>
-                                <div class="fs-5">{{ $category->title }}</div>
-                                <input type="radio" name="categories[]" value="{{ $category->id }}"
-                                    class="my-radio form-check-input my-input-form fs-5"
-                                    id="category-{{ $category->id }}"
-                                    @if ($errors->any()) {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
+                                {{ $apartment->categories->contains($category) ? 'selected-category' : '' }} @endif"
+                                type="button" onclick="selectCategory('{{ $category->id }}')">
+                                <label class="d-flex flex-column align-items-center gap-2 my-radio-label form-check-label"
+                                    for="category-{{ $category->id }}">
+                                    <i class="{{ $category->icon }} fs-3"></i>
+                                    <div class="fs-5">{{ $category->title }}</div>
+                                    <input type="radio" name="categories[]" value="{{ $category->id }}"
+                                        class="my-radio form-check-input my-input-form fs-5"
+                                        id="category-{{ $category->id }}"
+                                        @if ($errors->any()) {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
                                     @else
                                     {{ $apartment->categories->contains($category) ? 'checked' : '' }} @endif>
-                            </label>
-                        </button>
-                    </div>
+                                </label>
+                            </button>
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -234,7 +233,7 @@
                 menuAutoCompleteClass.remove('d-none');
         }
 
-        function getApiProjects(address) {
+        function getApiProjects(address, callback) {
             fetch(
                     `https://api.tomtom.com/search/2/search/${address}.json?key=${keyApi}&countrySet=IT&limit=5&lat=${lat}&lon=${lon}&radius=${radius}`
                 )
@@ -271,26 +270,32 @@
                     } else {
                         console.log("Nessun risultato trovato per", address);
                     }
+
+                    // Callback per gestire ulteriori operazioni dopo il fetch
+                    if (callback) {
+                        callback(data);
+                    }
                 })
+                .catch(error => {
+                    console.error('Errore nel fetch:', error);
+                });
         }
 
-
-        // function per controllare che l'utente scelga uno dei suggerimenti
         function validateForm() {
-            const inputAddress = document.getElementById("address").value;
+            const inputAddress = document.getElementById("address").value.trim().toLowerCase();
             const suggestions = document.querySelectorAll("#menuAutoComplete ul.list li");
+            let addressMatched = false;
 
             // Controllo che l'indirizzo corrisponda a uno dei suggerimenti
-            const addressMatched = false;
             suggestions.forEach(function(suggestion) {
                 const suggestionText = suggestion.textContent.trim().toLowerCase();
-                const inputAddressTrimmed = inputAddress.trim().toLowerCase();
-                if (suggestionText === inputAddressTrimmed) {
+                if (suggestionText === inputAddress) {
                     addressMatched = true;
                     return;
                 }
             });
-            // Se l'indirizzo inserito non corrisponde mostro un messaggio di errore
+
+            // Se l'indirizzo inserito non corrisponde a uno dei suggerimenti
             if (!addressMatched) {
                 const errorMessage = "L'indirizzo inserito non corrisponde a uno dei suggerimenti.";
                 document.getElementById('address-error').textContent = errorMessage;
@@ -299,8 +304,7 @@
                 document.getElementById('address-error').textContent = "";
             }
 
-
-            // Se l'indirizzo corrisponde invio il modulo
+            // Se l'indirizzo corrisponde, invio il modulo
             return true;
         }
 
@@ -313,43 +317,62 @@
                 menuAutoCompleteClass.add('d-none');
             }
         });
+
+        // logica per gestire il caso di modifica
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const currentAddress = document.getElementById("address").value.trim().toLowerCase();
+            if (currentAddress) {
+                // Simula una ricerca per popolare i suggerimenti e impostare latitudine e longitudine
+                getApiProjects(currentAddress, (data) => {
+                    const risultatoCorrispondente = data.results.find(result => result.address
+                        .freeformAddress.toLowerCase() === currentAddress);
+
+                    if (risultatoCorrispondente) {
+                        latitude.value = risultatoCorrispondente.position.lat;
+                        longitude.value = risultatoCorrispondente.position.lon;
+                        console.log('Latitudine e longitudine impostate:', latitude.value, longitude.value);
+                    } else {
+                        console.error("'Nessun risultato corrispondente trovato per l'indirizzo corrente.'");
+                    }
+                });
+            }
+        });
     </script>
 
     <script>
-  function selectCategory(categoryId) {
-    // Rimuovi la classe 'selected-category' da tutti i pulsanti
-    document.querySelectorAll('.my-button-categories').forEach(button => {
-        button.classList.remove('selected-category');
-        button.querySelector('i').classList.remove('animate-scale');
-    });
+        function selectCategory(categoryId) {
+            // Rimuovi la classe 'selected-category' da tutti i pulsanti
+            document.querySelectorAll('.my-button-categories').forEach(button => {
+                button.classList.remove('selected-category');
+                button.querySelector('i').classList.remove('animate-scale');
+            });
 
-    // Aggiungi la classe 'selected-category' al pulsante cliccato
-    const selectedButton = document.getElementById('category-' + categoryId).closest('.my-button-categories');
-    selectedButton.classList.add('selected-category');
+            // Aggiungi la classe 'selected-category' al pulsante cliccato
+            const selectedButton = document.getElementById('category-' + categoryId).closest('.my-button-categories');
+            selectedButton.classList.add('selected-category');
 
-    // Aggiungi la classe 'animate-scale' solo all'icona <i>
-    const icon = selectedButton.querySelector('i');
-    icon.classList.add('animate-scale');
+            // Aggiungi la classe 'animate-scale' solo all'icona <i>
+            const icon = selectedButton.querySelector('i');
+            icon.classList.add('animate-scale');
 
-    // Rimuovi la classe 'animate-scale' dopo 1 secondo
-    setTimeout(() => {
-        icon.classList.remove('animate-scale');
-    }, 1000);
+            // Rimuovi la classe 'animate-scale' dopo 1 secondo
+            setTimeout(() => {
+                icon.classList.remove('animate-scale');
+            }, 1000);
 
-    // Seleziona il radio button corrispondente
-    document.getElementById('category-' + categoryId).checked = true;
-}
-
-// Imposta il pulsante selezionato al caricamento della pagina
-window.onload = function() {
-    document.querySelectorAll('.my-radio').forEach(radio => {
-        if (radio.checked) {
-            const button = radio.closest('.my-button-categories');
-            button.classList.add('selected-category');
-            button.querySelector('i').classList.add('animate-scale');
+            // Seleziona il radio button corrispondente
+            document.getElementById('category-' + categoryId).checked = true;
         }
-    });
-}
 
+        // Imposta il pulsante selezionato al caricamento della pagina
+        window.onload = function() {
+            document.querySelectorAll('.my-radio').forEach(radio => {
+                if (radio.checked) {
+                    const button = radio.closest('.my-button-categories');
+                    button.classList.add('selected-category');
+                    button.querySelector('i').classList.add('animate-scale');
+                }
+            });
+        }
     </script>
 @endsection
