@@ -167,9 +167,13 @@
             </div>  
 
             {{-- visibilità --}}
-            <div class="form-check form-switch">
-                <input class="form-check-input @error('visible') is-invalid @enderror" type="checkbox" role="switch" id="visible" name="visible" value="1" {{ (old('visible') ?? (isset($apartment) && $apartment->visible ? 'checked' : '')) }}>
-                <label class="form-check-label" for="visible">Visibile</label>
+            <div class="mt-5">
+                <label class="mb-4 fw-medium fs-3">Vuoi rendere questo appartamento visibile?</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input @error('visible') is-invalid @enderror" type="checkbox" role="switch" id="visible" name="visible" value="1" {{ (old('visible') ?? (isset($apartment) && $apartment->visible ? 'checked' : '')) }}>
+                        <label class="form-check-label" for="visible">Visibile</label>
+                    </div>
+
             </div>
 
             {{-- sponsorizzazione --}}
