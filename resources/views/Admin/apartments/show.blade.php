@@ -63,7 +63,7 @@
     
 
     <div class="img-container w-100 mb-4 position-relative">
-      <img src="{{ $apartment->cover_image ? asset('storage/' . $apartment->cover_image) : asset('placeholder/Placeholder.svg') }}" alt="{{ $apartment['name'] }}" class="w-100 object-fit-cover rounded-3" style="height: 600px">
+      <img src="{{ $apartment->cover_image ? asset('storage/' . $apartment->cover_image) : asset('placeholder/Placeholder.png') }}" alt="{{ $apartment['name'] }}" class="w-100 object-fit-cover rounded-3" style="height: 600px">
 
       {{-- badge visibilità appartamento --}}
       <div class="visible-banner d-flex justify-content-end mb-0 ">
