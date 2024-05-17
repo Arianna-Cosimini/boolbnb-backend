@@ -8,25 +8,26 @@
                 <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-black">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.apartments.index') }}" class="text-black">I tuoi
                         annunci</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Affitta appartamento</li>
+                <li class="breadcrumb-item active" aria-current="page">Nuovo annuncio</li>
             </ol>
         </nav>
 
-        <h1 class="mb-3 fs-2">Affitta appartamento</h1>
+        <h1 class="mb-3 fs-2">Nuovo annuncio</h1>
 
         {{-- form --}}
         <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data" class="py-5" onsubmit="return validateForm()">
             @csrf
 
-            {{-- nome appartamento --}}
+            {{-- nome struttura --}}
             <div class="form-floating mb-3 position-relative">
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
                     placeholder="Nome appartamento" value="{{ old('name') }}">
-                <label for="name">Nome appartamento<span class="required">*</span></label>
+                <label for="name">Nome struttura<span class="required">*</span></label>
                 @error('name')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
+
             {{-- immagine principale --}}
             <div class="mb-3">
                 <label for="cover_image" class="form-label">Immagine di copertina</label>
@@ -105,13 +106,7 @@
                 @enderror
             </div>
 
-            {{-- immagine provvisoria --}}
-            {{-- <div class="form-floating mb-3">
-                <input type="string" class="form-control" id="image" name="image" value="{{ old('image') }}"
-                    placeholder="https://bollbnb.com/img-default">
-                <label for="image" class="form-label">Immagine di copertina</label>
-            </div> --}}
-
+            {{-- servizi --}}
             <div class="mb-4">
                 <label class="fw-medium fs-3">Servizi</label>
                 <p class="mb-3">Almeno un servizio</p>
@@ -132,6 +127,7 @@
                 @enderror
             </div>
 
+            {{-- categorie --}}
             <div class="mt-5">
                 <label class="mb-4 fw-medium fs-3">Quale di queste opzioni descrive meglio il tuo alloggio?</label>
                 <div class="row">
@@ -156,27 +152,17 @@
                 </div>
             </div>
 
+            {{-- visibilità --}}
+            
             <div class="mt-5">
-                
-                <div class="form-check me-3">
-                    <input class="form-check-input  @error('services') is-invalid @enderror" type="radio"
-                        name="visible" id="visible" value="1"
-                        {{ old('visible') == 1 ? 'checked' : '' }}>
-                    <label class="form-check-label  @error('visible') text-danger @enderror" for="visible">
-                        Visibile
-                    </label>
+                <label class="mb-4 fw-medium fs-3">Vuoi rendere questo appartamento visibile?</label>
+                <div class="form-check form-switch">
+                    <input class="form-check-input @error('visible') is-invalid @enderror" type="checkbox" role="switch" id="visible" name="visible" value="1" checked {{ old('visible') ? 'checked' : '' }}>
+                    <label class="form-check-label" for="visible">Visibile</label>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input  @error('services') is-invalid @enderror" type="radio"
-                        name="visible" id="visible" value="0"
-                        {{ old('visible') == 0 ? 'checked' : '' }}>
-                    <label class="form-check-label  @error('visible') text-danger @enderror" for="visible">
-                        Non Visibile
-                    </label>
-                </div>
-
             </div>
 
+            {{-- sponsorizzazioni --}}
             {{-- <div class="mb-3">
                 <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
                 <div class="d-flex gap-4">

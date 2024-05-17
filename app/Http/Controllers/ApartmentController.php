@@ -63,6 +63,7 @@ class ApartmentController extends Controller
         $newApartment->fill($request->all());
 
         $newApartment->user_id = Auth::id();
+        $newApartment->visible = $request->has('visible') ? 1 : 0;
 
         $newApartment->save();
 
@@ -70,7 +71,7 @@ class ApartmentController extends Controller
         $newApartment->categories()->attach($request->categories);
         $newApartment->sponsorships()->attach($request->sponsorships);
 
-        return redirect()->route('admin.apartments.index');
+        return redirect()->route('admin.apartments.index')->with('success', 'Annuncio aggiunto con successo');
     }
 
     /**
@@ -79,7 +80,7 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         if (Auth::user()->id != $apartment->user_id)
-        return redirect()->route('admin.apartments.index', compact('apartment'));
+        return redirect()->route('admin.apartments.index', compact('apartment'))->with('warning', 'Ci dispiace, questo appartamento non esiste');
 
         $user = User::where('user_id', $apartment->user_id);
 
@@ -92,7 +93,7 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         if (Auth::user()->id != $apartment->user_id)
-        return redirect()->route('admin.apartments.index', compact('apartment'));
+        return redirect()->route('admin.apartments.index', compact('apartment'))->with('warning', 'Ci dispiace, questo appartamento non esiste');
 
         $user = User::where('user_id', $apartment->user_id);
         $services = Service::all();
@@ -119,13 +120,16 @@ class ApartmentController extends Controller
         }
         // save slug
         $apartment->slug = Str::slug($request->name . Str::random(10));
+
+        $apartment->visible = $request->has('visible') ? 1 : 0;
+
         $apartment->services()->sync($request->services);
         $apartment->categories()->sync($request->categories);
         $apartment->sponsorships()->sync($request->sponsorships);
 
 
         $apartment->save();
-        return redirect()->route('admin.apartments.show', compact('apartment'));
+        return redirect()->route('admin.apartments.show', compact('apartment'))->with('success', 'Annuncio aggiornato con successo');
 
     }
 
@@ -136,6 +140,6 @@ class ApartmentController extends Controller
     {
         $apartment->delete();
 
-        return redirect()->route('admin.apartments.index');
+        return redirect()->route('admin.apartments.index')->with('success', 'Annuncio eliminato con successo');
     }
 }

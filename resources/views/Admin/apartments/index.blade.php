@@ -12,7 +12,18 @@
     </nav>
 
     <h1 class="mb-4 fs-2">I tuoi annunci</h1>
+
+    @if(session('success'))
+      <div class="alert alert-success">
+      {{ session('success') }}
+      </div>
+    @endif
    
+    @if (session()->has('warning'))
+        <div class="alert alert-warning">
+            {{ session('warning') }}
+        </div>
+    @endif
 
     @if (count($apartments) > 0)
 
@@ -25,7 +36,7 @@
             <div class="apartment-card d-flex justify-content-between align-items-center p-3 rounded-4">
                 <div class="left d-flex gap-3 align-items-center w-50">
                     <div class="img-container">
-                        <img src="{{ $apartment->cover_image ? asset('storage/' . $apartment->cover_image) : asset('placeholder/Placeholder.svg') }}" class="cover-img rounded-3" style="max-width: 64px; height: 64px;" alt="{{ $apartment->name }}">
+                        <img src="{{ $apartment->cover_image ? asset('storage/' . $apartment->cover_image) : asset('placeholder/Placeholder.png') }}" class="cover-img rounded-3" style="max-width: 64px; height: 64px;" alt="{{ $apartment->name }}">
                     </div>
                     <div class="apartment-info">
                         <h6 class="mb-0">{{ $apartment->name }}</h6>
