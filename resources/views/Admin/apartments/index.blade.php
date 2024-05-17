@@ -13,6 +13,11 @@
 
     <h1 class="mb-4 fs-2">I tuoi annunci</h1>
    
+    @if (session()->has('warning'))
+        <div class="alert alert-warning">
+            {{ session('warning') }}
+        </div>
+    @endif
 
     @if (count($apartments) > 0)
 
