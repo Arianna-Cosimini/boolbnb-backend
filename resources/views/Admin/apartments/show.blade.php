@@ -24,7 +24,7 @@
 
 
         <div class="button-container d-flex gap-2 align-items-center">
-          <a href="{{ route('admin.apartments.edit', $apartment->slug) }}" class="btn bg-black text-white border border-1 border-black">
+          <a href="{{ route('admin.apartments.edit', $apartment) }}" class="btn bg-black text-white border border-1 border-black">
             <i class="fa-solid fa-pen-to-square text-white"></i> Modifica
           </a>
           <a href="{{route('admin.apartments.show', $apartment)}}" class="btn bg-white text-black border border-1 border-black" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-trash-can text-color me-1"></i>Elimina</a>
