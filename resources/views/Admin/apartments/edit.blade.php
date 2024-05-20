@@ -140,9 +140,9 @@
             {{-- categorie --}}
             <div class="mt-5">
                 <label class="mb-4 fw-medium fs-3">Quale di queste opzioni descrive meglio il tuo alloggio?</label>
-                <div class="row">
+                <div class="row px-2 d-flex gap-3">
                     @foreach ($categories as $category)
-                        <div class="form-check col-3">
+                        <div class="form-check col-3 px-0">
                             <button
                                 class="btn border border-2 border-secondary-subtle rounded-4 px-3 py-4 my-button-categories
                             @if ($errors->any()) {{ in_array($category->id, old('categories', [])) ? 'selected-category' : '' }}
@@ -151,7 +151,7 @@
                                 type="button" onclick="selectCategory('{{ $category->id }}')">
                                 <label class="d-flex flex-column align-items-center gap-2 my-radio-label form-check-label"
                                     for="category-{{ $category->id }}">
-                                    <i class="{{ $category->icon }} fs-3"></i>
+                                    <img src="{{ $category->icon }}" class="my-icon" alt="">
                                     <div class="fs-5">{{ $category->title }}</div>
                                     <input type="radio" name="categories[]" value="{{ $category->id }}"
                                         class="my-radio form-check-input my-input-form fs-5"
@@ -355,15 +355,15 @@
             // Rimuovi la classe 'selected-category' da tutti i pulsanti
             document.querySelectorAll('.my-button-categories').forEach(button => {
                 button.classList.remove('selected-category');
-                button.querySelector('i').classList.remove('animate-scale');
+                button.querySelector('.my-icon').classList.remove('animate-scale');
             });
 
             // Aggiungi la classe 'selected-category' al pulsante cliccato
             const selectedButton = document.getElementById('category-' + categoryId).closest('.my-button-categories');
             selectedButton.classList.add('selected-category');
 
-            // Aggiungi la classe 'animate-scale' solo all'icona <i>
-            const icon = selectedButton.querySelector('i');
+            // Aggiungi la classe 'animate-scale' solo all'icona
+            const icon = selectedButton.querySelector('.my-icon');
             icon.classList.add('animate-scale');
 
             // Rimuovi la classe 'animate-scale' dopo 1 secondo
@@ -381,7 +381,7 @@
                 if (radio.checked) {
                     const button = radio.closest('.my-button-categories');
                     button.classList.add('selected-category');
-                    button.querySelector('i').classList.add('animate-scale');
+                    button.querySelector('.my-icon').classList.add('animate-scale');
                 }
             });
         }
