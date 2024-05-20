@@ -15,7 +15,7 @@ class ApartmentController extends Controller
         // dd($apartments);
 
         // $apartments=Apartment::paginate(5);
-        $apartments = Apartment::with(['user', 'message', 'view', 'services', 'categories', 'sponsorships'])->paginate(5);
+        $apartments = Apartment::with(['user', 'message', 'view', 'services', 'categories', 'sponsorships'])->paginate(12);
 
         return response()->json([
             "success" => true,
