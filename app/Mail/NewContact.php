@@ -18,12 +18,12 @@ class NewContact extends Mailable
      */
     // to manage email data we set a instance variable
     // being public it will be available from all laravel files
-    public $message;
+    public $lead;
 
-    public function __construct($message)
+    public function __construct($lead)
     {
         // parameter of the new contact = instance variable
-        $this->message = $message;
+        $this->lead = $lead;
     }
 
     /**
@@ -32,7 +32,7 @@ class NewContact extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            replyTo: $this->message->address,
+            replyTo: $this->lead->address,
             subject: 'New Contact Request',
         );
     }
@@ -43,7 +43,7 @@ class NewContact extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'admin.message.index',
+            view: 'admin.messages.index',
         );
     }
 

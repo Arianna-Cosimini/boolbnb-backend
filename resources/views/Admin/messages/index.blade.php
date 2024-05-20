@@ -1,21 +1,25 @@
-@extends('layouts.app')
-
-@section('content')
 
 
-<h1>Tutti i messaggi ricevuti</h1>
+
+<h1>Richiesta di contatto</h1>
 
 <p>
+   
+        
+    
     <ul>
         <li>
-            Da: {{$message->name}} {{$message->surname}}
+            Da: {{$lead->name}} {{$lead->surname}}
         </li>
         <li>
-            Email: {{$message->address}}
+            Email: {{$lead->address}}
         </li>
         <li>
-            Messaggio: {{$message->message}}
+            Messaggio: {{$lead->message}}
+        </li>
+        <li>
+            Il: {{$lead->send_date}}
         </li>
     </ul>
+  
 </p>
-@endsection
