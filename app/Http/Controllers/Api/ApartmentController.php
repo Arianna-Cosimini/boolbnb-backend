@@ -8,14 +8,29 @@ use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
 {
-    public function index()
-    {
-        // ci restituisc tutti gli appartamenti dal db
-        // $apartments=Apartment::all();
-        // dd($apartments);
 
-        // $apartments=Apartment::paginate(5);
-        $apartments = Apartment::with(['user', 'message', 'view', 'services', 'categories', 'sponsorships'])->paginate(5);
+    public function index(Request $request)
+    {
+        // Coordinate di riferimento e raggio in metri
+        $latitude = 44.4949;
+        $longitude = 11.3426;
+        $distanceLimit = 20000; // 20 km
+
+        // Query per calcolare la distanza e filtrare gli appartamenti
+        $address = $request->input('address'); // Get address from request
+
+        $apartments = Apartment::where('address', 'like', "%{$address}%") // Street-level filtering
+            ->selectRaw("
+                apartments.*,
+                ST_Distance_Sphere(
+                    Point(?, ?),
+                    Point(apartments.longitude, apartments.latitude)
+                ) AS distance
+            ", [$longitude, $latitude])
+            ->with(['user', 'message', 'view', 'services', 'categories', 'sponsorships'])
+            ->havingRaw("distance < ?", [$distanceLimit])
+            ->orderBy('distance')
+            ->paginate(12);
 
         return response()->json([
             "success" => true,
