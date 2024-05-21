@@ -39,7 +39,7 @@
             transition: background-color 0.3s;
         }
         .container a:hover {
-            background-color: #cb2a48;
+            background-color: #DE1361;
         }
 
         a.logo {

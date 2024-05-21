@@ -8,6 +8,10 @@ $fa-font-path: "~fontawesome/webfonts";
 
 .button-red {
     background-color: $primaryColor;
+
+    &:hover {
+        background-color: #de1361 !important;
+    }
 }
 
 .text-color {
