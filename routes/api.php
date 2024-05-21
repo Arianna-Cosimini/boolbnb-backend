@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\ApartmentController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\MessageController;
 use App\Models\Apartment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,3 +26,9 @@ Route::get('/apartments', [ApartmentController::class, 'index']);
 
 //rotta per la show singola
 Route::get('/apartments/{slug}', [ApartmentController::class, 'show']);
+
+//rotta per le categorie
+Route::get('/categories', [CategoryController::class, 'index']);
+
+//rotta per la store dei messages
+Route::post('/new-message', [MessageController::class, 'store']);
