@@ -18,7 +18,7 @@ class ApartmentSeeder extends Seeder
     public function run(): void
     {
         //
-        $numberOfApartments = 10;
+        $numberOfApartments = 12;
         $location = "Bologna";
 
         $response = Http::withOptions(['verify' => false])->get('https://api.tomtom.com/search/2/geocode/' . urlencode($location) . '.json', [
@@ -36,7 +36,7 @@ class ApartmentSeeder extends Seeder
             $apartment = new Apartment();
             $apartment->user_id = rand(1, 4);
             $apartment->name = "Appartamento " . ($i + 1);
-            $apartment->slug = Str::slug($apartment->name . Str::random(10));       
+            $apartment->slug = Str::slug($apartment->name . Str::random(10));
             // $apartment->image = "https://a0.muscache.com/im/pictures/miso/Hosting-881808599061267756/original/b16970cf-1d55-4edd-bb1f-e1735d0a228e.jpeg?im_w=2560&im_q=highq";
             $apartment->room_number = rand(1, 5);
             $apartment->bed_number = rand(1, 10);
