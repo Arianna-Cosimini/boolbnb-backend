@@ -29,14 +29,11 @@ class ApartmentController extends Controller
             ", [$longitude, $latitude])
             ->with(['user', 'message', 'view', 'services', 'categories', 'sponsorships'])
             ->havingRaw("distance < ?", [$distanceLimit])
-            ->orderBy('distance')
-            ->paginate(12);
+            ->orderBy('distance');
         // ci restituisc tutti gli appartamenti dal db
         // $apartments=Apartment::all();
         // dd($apartments);
 
-        // $apartments=Apartment::paginate(5);
-        $apartments = Apartment::with(['user', 'message', 'view', 'services', 'categories', 'sponsorships']);
 
         if ($request->has('services')) {
             $services= $request->input('services');
