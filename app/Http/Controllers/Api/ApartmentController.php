@@ -41,7 +41,9 @@ class ApartmentController extends Controller
 
             $apartments->whereHas('services', function ($apartments) use ($servicesArr) {
                 $apartments->whereIn('service_id', $servicesArr);
-            });
+            })->orWhereHas('services', function ($apartments) use ($servicesArr) {
+                $apartments->whereIn('service_id', $servicesArr);
+            }, '=', count($servicesArr));
         }
 
         $allApartments= $apartments->paginate(12);
