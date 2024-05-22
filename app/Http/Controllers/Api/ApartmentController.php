@@ -25,7 +25,7 @@ class ApartmentController extends Controller
             ->selectRaw("(6371 * acos(cos(radians($lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($lon)) + sin(radians($lat)) * sin(radians(latitude)))) AS distance")
             ->having('distance', '<=', $range)
             ->orderBy('distance', 'asc');
-
+            // dd($apartments->get()->pluck('distance')->toArray());
         // Filtra per servizi se richiesto
         if ($request->has('services')) {
             $services = $request->input('services');
