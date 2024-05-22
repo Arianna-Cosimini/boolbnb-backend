@@ -24,7 +24,8 @@ class ApartmentController extends Controller
         $apartments = Apartment::select('apartments.*')
             ->selectRaw("(6371 * acos(cos(radians($lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($lon)) + sin(radians($lat)) * sin(radians(latitude)))) AS distance")
             ->having('distance', '<=', $range)
-            ->orderBy('distance', 'asc');
+            ->orderBy('distance', 'asc')
+            ->with(['user', 'message', 'view', 'services', 'categories', 'sponsorships']);
 
         // Filtra per servizi se richiesto
         if ($request->has('services')) {
@@ -33,9 +34,7 @@ class ApartmentController extends Controller
 
             $apartments->whereHas('services', function ($apartments) use ($servicesArr) {
                 $apartments->whereIn('service_id', $servicesArr);
-            })->orWhereHas('services', function ($apartments) use ($servicesArr) {
-                $apartments->whereIn('service_id', $servicesArr);
-            }, '=', count($servicesArr));
+            });
 
         }
 
