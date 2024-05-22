@@ -19,8 +19,8 @@ class FilterController extends Controller
 
         $query = Apartment::with(['user', 'message', 'view', 'services', 'categories', 'sponsorships']);
 
-        if(isset($filters['rooms'])){
-            $query->where('rooms' , '>=' ,$filters['rooms']) ;
+        if(isset($filters['room_number'])){
+            $query->where('room_number' , '>=' ,$filters['room_number']) ;
         }
 
         if(isset($filters['bed_number'])) {
