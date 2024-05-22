@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ApartmentController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\FilterController;
 use App\Http\Controllers\Api\MessageController;
 use App\Models\Apartment;
 use Illuminate\Http\Request;
@@ -32,3 +33,6 @@ Route::get('/categories', [CategoryController::class, 'index']);
 
 //rotta per la store dei messages
 Route::post('/new-message', [MessageController::class, 'store']);
+
+// rotta per i filtri
+Route::get('/filter', [FilterController::class, 'index']);
