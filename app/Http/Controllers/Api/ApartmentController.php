@@ -31,19 +31,20 @@ class ApartmentController extends Controller
             ->havingRaw("distance < ?", [$distanceLimit])
             ->orderBy('distance');
         // ci restituisc tutti gli appartamenti dal db
-        // $apartments=Apartment::all();
+        // $apartments = Apartment::with('services');
         // dd($apartments);
 
 
         if ($request->has('services')) {
             $services= $request->input('services');
-            $servicesArr= explode(', ', $services);
+            $servicesArr= explode(',', $services);
 
             $apartments->whereHas('services', function ($apartments) use ($servicesArr) {
                 $apartments->whereIn('service_id', $servicesArr);
             })->orWhereHas('services', function ($apartments) use ($servicesArr) {
                 $apartments->whereIn('service_id', $servicesArr);
             }, '=', count($servicesArr));
+
         }
 
         $allApartments= $apartments->paginate(12);
