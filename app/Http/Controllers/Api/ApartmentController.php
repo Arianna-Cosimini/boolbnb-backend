@@ -28,11 +28,15 @@ class ApartmentController extends Controller
 
         // Filtra per servizi se richiesto
         if ($request->has('services')) {
-            $services = $request->input('services');
-            $servicesArr = explode(', ', $services);
-            $apartments->whereHas('services', function ($query) use ($servicesArr) {
-                $query->whereIn('service_id', $servicesArr);
-            });
+            $services= $request->input('services');
+            $servicesArr= explode(',', $services);
+
+            $apartments->whereHas('services', function ($apartments) use ($servicesArr) {
+                $apartments->whereIn('service_id', $servicesArr);
+            })->orWhereHas('services', function ($apartments) use ($servicesArr) {
+                $apartments->whereIn('service_id', $servicesArr);
+            }, '=', count($servicesArr));
+
         }
 
         // Esegui la paginazione e ottieni i risultati
