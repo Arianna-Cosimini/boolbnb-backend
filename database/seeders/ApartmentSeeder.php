@@ -363,7 +363,7 @@ class ApartmentSeeder extends Seeder
             Apartment::create([
                 'user_id' => $apartment['user_id'],
                 'name' => $apartment['name'],
-                'slug' => Str::slug($apartment['name']),
+                'slug' => Str::slug($apartment['name'] . Str::random(10)),
                 'description' => $apartment['description'],
                 'cover_image' => $apartment['cover_image'],
                 'room_number' => $apartment['room_number'],
