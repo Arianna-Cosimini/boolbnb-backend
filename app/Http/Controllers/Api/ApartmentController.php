@@ -24,15 +24,18 @@ class ApartmentController extends Controller
         $apartments = Apartment::select('apartments.*')
             ->selectRaw("(6371 * acos(cos(radians($lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($lon)) + sin(radians($lat)) * sin(radians(latitude)))) AS distance")
             ->having('distance', '<=', $range)
-            ->orderBy('distance', 'asc');
+            ->orderBy('distance', 'asc')
+            ->with(['user', 'message', 'view', 'services', 'categories', 'sponsorships']);
             // dd($apartments->get()->pluck('distance')->toArray());
         // Filtra per servizi se richiesto
         if ($request->has('services')) {
-            $services = $request->input('services');
-            $servicesArr = explode(', ', $services);
-            $apartments->whereHas('services', function ($query) use ($servicesArr) {
-                $query->whereIn('service_id', $servicesArr);
+            $services= $request->input('services');
+            $servicesArr= explode(',', $services);
+
+            $apartments->whereHas('services', function ($apartments) use ($servicesArr) {
+                $apartments->whereIn('service_id', $servicesArr);
             });
+
         }
 
         // Esegui la paginazione e ottieni i risultati

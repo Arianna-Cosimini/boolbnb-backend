@@ -56,11 +56,19 @@ ul.list li:hover {
 .label::after,
 label.form-check-label:focus,
 .form-check-input::after,
-.form-check-input:not(:disabled):not(.disabled):active:focus {
-    color: black;
+.form-check-input:not(:disabled):not(.disabled):active {
+    color: black !important;
     outline: 0;
-    border: 0;
+    border: 1;
     box-shadow: 0 0 0 0.1rem #ffa6b600 !important;
+}
+
+.form-check-input:focus {
+    color: #ff385c !important;
+}
+
+.form-check-input:focus-visible {
+    color: #ff385c !important;
 }
 
 .cover-img {
