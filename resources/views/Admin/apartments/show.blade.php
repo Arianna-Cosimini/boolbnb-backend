@@ -89,10 +89,10 @@
       
       <div class="mb-4">
         <label class="mb-3 fw-medium fs-4">Cosa troverai</label>
-        <div class="row row-cols-1 d-flex gap-3">
+        <div class="row d-flex gap-3">
             @foreach($apartment->services as $key => $service)
-                <div class="col-2 d-flex flex-wrap gap-2 align-items-center">
-                    <i class="{{ $service->icon }} fs-5"></i>
+                <div class="col-3 d-flex flex-wrap gap-2 align-items-center">
+                    <img src="{{ $service->icon }}" alt="">
                     <span>{{ $service->title }}</span>
                 </div>
     

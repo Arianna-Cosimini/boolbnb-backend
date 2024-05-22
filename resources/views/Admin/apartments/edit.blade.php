@@ -36,7 +36,7 @@
             <div class="mb-3">
                 <label for="cover_image" class="form-label">Immagine di copertina</label>
                 <div class="rounded-2 overflow-hidden mb-2">
-                    <img class="w-100" src="{{ asset('storage/' . $apartment->cover_image) }}" alt="Copertina immagine">
+                    <img class="w-100" src="{{ asset('storage/' . $apartment->cover_image) }}" alt="Copertina immagine" style="height: 600px">
                 </div>
                 <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image"
                     name="cover_image" value="{{ old('cover_image') ?? $apartment->cover_image }}">
@@ -120,9 +120,10 @@
             <div class="mb-4">
                 <label class="fw-medium fs-3">Servizi</label>
                 <p class="mb-3">Almeno un servizio</p>
-                <div class="d-flex flex-column gap-2">
+                <div class="row px-2 d-flex gap-3">
                     @foreach ($services as $service)
-                        <div class="form-check">
+                    <div class="form-check col-3">
+                        <div class="user-select-none">
                             <label for="service-{{ $service->id }}" class="form-check-label">
                                 <div class="text-nowrap">{{ $service->title }}</div>
                             </label>
@@ -130,6 +131,7 @@
                                 class="form-check-input" id="service-{{ $service->id }}"
                                 {{ in_array($service->id, old('services', $apartment->services->pluck('id')->toArray())) ? 'checked' : '' }}>
                         </div>
+                    </div>
                     @endforeach
                 </div>
                 @error('services')
