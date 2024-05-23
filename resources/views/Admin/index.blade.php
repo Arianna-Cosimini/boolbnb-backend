@@ -8,6 +8,7 @@
       
     <h1 class="mb-4 fs-2">Dashboard</h1>
     <a href="{{route('admin.apartments.index')}}" class="btn btn-danger button-red text-white">I tuoi annunci</a>
+    <a href="{{route('admin.messages.index')}}" class="btn btn-danger button-red text-white">I tuoi annunci</a>
 
 </div>
 @endsection

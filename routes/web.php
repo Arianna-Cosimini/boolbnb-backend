@@ -53,7 +53,7 @@ Route::middleware(['auth', 'verified'])
             Route::resource('views', ViewController::class);
 
             //rotta per i messagges
-            Route::resource('messages', MessageController::class);
+            Route::resource('messages', MessageController::class)->only(['index']);
 
 
 
