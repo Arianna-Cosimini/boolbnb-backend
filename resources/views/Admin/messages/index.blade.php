@@ -18,7 +18,7 @@
             Messaggio: {{$lead->message}}
         </li>
         <li>
-            Il: {{$lead->send_date}}
+            Il: {{$lead->created_at}}
         </li>
     </ul>
   
