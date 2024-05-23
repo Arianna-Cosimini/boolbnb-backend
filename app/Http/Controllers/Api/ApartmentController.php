@@ -27,16 +27,7 @@ class ApartmentController extends Controller
             ->orderBy('distance', 'asc')
             ->with(['user', 'message', 'view', 'services', 'categories', 'sponsorships']);
             // dd($apartments->get()->pluck('distance')->toArray());
-        // Filtra per servizi se richiesto
-        if ($request->has('services')) {
-            $services= $request->input('services');
-            $servicesArr= explode(',', $services);
 
-            $apartments->whereHas('services', function ($apartments) use ($servicesArr) {
-                $apartments->whereIn('service_id', $servicesArr);
-            });
-
-        }
 
         // Esegui la paginazione e ottieni i risultati
         $allApartments = $apartments->paginate(12);

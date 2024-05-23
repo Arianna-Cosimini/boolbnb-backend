@@ -27,7 +27,19 @@ class FilterController extends Controller
             $query->where('bed_number' , '>=' ,$filters['bed_number']) ;
         }
 
-        $apartments = $query->get();
+        // Filtra per servizi se richiesto
+        if ($request->has('services')) {
+            $services = $request->input('services');
+            $servicesArr = explode(',', $services); 
+    
+            foreach ($servicesArr as $serviceId) {
+                $query->whereHas('services', function ($query) use ($serviceId) {
+                    $query->where('service_id', $serviceId); 
+                });
+            }
+        }
+
+        $apartments = $query->get(); 
 
         return response()->json([
             "success" => true,
