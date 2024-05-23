@@ -27,7 +27,8 @@ class MessageController extends Controller
         'surname' => 'required',
         'address' => 'required|email',
         'message' => 'required',
-        'send_date' => 'nullable'
+        'apartment_id' => '',
+
     ],
     [
         'name.required' => "Devi inserire il tuo nome",
@@ -43,7 +44,7 @@ class MessageController extends Controller
         return response()->json([
             'success' => false,
             'message' => 'Error of Validation',
-            'errors' => $validator->errors(),
+            'errors' => $validator->errors()->toArray(),
 
         ]);
     }
