@@ -164,8 +164,8 @@
             </div>
 
             {{-- sponsorizzazioni --}}
-            {{-- <div class="mb-3">
-                <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
+            <div class="mt-5">
+                <label class="mb-4 fw-medium fs-3" for="">Vuoi Sponsorizzare il tuo BnB?</label>
                 <div class="d-flex gap-4">
                     @foreach ($sponsorships as $sponsorship)
                     <div class="form-check ">
@@ -176,7 +176,7 @@
                     </div>
                     @endforeach
                 </div>
-            </div> --}}
+            </div>
 
             <button type="submit" class="btn btn-danger button-red mt-5">Aggiungi</button>
 
