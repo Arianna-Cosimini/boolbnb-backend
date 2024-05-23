@@ -23,6 +23,7 @@ class FilterController extends Controller
         // Ottenere la posizione dell'utente o l'indirizzo desiderato
         $lat = $request->input('lat', $lat);
         $lon = $request->input('lon', $lon);
+        $range = $request->input('range', $range);
 
         //default command to set 20 km
         /* $radius = $filters['radius'] ?? 20000; */
