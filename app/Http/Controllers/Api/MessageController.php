@@ -6,19 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\NewContact;
-
+use App\Models\Apartment;
 //Models
 use App\Models\Message;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class MessageController extends Controller
 {
-    // memorized the new-message in the db using store
-
-
-    //invio della mail
-
-    // risposta al client
+  
     public function store(Request $request) {
 
         //validation
