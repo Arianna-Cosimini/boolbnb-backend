@@ -16,7 +16,7 @@
             Messaggio: {{$lead->message}}
         </li>
         <li>
-            Il: {{$lead->created_at}}
+            Il: {{date_format($lead->created_at, 'd/m/Y H:i') }}
         </li>
     </ul>
   
