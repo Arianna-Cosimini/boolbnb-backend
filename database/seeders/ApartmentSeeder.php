@@ -20,7 +20,7 @@ class ApartmentSeeder extends Seeder
 
         $apartments = [
             [
-                "user_id" => "",
+                "user_id" => "1",
                 "name" => "Appartamento Bologna - Loreto",
                 // "slug" => Str::slug("Appartamento-Bologna-" . Str::random(10)),
                 "description" => "Un appartamento completamente nuovo a Tua disposizione nel centro di Bologna per un soggiorno di lavoro o per una vacanza. ",

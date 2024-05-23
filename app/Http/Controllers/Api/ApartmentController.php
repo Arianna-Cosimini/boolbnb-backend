@@ -11,32 +11,19 @@ class ApartmentController extends Controller
 {
     public function index(Request $request)
     {
-        // Coordinate di default
-        $lat = 44.4949;
-        $lon = 11.3426;
-        $range = 20; // 20 km
-
-        // Ottenere la posizione dell'utente o l'indirizzo desiderato
-        $lat = $request->input('lat', $lat);
-        $lon = $request->input('lon', $lon);
 
         // Query per filtrare gli appartamenti in base alla distanza e al raggio
-        $apartments = Apartment::select('apartments.*')
-            ->selectRaw("(6371 * acos(cos(radians($lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($lon)) + sin(radians($lat)) * sin(radians(latitude)))) AS distance")
-            ->having('distance', '<=', $range)
-            ->orderBy('distance', 'asc')
-            ->with(['user', 'message', 'view', 'services', 'categories', 'sponsorships']);
+        $apartments = Apartment::with(['user', 'message', 'view', 'services', 'categories', 'sponsorships'])->get();
             // dd($apartments->get()->pluck('distance')->toArray());
 
 
-        // Esegui la paginazione e ottieni i risultati
-        $allApartments = $apartments->paginate(12);
-        $allServices = Service::all();
+        // // Esegui la paginazione e ottieni i risultati
+        // $allApartments = $apartments->paginate(12);
+
 
         return response()->json([
             "success" => true,
-            "results" => $allApartments,
-            "services" => $allServices
+            "results" => $apartments
         ]);
     }
 
