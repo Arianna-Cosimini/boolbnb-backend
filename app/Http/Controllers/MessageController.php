@@ -35,9 +35,9 @@ class MessageController extends Controller
         $allMessages = $allMessages->sortByDesc('created_at');
 
         $apartments = Apartment::where('user_id',$user->id)->get(); */
-        $allMessages = Message::all();
+        $messages = Message::all();
         $apartments = Apartment::all();
-        return view('admin.messages.index', (compact('allMessages','apartments')));
+        return view('admin.messages.index', (compact('messages','apartments')));
 /*             'allMessages' => $allMessages,
             'apartments' => $apartments,
             'apartment_id_used' => $apartment_id,
@@ -93,5 +93,8 @@ class MessageController extends Controller
     public function destroy(Message $message)
     {
         //
+        $message->delete();
+        
+        return redirect()->route('admin.messages.index');
     }
 }
