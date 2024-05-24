@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
-use App\Models\Service;
 use Illuminate\Http\Request;
 
 class ApartmentController extends Controller

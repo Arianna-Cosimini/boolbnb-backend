@@ -54,6 +54,8 @@ class FilterController extends Controller
             }
         }
 
+        $query->where('visible', 1);
+
         $apartments = $query->paginate(12); 
         $allServices = Service::all();
 
