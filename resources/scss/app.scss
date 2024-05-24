@@ -14,6 +14,15 @@ $fa-font-path: "~fontawesome/webfonts";
     }
 }
 
+.button-black {
+    background-color: #222;
+    border: 1px solid #222;
+
+    &:hover {
+        background-color: black !important;
+    }
+}
+
 .text-color {
     color: $primaryColor !important;
 }
