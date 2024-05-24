@@ -54,6 +54,15 @@ class FilterController extends Controller
             }
         }
 
+        if ($request->has('categories')) {
+            $categories= $request->input('categories');
+            $categoriesArr= explode(',', $categories); //questa non so se va bene così dal momento che hai 2 elementi
+
+            $query->whereHas('categories', function ($query) use ($categoriesArr) {
+                $query->whereIn('category_id', $categoriesArr); //non so se è serices.title o solo title
+            });
+        }
+
         $query->where('visible', 1);
 
         $apartments = $query->paginate(12); 
