@@ -1,15 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="messages_index" class="container-fluid mt-4">
+<div id="messages_index" class="container py-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{url('admin')}}" class="text-black">Dashboard</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Messaggi</li>
+        </ol>
+      </nav>
+
     <div class="row row-cols-1 mb-5">
         <div class="col py-3">
-            <h1>
-                <span class="icon-section me-2">
-                    <i class="fa-solid fa-message fa-sm"></i>
-                </span>
-                I miei messaggi
-            </h1>
+            <h1 class="fs-3">Messaggi</h1>
         </div>
 
     </div>
