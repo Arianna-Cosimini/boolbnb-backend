@@ -11,7 +11,7 @@ class StoreSponsorshipRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreSponsorshipRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'apartment_id' => 'required|exists:apartments,id',
+            'sponsorships' => 'required|array',
+            'sponsorships.*' => 'exists:sponsorships,id',
         ];
     }
 }

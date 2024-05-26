@@ -13,7 +13,7 @@ class ApartmentSponsorship extends Model
 
     protected $fillable = ['apartment_id','sponsorship_id','start_date','end_date'];
 
-    protected $casts = ['start_date' => 'datetime:Y-m-d',];
+    // protected $casts = ['start_date' => 'datetime:Y-m-d',];
 
 }
 

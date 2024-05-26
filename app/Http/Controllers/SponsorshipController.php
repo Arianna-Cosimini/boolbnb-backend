@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Sponsorship;
 use App\Http\Requests\StoreSponsorshipRequest;
 use App\Http\Requests\UpdateSponsorshipRequest;
+use App\Models\Apartment;
 use App\Models\ApartmentSponsorship;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class SponsorshipController extends Controller
 {
@@ -23,7 +26,12 @@ class SponsorshipController extends Controller
      */
     public function create()
     {
-        //
+        $sponsorships = Sponsorship::all();
+
+        $apartments = Apartment::where('user_id', Auth::id())->get();
+
+
+        return view('admin.sponsorships.create', compact('sponsorships', 'apartments'));
     }
 
     /**
@@ -31,34 +39,33 @@ class SponsorshipController extends Controller
      */
     public function store(StoreSponsorshipRequest $request)
     {
-        $validatedData = $request->validate([
-            'apartment_id' => 'required|integer',
-            'sponsorship_id' => 'required|integer',
-            'end_date' => 'required|date',
-        ]);
+        $apartmentId = $request->input('apartment_id');
+        $sponsorshipId = $request->input('sponsorships')[0];
 
-        $sponsorship = new ApartmentSponsorship($validatedData);
+        $currentDate = Carbon::now();
+        $endDate = null;
 
+        switch ($sponsorshipId) {
+            case 1:
+                $endDate = $currentDate->copy()->addHours(24);
+                break;
+            case 2:
+                $endDate = $currentDate->copy()->addHours(72);
+                break;
+            case 3:
+                $endDate = $currentDate->copy()->addHours(144);
+                break;
+        }
 
+        // Creare un nuovo record di ApartmentSponsorship
+        $newSponsorship = new ApartmentSponsorship();
+        $newSponsorship->apartment_id = $apartmentId;
+        $newSponsorship->sponsorship_id = $sponsorshipId;
+        $newSponsorship->start_date = $currentDate;
+        $newSponsorship->end_date = $endDate;
+        $newSponsorship->save();
 
-        $endDate = Carbon::parse($sponsorship->start_date)->addDays(1);
-        $sponsorship->end_date = $endDate;
-
-        // $currentDate = date("Y-m-d H:i:s");
-
-        // if ($sponsorship->sponsorship_id == 1) {
-        //     $sponsorDate = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($currentDate)));
-        // } else if ($sponsorship->sponsorship_id == 2) {
-        //     $sponsorDate = date("Y-m-d H:i:s", strtotime('+72 hours', strtotime($currentDate)));
-        // } else if ($sponsorship->sponsorship_id == 3) {
-        //     $sponsorDate = date("Y-m-d H:i:s", strtotime('+144 hours', strtotime($currentDate)));
-        // }
-
-        // $sponsorship->end_date = $sponsorDate;
-
-        $sponsorship->save();
-
-        return redirect()->route('admin.apartments.index')->with('success', 'Sponsorship created successfully!');
+        return redirect()->back()->with('success', 'Sponsorship added successfully.');
     }
 
     /**
@@ -72,17 +79,40 @@ class SponsorshipController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Sponsorship $sponsorship)
+    public function edit(ApartmentSponsorship $apartmentSponsorship)
     {
-        //
+        $sponsorships = Sponsorship::all();
+
+        return view('admin.sponsorships.edit', compact('apartmentSponsorship', 'sponsorships'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSponsorshipRequest $request, Sponsorship $sponsorship)
+    public function update(UpdateSponsorshipRequest $request, ApartmentSponsorship $apartmentSponsorship)
     {
-        //
+        $sponsorshipId = $request->input('sponsorships')[0];
+        $currentDate = Carbon::now();
+        $endDate = null;
+
+        switch ($sponsorshipId) {
+            case 1:
+                $endDate = $currentDate->copy()->addHours(24);
+                break;
+            case 2:
+                $endDate = $currentDate->copy()->addHours(72);
+                break;
+            case 3:
+                $endDate = $currentDate->copy()->addHours(144);
+                break;
+        }
+
+        $apartmentSponsorship->sponsorship_id = $sponsorshipId;
+        $apartmentSponsorship->start_date = $currentDate;
+        $apartmentSponsorship->end_date = $endDate;
+        $apartmentSponsorship->save();
+
+        return redirect()->route('admin.sponsorships.edit', $apartmentSponsorship->id)->with('success', 'Sponsorship updated successfully.');
     }
 
     /**
