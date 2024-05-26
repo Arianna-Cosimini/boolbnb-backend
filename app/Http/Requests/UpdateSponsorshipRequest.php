@@ -11,7 +11,7 @@ class UpdateSponsorshipRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateSponsorshipRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'sponsorships' => 'required|array',
+            'sponsorships.*' => 'exists:sponsorships,id',
         ];
     }
 }
