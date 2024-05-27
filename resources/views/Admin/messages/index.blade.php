@@ -13,27 +13,43 @@
         <div class="messages-column col-4 py-3 pe-4">
             <h1 class="fs-3 mb-5">Messaggi</h1>
             <div class="messages-list d-flex flex-column gap-3 overflow-y-auto" style="height: 70vh">
-                @foreach ($messages as $index => $message)
-                    <div class="message p-4 rounded-4 @if($loop->first) selected @endif" data-message-id="{{ $message->id }}">
-                        <div class="name-date d-flex justify-content-between">
-                            <span class="message-text message-name" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $message->name }}</span>
-                            <span class="message-text small message-date">{{ $message->created_at }}</span>
+                @if($messages->isEmpty())
+                    <p>Non ci sono messaggi da visualizzare.</p>
+                @else
+                    @foreach ($messages as $index => $message)
+                        <div class="message p-4 rounded-4 @if($loop->first) selected @endif" data-message-id="{{ $message->id }}">
+                            <div class="name-date d-flex justify-content-between">
+                                <span class="message-text message-name" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $message->name }}</span>
+                                <span class="message-text small message-date">{{ $message->created_at }}</span>
+                            </div>
+                            <span class="message-text small message-address">{{ $message->address }}</span>
+                            <p class="message-text mt-3 mb-0 message-content" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $message->message }}</p>
                         </div>
-                        <span class="message-text small message-address">{{ $message->address }}</span>
-                        <p class="message-text mt-3 mb-0 message-content" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $message->message }}</p>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
             </div>
         </div>
 
+        @if($messages->isEmpty())
+
+        @else
         <div class="message-details col-8 py-3 px-5 d-flex flex-column">
-            <h1 class="message-name fs-4 pb-3 mb-5" id="message-name">{{ $messages->first()->name ?? '' }}</h1>
+            <div class="header d-flex mb-4 justify-content-between">
+                <div class="apartment-message-info">
+                    <h1 class="message-name fs-4 pb-3" id="message-name">{{ $messages->first()->name ?? '' }}</h1>
+                    <p class="apartment-info mb-3">Appartamento di riferimento: {{ $message->apartment->name }}</p>
+                </div>
+                <div class="bnt-container">
+                    <a href="mailto:{{ $message->address }}" class="btn button-black text-white">Rispondi</a>
+                </div>
+            </div>
             <span class="message-date text-center mb-4" id="message-date">{{ $messages->first() ? \Carbon\Carbon::parse($messages->first()->created_at)->translatedFormat('d M Y') : '' }}</span>
             <span class="message-time small mb-2" style="font-size: 12px" id="message-time">{{ $messages->first() ? \Carbon\Carbon::parse($messages->first()->created_at)->format('H:i') : '' }}</span>
             <div id="message-detail-content" class="p-4 rounded-4 text-white">
                 <p class="message-text mb-0" id="message-text" style="font-weight: 200">{{ $messages->first()->message ?? '' }}</p>
             </div>
         </div>
+        @endif
     </div>
 </div>
 
@@ -105,6 +121,7 @@
     });
 </script>
 @endsection
+
 
 
 

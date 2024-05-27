@@ -25,13 +25,12 @@ class MessageController extends Controller
         $messages = Message::whereHas('apartment', function ($query) use ($user) {
             $query->where('user_id', '=', $user->id)
                 ->orderBy('created_at', 'desc');
-        });
+        })->with('apartment')->get();
 
         if ($apartment_id) {
             $messages = $messages->where('apartment_id', $apartment_id);
         }
 
-        $messages = $messages->get();
         $messages = $messages->sortByDesc('created_at');
         $apartments = Apartment::where('user_id', $user->id)->get();
 

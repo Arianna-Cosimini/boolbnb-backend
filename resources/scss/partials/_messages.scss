@@ -24,8 +24,12 @@
 }
 
 .message-details {
-    .message-name {
+    .header {
         border-bottom: 1px solid #eeeeee;
+    }
+
+    .apartment-info {
+        font-size: 14px;
     }
 
     .message-date {
