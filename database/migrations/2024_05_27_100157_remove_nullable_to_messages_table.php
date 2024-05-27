@@ -11,8 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('messages', function (Blueprint $table) {
-            //
-            $table->foreignId('apartment_id')->nullable()->constrained();
+            $table->foreignId('apartment_id')->nullable(false)->change();
         });
     }
 
@@ -22,11 +21,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('messages', function (Blueprint $table) {
-            // delete the add of foreign key
-            $table->dropForeign('messages_apartment_id_foreign');
-
-            // delete the column
-            $table->dropColumn('apartment_id');
+            $table->foreignId('apartment_id')->nullable()->change();
         });
     }
 };

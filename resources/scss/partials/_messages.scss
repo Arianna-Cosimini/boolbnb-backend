@@ -1,0 +1,39 @@
+.messages-column {
+    border-right: 1px solid #eeeeee;
+
+    .messages-list {
+        .message {
+            background-color: transparent;
+            cursor: pointer;
+
+            .message-text {
+                color: #6a6a6a;
+                font-weight: 300;
+                font-size: 14px;
+
+                &.small {
+                    font-size: 12px;
+                }
+            }
+
+            &.selected {
+                background-color: #f7f7f7;
+            }
+        }
+    }
+}
+
+.message-details {
+    .message-name {
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    .message-date {
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    #message-detail-content {
+        background-color: #222;
+    }
+}

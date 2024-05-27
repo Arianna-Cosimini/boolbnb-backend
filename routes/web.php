@@ -44,7 +44,7 @@ Route::middleware(['auth', 'verified'])
             // Route::get('/users',[DashboardController::class,'users'])->name('users');
         
             Route::get('/', [DashboardController::class, 'index'])->name('index');
-            Route::resource('apartments', ApartmentController::class)->parameters(['apartments' =>'apartment:slug']);
+            Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
 
             Route::get('users', [DashboardController::class, 'users'])->name('users');
 
@@ -53,6 +53,11 @@ Route::middleware(['auth', 'verified'])
 
             //rotta per i messagges
             Route::resource('messages', MessageController::class);
+
+            //rotta per il singolo messaggio
+            Route::get('messages/{id}', [MessageController::class, 'show'])->name('messages.show');
+
+
 
             //rotta per la sponsorizzazione
             Route::resource('sponsorships', SponsorshipController::class);

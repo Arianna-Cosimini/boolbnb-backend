@@ -14,39 +14,33 @@ class MessageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    
-    public function index(Request $request) {
 
+    public function index(Request $request)
+    {
         $user = Auth::user();
 
         $apartment_id = $request->input('apartment_id');
 
-        // query to order messages
-       /*  $allMessages = Message::whereHas('apartment', function($query) use($user) {
-            $query->where('user_id' ,'=', $user->id)
-            ->orderBy('created_at', 'desc');
+        //  prova query per ordinare date messaggi
+        $messages = Message::whereHas('apartment', function ($query) use ($user) {
+            $query->where('user_id', '=', $user->id)
+                ->orderBy('created_at', 'desc');
         });
 
-        if ($apartment_id){
-            $allMessages = $allMessages->where('apartment_id',$apartment_id);
+        if ($apartment_id) {
+            $messages = $messages->where('apartment_id', $apartment_id);
         }
 
-        $allMessages = $allMessages->get();
-        $allMessages = $allMessages->sortByDesc('created_at');
+        $messages = $messages->get();
+        $messages = $messages->sortByDesc('created_at');
+        $apartments = Apartment::where('user_id', $user->id)->get();
 
-        $apartments = Apartment::where('user_id',$user->id)->get(); */
-        $messages = Message::all();
-        $apartments = Apartment::all();
-        return view('admin.messages.index', (compact('messages','apartments')));
-/*             'allMessages' => $allMessages,
+        return view('admin.messages.index', [
+            'messages' => $messages,
             'apartments' => $apartments,
-            'apartment_id_used' => $apartment_id,
-
+            'selected_apartment_id' => $apartment_id,
         ]);
- */
-
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -94,7 +88,7 @@ class MessageController extends Controller
     {
         //
         $message->delete();
-        
+
         return redirect()->route('admin.messages.index');
     }
 }
