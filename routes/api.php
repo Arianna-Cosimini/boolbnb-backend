@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ApartmentController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FilterController;
 use App\Http\Controllers\Api\MessageController;
+use App\Http\Controllers\Api\ViewController;
 use App\Http\Controllers\SponsorshipController;
 use App\Models\Apartment;
 use Illuminate\Http\Request;
@@ -40,3 +41,6 @@ Route::get('/filter', [FilterController::class, 'index']);
 
 // rotta per i filtri
 Route::post('/sponsorships', [SponsorshipController::class, 'create']);
+
+//Rotta per le visualizzazioni
+Route::post('/views', [ViewController::class, 'store']);
