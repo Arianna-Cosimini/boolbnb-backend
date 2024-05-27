@@ -2,9 +2,14 @@
 
 @section('content')
 <div class="container py-5">
-    <ol class="breadcrumb mb-5">
-        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-    </ol>
+   
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-black">Dashboard</a></li>
+            
+            <li class="breadcrumb-item active" aria-current="page">Sponsorizzazioni</li>
+        </ol>
+    </nav>
       
     <h1>Sponsorizzazioni degli Appartamenti</h1>
     @foreach($sponsorships as $sponsorship)
