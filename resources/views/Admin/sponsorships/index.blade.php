@@ -7,6 +7,13 @@
     </ol>
       
     <h1>Sponsorizzazioni degli Appartamenti</h1>
+    @foreach($sponsorships as $sponsorship)
+    <div class="feature-item">
+        <h2 class="h4">Gestione Sponsorizzate</h2>
+        <p>Sponsorizza il tuo appartamento in modo da avere più visibilità.</p>
+        <a href="{{ route('admin.sponsorships.show'), $sponsorship->id}}" class="btn button-black text-white">Crea una sponsorizzata</a>
+    </div>
+    @endforeach
     <div class="feature-item">
         <h2 class="h4">Gestione Sponsorizzate</h2>
         <p>Sponsorizza il tuo appartamento in modo da avere più visibilità.</p>
