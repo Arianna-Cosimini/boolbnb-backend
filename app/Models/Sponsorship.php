@@ -12,6 +12,7 @@ class Sponsorship extends Model
     protected $fillable = ['title','price','description'];
 
     public function apartments() {
-        return $this->belongsToMany(Apartment::class);
+        return $this->belongsToMany(Apartment::class, 'apartment_sponsorship')
+                    ->withPivot('start_date', 'end_date', 'apartment_id', 'sponsorship_id');
     }
 }

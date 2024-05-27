@@ -60,17 +60,16 @@ Route::middleware(['auth', 'verified'])
 
             //rotta per i messagges
             Route::resource('messages', MessageController::class);
-
             //rotta per il singolo messaggio
             Route::get('messages/{id}', [MessageController::class, 'show'])->name('messages.show');
 
 
-
             //rotta per la sponsorizzazione
-            Route::resource('sponsorships', SponsorshipController::class);
-
-
-            
+            Route::resource('sponsorships', SponsorshipController::class, ['except' => ['show']]);
+            //rotta per la modifica della sponsorizzazione
+            Route::get('sponsorships/{apartment_id}/{sponsorship_id}/edit', [SponsorshipController::class, 'edit'])->name('admin.sponsorships.edit');
+            //rotta per l'aggiornamento della sponsorizzazione
+            Route::put('sponsorships/{apartment_id}/{sponsorship_id}', [SponsorshipController::class, 'update'])->name('admin.sponsorships.update');
         }
     );
     
