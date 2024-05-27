@@ -2,14 +2,18 @@
 
 @section('content')
 <div class="container py-5">
-    <ol class="breadcrumb mb-5">
-        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-    </ol>
+   
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-black">Dashboard</a></li>
+            
+            <li class="breadcrumb-item active" aria-current="page">Sponsorizzazioni</li>
+        </ol>
+    </nav>
       
-    <h1>Sponsorizzazioni degli Appartamenti</h1>
+    <h1 class="mb-4 fs-2">Sponsorizzazioni</h1>
     <div class="feature-item">
-        <h2 class="h4">Gestione Sponsorizzate</h2>
-        <p>Sponsorizza il tuo appartamento in modo da avere più visibilità.</p>
+        <p>Sponsorizza il tuo appartamento e raggiungi più facilmente il tuo pubblico.</p>
         <a href="{{ route('admin.sponsorships.create') }}" class="btn button-black text-white">Crea una sponsorizzata</a>
     </div>
   </div>
