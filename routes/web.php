@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorshipController;
 use App\Http\Controllers\UserDatasController;
@@ -44,6 +45,12 @@ Route::middleware(['auth', 'verified'])
             // Route::get('/users',[DashboardController::class,'users'])->name('users');
         
             Route::get('/', [DashboardController::class, 'index'])->name('index');
+            // Braintree
+            
+            Route::any('payment/token', [PaymentController::class, 'token'])->name('payment.token');
+            Route::post('payment/process', [PaymentController::class, 'process'])->name('payment.process');
+
+
             Route::resource('apartments', ApartmentController::class)->parameters(['apartments' =>'apartment:slug']);
 
             Route::get('users', [DashboardController::class, 'users'])->name('users');
@@ -57,7 +64,9 @@ Route::middleware(['auth', 'verified'])
             //rotta per la sponsorizzazione
             Route::resource('sponsorships', SponsorshipController::class);
 
+
+            
         }
     );
-
+    
 require __DIR__ . '/auth.php';
