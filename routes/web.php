@@ -49,7 +49,7 @@ Route::middleware(['auth', 'verified'])
             Route::get('users', [DashboardController::class, 'users'])->name('users');
 
             //rotta per le views
-            Route::resource('views', ViewController::class);
+            Route::resource('visited', ViewController::class);
 
             //rotta per i messagges
             Route::resource('messages', MessageController::class);
