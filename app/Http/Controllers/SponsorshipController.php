@@ -18,7 +18,9 @@ class SponsorshipController extends Controller
      */
     public function index()
     {
-        //
+        $apartments = Apartment::where('user_id', Auth::id())->get();
+
+        return view('admin.sponsorships.index', compact('apartments'));
     }
 
     /**
@@ -71,9 +73,9 @@ class SponsorshipController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Sponsorship $sponsorship)
+    public function show(ApartmentSponsorship $apartmentSponsorship)
     {
-        //
+        return view('admin.sponsorships.show', compact('apartmentSponsorship'));
     }
 
     /**

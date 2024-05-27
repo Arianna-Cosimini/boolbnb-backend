@@ -29,7 +29,7 @@
       <div class="feature-item">
           <h2 class="h4">Gestione Sponsorizzate</h2>
           <p>Sponsorizza il tuo appartamento in modo da avere più visibilità.</p>
-          <a href="{{ route('admin.sponsorships.create') }}" class="btn button-black text-white">Le tue sponsorizzate</a>
+          <a href="{{ route('admin.sponsorships.index') }}" class="btn button-black text-white">Le tue sponsorizzate</a>
       </div>
   </div>
 </div>
