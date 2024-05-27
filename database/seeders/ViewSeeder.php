@@ -2,78 +2,35 @@
 
 namespace Database\Seeders;
 
-use App\Models\View;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+
+// Model
+use App\Models\View;
+use App\Models\Apartment;
+
+// Helpers
+use Faker\Generator as Faker;
 
 class ViewSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run(Faker $faker)
     {
-        //
-        $views = [
-            [
-                'ip_address' => '101.56.58.201',
-                'apartment_id'=> '1',
-                'created_at' =>   '2024-06-23',  
-            ],
-            [
-                'ip_address' => '101.56.54.208',
-                'apartment_id'=> '1',
-                'created_at' =>   '2024-05-23',  
-            ],
-            [
-                'ip_address' => '101.56.54.207',
-                'apartment_id'=> '1',
-                'created_at' =>   '2024-04-23',  
-            ],
-            [
-                'ip_address' => '101.56.54.205',
-                'apartment_id'=> '1',
-                'created_at' =>   '2024-05-23',  
-            ],
-            [
-                'ip_address' => '101.56.54.204',
-                'apartment_id'=> '2',
-                'created_at' =>   '2024-04-23',  
-            ],
-            [
-                'ip_address' => '101.56.54.203',
-                'apartment_id'=> '2',
-                'created_at' =>   '2024-06-23',  
-            ],
-            [
-                'ip_address' => '101.56.54.202',
-                'apartment_id'=> '2',
-                'created_at' =>   '2024-05-23',  
-            ],
-            [
-                'ip_address' => '101.56.54.201',
-                'apartment_id'=> '2',
-                'created_at' =>   '2024-04-23',  
-            ],
-            [
-                'ip_address' => '101.56.54.200',
-                'apartment_id'=> '2',
-                'created_at' =>   '2024-05-23',  
-            ],
-            [
-                'ip_address' => '101.56.54.209',
-                'apartment_id'=> '2',
-                'created_at' =>   '2024-06-23',  
-            ],
-            
-        ];
+        for ($i = 0; $i  < 1000; $i++) {
+            $apartment_id = Apartment::inRandomOrder()->first()->id;
+            $view = [
 
-        foreach($views as $view) {
-            View::create([
-            'ip_address' => $view['ip_address'], 
-            'apartment_id' => $view['apartment_id'],
-            'created_at' => $view['created_at'],
-            ]);
+                "apartment_id" => $apartment_id,
+                "ip_address" => $faker->ipv4(),
+                "created_at" => $faker->dateTimeBetween('-12 months', '-1 days')
+
+            ];
+            View::create($view);
         }
     }
 }

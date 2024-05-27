@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreViewRequest;
 use App\Http\Requests\UpdateViewRequest;
 use App\Models\View;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ViewController extends Controller
@@ -12,12 +13,23 @@ class ViewController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(View $view)
     {
         $user = Auth::user();
-        $views = View::all();
+        $views = View::select('id','created_at')->get()
+        ->groupBy(function ($views){
+           return Carbon::parse($views->created_at)->format('M');
+        });
+        $months = [];
+        $monthCount = [];
+        foreach($views as $month => $values){
+            $months[] = $month;
+            $monthCount[] = count($values);
+        }
 
-        return view('admin.dashboard', compact('views'));
+        
+
+        return view('admin.visited.index', compact('views','user','months','monthCount'));
         
     }
 

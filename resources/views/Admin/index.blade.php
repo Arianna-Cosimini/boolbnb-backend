@@ -31,6 +31,12 @@
           <p>Sponsorizza il tuo appartamento in modo da avere più visibilità.</p>
           <a href="{{ route('admin.sponsorships.index') }}" class="btn button-black text-white">Le tue sponsorizzate</a>
       </div>
+      <div class="feature-item">
+        <h2 class="h4">Gestione Visualizzazioni</h2>
+        <p>Guarda come procede la visualizzazione dei tuoi appatamenti</p>
+        <a href="{{ route('admin.visited.index') }}" class="btn button-black text-white">Le tue visualizzazioni</a>
+    </div>
   </div>
+  
 </div>
 @endsection

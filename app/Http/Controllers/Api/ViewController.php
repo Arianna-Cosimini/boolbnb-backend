@@ -17,23 +17,23 @@ class ViewController extends Controller
         /* $apartment_id = '1';
         $ip_address = '101.56.54.208'; */
 
-        $ip_address = $request->ip_address; 
+        $ip_address = $request->input('ip_address'); 
         $apartment_id = $request->input('apartment_id'); 
        
-
+        // controllo per 
         
         
-        $isView = View::where('apartment_id', $apartment_id)
+        $isVisited = View::where('apartment_id', $apartment_id)
             ->where('ip_address', $ip_address)
             ->where('created_at', '>=', Carbon::now()->subDay())
             ->first();
         
-       /*  if ($isView) {
+        if ($isVisited) {
             return response()->json([
                 'success' => false,
                 'message' => 'Questo ip ha già guardato questo appartamento nelle ultime 24 ore'
             ]);
-        } */
+        }
         
         // Create a new view
         $view = new View;
