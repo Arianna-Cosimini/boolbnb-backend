@@ -28,7 +28,6 @@ class SponsorshipController extends Controller
             }])
             ->get();
 
-        // dd($apartments);
 
         return view('admin.sponsorships.index', compact('apartments'));
     }
@@ -40,7 +39,10 @@ class SponsorshipController extends Controller
     {
         $sponsorships = Sponsorship::all();
 
-        $apartments = Apartment::where('user_id', Auth::id())->get();
+        $apartments = Apartment::where('user_id', Auth::id())
+        ->whereDoesntHave('sponsorships', function($query) {
+            $query->where('end_date', '>', Carbon::now());
+        })->get();
 
 
         return view('admin.sponsorships.create', compact('sponsorships', 'apartments'));
@@ -77,7 +79,7 @@ class SponsorshipController extends Controller
         $newSponsorship->end_date = $endDate;
         $newSponsorship->save();
 
-        return redirect()->back()->with('success', 'Sponsorship added successfully.');
+        return redirect()->route('admin.sponsorships.index')->with('success', 'Sponsorizzazione creata con successo.');
     }
 
     /**
@@ -85,15 +87,20 @@ class SponsorshipController extends Controller
      */
     public function show(ApartmentSponsorship $apartmentSponsorship)
     {
-        return view('admin.sponsorships.show', compact('apartmentSponsorship'));
+        // 
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ApartmentSponsorship $apartmentSponsorship)
+    public function edit($apartment_id, $sponsorship_id)
     {
+        $apartmentSponsorship = ApartmentSponsorship::where('apartment_id', $apartment_id)
+                                                     ->where('sponsorship_id', $sponsorship_id)
+                                                     ->firstOrFail();
         $sponsorships = Sponsorship::all();
+
+        dd($apartmentSponsorship);
 
         return view('admin.sponsorships.edit', compact('apartmentSponsorship', 'sponsorships'));
     }
@@ -101,9 +108,13 @@ class SponsorshipController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSponsorshipRequest $request, ApartmentSponsorship $apartmentSponsorship)
+    public function update(UpdateSponsorshipRequest $request, $apartment_id, $sponsorship_id)
     {
-        $sponsorshipId = $request->input('sponsorships')[0];
+        $apartmentSponsorship = ApartmentSponsorship::where('apartment_id', $apartment_id)
+                                                     ->where('sponsorship_id', $sponsorship_id)
+                                                     ->firstOrFail();
+
+        $sponsorshipId = $request->input('sponsorship_id');
         $currentDate = Carbon::now();
         $endDate = null;
 
@@ -119,12 +130,13 @@ class SponsorshipController extends Controller
                 break;
         }
 
-        $apartmentSponsorship->sponsorship_id = $sponsorshipId;
-        $apartmentSponsorship->start_date = $currentDate;
+        $apartmentSponsorship->start_date = $request->input('start_date', $currentDate);
         $apartmentSponsorship->end_date = $endDate;
+        $apartmentSponsorship->sponsorship_id = $sponsorshipId;
+        
         $apartmentSponsorship->save();
 
-        return redirect()->route('admin.sponsorships.edit', $apartmentSponsorship->id)->with('success', 'Sponsorship updated successfully.');
+        return redirect()->route('admin.sponsorships.index')->with('success', 'Sponsorship updated successfully.');
     }
 
     /**
