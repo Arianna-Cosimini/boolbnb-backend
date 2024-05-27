@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('views', function (Blueprint $table) {
-            $table->id();
-
-            $table->date('date');
-            $table->string('ip_address', 20);
-            
-            $table->timestamps();
+        Schema::table('views', function (Blueprint $table) {
+            //
+            $table->dropColumn('date');
         });
     }
 
@@ -26,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('views');
+        Schema::table('views', function (Blueprint $table) {
+            //
+        });
     }
 };

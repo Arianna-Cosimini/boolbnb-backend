@@ -18,7 +18,17 @@ class SponsorshipController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::where('user_id', Auth::id())->get();
+        // Recupera gli appartamenti dell'utente autenticato con sponsorizzazioni attive
+        $apartments = Apartment::where('user_id', Auth::id())
+            ->whereHas('sponsorships', function($query) {
+                $query->where('end_date', '>', Carbon::now());
+            })
+            ->with(['sponsorships' => function($query) {
+                $query->where('end_date', '>', Carbon::now());
+            }])
+            ->get();
+
+        // dd($apartments);
 
         return view('admin.sponsorships.index', compact('apartments'));
     }

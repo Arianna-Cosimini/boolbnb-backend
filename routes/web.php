@@ -61,6 +61,11 @@ Route::middleware(['auth', 'verified'])
             //rotta per i messagges
             Route::resource('messages', MessageController::class);
 
+            //rotta per il singolo messaggio
+            Route::get('messages/{id}', [MessageController::class, 'show'])->name('messages.show');
+
+
+
             //rotta per la sponsorizzazione
             Route::resource('sponsorships', SponsorshipController::class);
 
