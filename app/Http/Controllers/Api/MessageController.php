@@ -22,7 +22,7 @@ class MessageController extends Controller
             'surname' => 'required',
             'address' => 'required|email',
             'message' => 'required',
-            'apartment_id' => '',
+            'apartment_id' => 'nullable|exists:apartments,id',
         ], [
             'name.required' => "Devi inserire il tuo nome",
             'surname.required' => "Devi inserire il tuo cognome",
@@ -43,6 +43,9 @@ class MessageController extends Controller
         // save in db
         $newMessage = new Message();
         $newMessage->fill($request->all());
+        if ($request->has('apartment_id')) {
+            $newMessage->apartment_id = $request->input('apartment_id');
+        }
         $newMessage->save();
 
         // send the message

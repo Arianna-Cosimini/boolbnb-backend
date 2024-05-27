@@ -13,25 +13,25 @@
         <div class="messages-column col-4 py-3 pe-4">
             <h1 class="fs-3 mb-5">Messaggi</h1>
             <div class="messages-list d-flex flex-column gap-3 overflow-y-auto" style="height: 70vh">
-                @foreach ($messages as $message)
-                    <div class="message p-4 rounded-4" data-message-id="{{ $message->id }}">
+                @foreach ($messages as $index => $message)
+                    <div class="message p-4 rounded-4 @if($loop->first) selected @endif" data-message-id="{{ $message->id }}">
                         <div class="name-date d-flex justify-content-between">
-                            <span class="message-text" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $message->name }}</span>
-                            <span class="message-text small">{{ date_format($message->created_at, 'd/m/Y H:i') }}</span>
+                            <span class="message-text message-name" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $message->name }}</span>
+                            <span class="message-text small message-date">{{ $message->created_at }}</span>
                         </div>
-                        <span class="message-text small">{{ $message->address }}</span>
-                        <p class="message-text mt-3 mb-0" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $message->message }}</p>
+                        <span class="message-text small message-address">{{ $message->address }}</span>
+                        <p class="message-text mt-3 mb-0 message-content" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $message->message }}</p>
                     </div>
                 @endforeach
             </div>
         </div>
 
         <div class="message-details col-8 py-3 px-5 d-flex flex-column">
-            <h1 class="message-name fs-4 pb-3 mb-5" id="message-name"></h1>
-            <span class="message-date text-center mb-4" id="message-date"></span>
-            <span class="message-time small mb-2" style="font-size: 12px" id="message-time"></span>
+            <h1 class="message-name fs-4 pb-3 mb-5" id="message-name">{{ $messages->first()->name ?? '' }}</h1>
+            <span class="message-date text-center mb-4" id="message-date">{{ $messages->first() ? \Carbon\Carbon::parse($messages->first()->created_at)->translatedFormat('d M Y') : '' }}</span>
+            <span class="message-time small mb-2" style="font-size: 12px" id="message-time">{{ $messages->first() ? \Carbon\Carbon::parse($messages->first()->created_at)->format('H:i') : '' }}</span>
             <div id="message-detail-content" class="p-4 rounded-4 text-white">
-                <p class="message-text mb-0" id="message-text" style="font-weight: 200"></p>
+                <p class="message-text mb-0" id="message-text" style="font-weight: 200">{{ $messages->first()->message ?? '' }}</p>
             </div>
         </div>
     </div>
@@ -40,28 +40,76 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const messages = document.querySelectorAll('.message');
+        const messageNameElement = document.getElementById('message-name');
+        const messageDateElement = document.getElementById('message-date');
+        const messageTimeElement = document.getElementById('message-time');
+        const messageTextElement = document.getElementById('message-text');
+
+        // Seleziona il primo messaggio all'apertura della pagina
+        if (messages.length > 0) {
+            const firstMessage = messages[0];
+            firstMessage.classList.add('selected');
+
+            const name = firstMessage.querySelector('.message-name').innerText;
+            const dateTimeString = firstMessage.querySelector('.message-date').innerText;
+            const address = firstMessage.querySelector('.message-address').innerText;
+            const content = firstMessage.querySelector('.message-content').innerText;
+
+            const date = new Date(dateTimeString);
+            const formattedDate = date.toLocaleDateString('it-IT', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            });
+            const formattedTime = date.toLocaleTimeString('it-IT', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            messageNameElement.innerText = name;
+            messageDateElement.innerText = formattedDate;
+            messageTimeElement.innerText = formattedTime;
+            messageTextElement.innerText = content;
+        }
+
         messages.forEach(message => {
             message.addEventListener('click', function () {
-                const messageId = this.getAttribute('data-message-id');
+                // Rimuove la classe 'selected' da tutti i messaggi
+                messages.forEach(msg => msg.classList.remove('selected'));
 
-                fetch(`/admin/messages/${messageId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('message-name').textContent = data.name;
-                        document.getElementById('message-date').textContent = new Date(data.created_at).toLocaleDateString();
-                        document.getElementById('message-time').textContent = new Date(data.created_at).toLocaleTimeString();
-                        document.getElementById('message-text').textContent = data.message;
-                        document.getElementById('message-detail-content').innerHTML = `
-                            <p><strong>Email:</strong> ${data.address}</p>
-                            <p><strong>Messaggio:</strong> ${data.message}</p>
-                        `;
-                    })
-                    .catch(error => console.error('Error:', error));
+                // Aggiunge la classe 'selected' al messaggio cliccato
+                this.classList.add('selected');
+
+                const name = this.querySelector('.message-name').innerText;
+                const dateTimeString = this.querySelector('.message-date').innerText;
+                const address = this.querySelector('.message-address').innerText;
+                const content = this.querySelector('.message-content').innerText;
+
+                const date = new Date(dateTimeString);
+                const formattedDate = date.toLocaleDateString('it-IT', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                });
+                const formattedTime = date.toLocaleTimeString('it-IT', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                messageNameElement.innerText = name;
+                messageDateElement.innerText = formattedDate;
+                messageTimeElement.innerText = formattedTime;
+                messageTextElement.innerText = content;
             });
         });
     });
 </script>
 @endsection
+
+
+
+
+
 
 
     {{-- eliminazione --}}
