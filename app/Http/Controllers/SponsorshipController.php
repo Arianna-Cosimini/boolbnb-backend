@@ -68,13 +68,13 @@ class SponsorshipController extends Controller
         // Ottenere i dati dalla richiesta
         $data = $request->validated();
 
-        // Verifica se esiste già una sponsorizzazione attiva per l'appartamento specificato
+        // Check if the sponsorship for this apartment already exists
         $existingSponsorship = ApartmentSponsorship::where('apartment_id', $data['apartment_id'])
-            ->where('end_date', '>', Carbon::now())
+            ->where('sponsorship_id', $data['sponsorships'][0])
             ->first();
 
         if ($existingSponsorship) {
-            return back()->withErrors('Esiste già una sponsorizzazione attiva per questo appartamento.');
+            return back()->withErrors('La sponsorizzazione per questo appartamento è già presente.');
         }
 
         // Calcolare il prezzo in base alla sponsorizzazione selezionata
@@ -125,11 +125,11 @@ class SponsorshipController extends Controller
         // Questo è solo un esempio, sostituiscilo con la tua logica effettiva
         switch ($sponsorshipId) {
             case 1:
-                return 10.00; // Prezzo per la sponsorizzazione 1
+                return 2.99; // Prezzo per la sponsorizzazione 1
             case 2:
-                return 20.00; // Prezzo per la sponsorizzazione 2
+                return 5.99; // Prezzo per la sponsorizzazione 2
             case 3:
-                return 30.00; // Prezzo per la sponsorizzazione 3
+                return 9.99; // Prezzo per la sponsorizzazione 3
             default:
                 return 0.00; // Prezzo predefinito nel caso di ID non valido
         }
