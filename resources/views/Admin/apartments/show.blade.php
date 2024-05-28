@@ -130,8 +130,72 @@
           @endforeach
       </div>  --}}
     </div>
+    
+          <!-- Button modal -->
+    <button type="button" class="btn button-red text-white" data-bs-toggle="modal" data-bs-target="#views">
+      Guarda le visualizzazioni
+    </button>
+
+      <!-- Modal -->
+    <div class="modal fade" id="views" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog ">
+        <div class="modal-content modal-content-center">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Tabella visualizzazioni</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <canvas id="myChart"></canvas>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark text-white" data-bs-dismiss="modal">Chiudi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
 
     
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+   /*  let months = '{!! json_encode($months) !!}';
+    let monthCount = '{!! json_encode($monthCount) !!}';
+    console.log(months);
+    console.log(monthCount) */
+  const ctx = document.getElementById('myChart').getContext('2d');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago',
+                        'Set', 'Ott', 'Nov', 'Dic'
+                    ] /* {!! json_encode($months) !!} */,
+      datasets: [{
+        label: '# Visualizzazioni di questo appartamento',
+        data: {!! json_encode($monthCount) !!},
+        borderWidth: 3,
+        backgroundColor: [
+            'rgba(0, 0, 0, 0.4)',
+            
+        ],
+        borderColor: [
+            'rgba(0, 0, 0, 1)',
+                           
+      ]
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
 
     
 </div>

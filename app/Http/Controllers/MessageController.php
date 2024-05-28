@@ -6,6 +6,7 @@ use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
 use App\Models\Apartment;
 use App\Models\Message;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +26,7 @@ class MessageController extends Controller
         $messages = Message::whereHas('apartment', function ($query) use ($user) {
             $query->where('user_id', '=', $user->id)
                 ->orderBy('created_at', 'desc');
+                return Carbon::parse($query->created_at)->format('M');
         })->with('apartment')->get();
 
         if ($apartment_id) {
@@ -34,10 +36,19 @@ class MessageController extends Controller
         $messages = $messages->sortByDesc('created_at');
         $apartments = Apartment::where('user_id', $user->id)->get();
 
+        $months = [];
+        $messageCount = [];
+        foreach($messages as $month => $values){
+            $months[] = $month;
+            $messageCount[] = count($values);
+        }
+
         return view('admin.messages.index', [
             'messages' => $messages,
             'apartments' => $apartments,
             'selected_apartment_id' => $apartment_id,
+            'month' => $months,
+            'messageCount' => $messageCount,
         ]);
     }
     /**
