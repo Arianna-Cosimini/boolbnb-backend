@@ -6,6 +6,7 @@ use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
 use App\Models\Apartment;
 use App\Models\Message;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,6 +24,7 @@ class MessageController extends Controller
 
         //  prova query per ordinare date messaggi
         $messages = Message::whereHas('apartment', function ($query) use ($user) {
+            
             $query->where('user_id', '=', $user->id)
                 ->orderBy('created_at', 'desc');
         })->with('apartment')->get();

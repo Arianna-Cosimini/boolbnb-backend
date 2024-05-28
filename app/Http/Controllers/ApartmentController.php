@@ -6,9 +6,12 @@ use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Category;
+use App\Models\Message;
 use App\Models\Service;
 use App\Models\Sponsorship;
 use App\Models\User;
+use App\Models\View;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +25,15 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::where('user_id', Auth::id())->get();
+        // Recupera gli appartamenti dell'utente autenticato
+        $apartments = Apartment::where('user_id', Auth::id())
+        ->with(['services', 'sponsorships' => function ($query) {
+            $query->where('end_date', '>', Carbon::now());
+        }])
+        ->get();
+
+        // dd($apartments);
+        
         return view('admin.apartments.index', compact('apartments'));
     }
 
@@ -84,7 +95,40 @@ class ApartmentController extends Controller
 
         $user = User::where('user_id', $apartment->user_id);
 
-        return view('admin.apartments.show', compact('apartment'));
+        /* $apartments = Apartment::where('user_id', $user->id)->pluck('id');   */
+
+        $views = View::whereIn('apartment_id', $apartment)
+        ->select('id', 'apartment_id', 'created_at')
+        ->orderBy('created_at', 'desc')  // Optional: Order by creation date (desc)
+        ->get()
+        ->groupBy(function ($view) {
+            return Carbon::parse($view->created_at)->format('M');
+        });
+
+        $messages = Message::whereIn('apartment_id', $apartment)
+        ->select('id', 'apartment_id', 'created_at')
+        ->orderBy('created_at', 'desc')  // Optional: Order by creation date (desc)
+        ->get()
+        ->groupBy(function ($message) {
+            return Carbon::parse($message->created_at)->format('M');
+        });
+        $months = [];
+        $monthCount = [];
+        foreach($views as $month => $values ){
+            $months[] = $month;
+            $monthCount[] = count($values);
+        }
+        
+        /* $messages_no = []; */
+        $messageCount=[];
+        foreach($messages as $message => $value){
+            /* $messages_no [] = $month; */
+            $messageCount[] = count($values);
+        }
+        $months = array_reverse($months);
+        
+
+        return view('admin.apartments.show', compact('apartment','views','messages','months','monthCount','messageCount',));
     }
 
     /**

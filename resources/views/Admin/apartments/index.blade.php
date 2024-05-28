@@ -27,9 +27,39 @@
 
     @if (count($apartments) > 0)
 
-    <a href="{{ route('admin.apartments.create') }}" class="btn btn-danger button-red text-white mb-5">
-        <i class="fas fa-plus"></i> Aggiungi
-      </a>
+    <div class="d-flex justify-content-between">
+        <a href="{{ route('admin.apartments.create') }}" class="btn btn-danger button-red text-white mb-5">
+            <i class="fas fa-plus"></i> Aggiungi
+        </a>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-danger button-red text-white mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Gestisci Sponsorizzazioni
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Sponsorizzazioni</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Dai al tuo appartmaneto più visibilità crea una nuova sponsorizzazione o accedi alla dashboard per gestire quelle già esistenti
+                    </div>
+                    <div class="modal-footer ">
+                        <a href="{{ route('admin.sponsorships.create') }}" class="btn btn-danger button-red text-white">
+                            Crea Sponsorizzata
+                        </a>
+                        <a href="{{ route('admin.sponsorships.index') }}" class="btn btn-danger button-red text-white">
+                            Dashboard Sponsorizzazioni
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
       <div class="apartments-container d-flex flex-column gap-3">
         @foreach ($apartments as $apartment)
@@ -41,6 +71,11 @@
                     <div class="apartment-info">
                         <h6 class="mb-0">{{ $apartment->name }}</h6>
                         <p class="mb-0">{{ $apartment->address }}</p>
+                        @if ($apartment->sponsorships->isNotEmpty())
+                            @foreach ($apartment->sponsorships as $sponsorship)
+                                <p class="mb-0">Sponsorizzato fino al: {{ $sponsorship->pivot->end_date }}</p>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
     

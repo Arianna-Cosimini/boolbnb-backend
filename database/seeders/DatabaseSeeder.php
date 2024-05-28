@@ -31,6 +31,10 @@ class DatabaseSeeder extends Seeder
             ApartmentSponsorshipSeeder::class,
 
             UserSeeder::class,
+
+            ApartmentServiceSeeder::class,
+
+            ApartmentCategorySeeder::class,
         ]);
          
        

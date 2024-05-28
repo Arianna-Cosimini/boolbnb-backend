@@ -53,6 +53,8 @@
     </div>
 </div>
 
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const messages = document.querySelectorAll('.message');
@@ -119,6 +121,11 @@
             });
         });
     });
+
+     
+    
+  
+
 </script>
 @endsection
 
