@@ -28,7 +28,7 @@ class ViewController extends Controller
             return Carbon::parse($view->created_at)->format('M');
         });
 
-       /*  $views = View::select('id','apartment_id','created_at')->get()
+        /* $views = View::select('id','apartment_id','created_at')->get()
         ->groupBy(function ($views){
            return Carbon::parse($views->created_at)->format('M');
         }); */

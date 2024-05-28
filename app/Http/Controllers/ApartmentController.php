@@ -9,6 +9,8 @@ use App\Models\Category;
 use App\Models\Service;
 use App\Models\Sponsorship;
 use App\Models\User;
+use App\Models\View;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,7 +25,10 @@ class ApartmentController extends Controller
     public function index()
     {
         $apartments = Apartment::where('user_id', Auth::id())->get();
+        
         return view('admin.apartments.index', compact('apartments'));
+        
+        
     }
 
     /**
@@ -84,7 +89,30 @@ class ApartmentController extends Controller
 
         $user = User::where('user_id', $apartment->user_id);
 
-        return view('admin.apartments.show', compact('apartment'));
+        /* $apartments = Apartment::where('user_id', $user->id)->pluck('id');   */
+
+        $views = View::whereIn('apartment_id', $apartment)
+        ->select('id', 'apartment_id', 'created_at')
+        ->orderBy('created_at', 'desc')  // Optional: Order by creation date (desc)
+        ->get()
+        ->groupBy(function ($view) {
+            return Carbon::parse($view->created_at)->format('M');
+        });
+
+        /* $views = View::select('id','apartment_id','created_at')->get()
+        ->groupBy(function ($views){
+           return Carbon::parse($views->created_at)->format('M');
+        }); */
+        $months = [];
+        $monthCount = [];
+        foreach($views as $month => $values){
+            $months[] = $month;
+            $monthCount[] = count($values);
+        }
+
+        
+
+        return view('admin.apartments.show', compact('apartment','views','months','monthCount'));
     }
 
     /**
