@@ -70,6 +70,7 @@ Route::middleware(['auth', 'verified'])
             Route::get('sponsorships/{apartment_id}/{sponsorship_id}/edit', [SponsorshipController::class, 'edit'])->name('admin.sponsorships.edit');
             //rotta per l'aggiornamento della sponsorizzazione
             Route::put('sponsorships/{apartment_id}/{sponsorship_id}', [SponsorshipController::class, 'update'])->name('admin.sponsorships.update');
+            
         }
     );
     

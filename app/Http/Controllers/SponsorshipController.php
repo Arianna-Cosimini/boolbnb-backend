@@ -175,7 +175,7 @@ class SponsorshipController extends Controller
             ->firstOrFail();
         $sponsorships = Sponsorship::all();
 
-        dd($apartmentSponsorship);
+        // dd($apartmentSponsorship);
 
         return view('admin.sponsorships.edit', compact('apartmentSponsorship', 'sponsorships'));
     }
@@ -208,7 +208,7 @@ class SponsorshipController extends Controller
         $apartmentSponsorship->start_date = $request->input('start_date', $currentDate);
         $apartmentSponsorship->end_date = $endDate;
         $apartmentSponsorship->sponsorship_id = $sponsorshipId;
-
+        
         $apartmentSponsorship->save();
 
         return redirect()->route('admin.sponsorships.index')->with('success', 'Sponsorship updated successfully.');

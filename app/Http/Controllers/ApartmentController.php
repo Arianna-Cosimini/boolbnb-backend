@@ -12,6 +12,7 @@ use App\Models\Sponsorship;
 use App\Models\User;
 use App\Models\View;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,18 +24,34 @@ class ApartmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Recupera gli appartamenti dell'utente autenticato
-        $apartments = Apartment::where('user_id', Auth::id())
-        ->with(['services', 'sponsorships' => function ($query) {
-            $query->where('end_date', '>', Carbon::now());
-        }])
-        ->get();
+        // Recupera il filtro dal request, di default mostra tutti gli appartamenti
+        $filter = $request->input('filter', 0);
 
-        // dd($apartments);
-        
-        return view('admin.apartments.index', compact('apartments'));
+        // Recupera gli appartamenti dell'utente autenticato
+        $query = Apartment::where('user_id', Auth::id());
+
+        // Aggiungi le relazioni e i filtri in base al valore del filtro
+        if ($filter == 1) {
+            // Solo appartamenti con sponsorizzazione attiva
+            $query->whereHas('sponsorships', function ($query) {
+                $query->where('end_date', '>', Carbon::now());
+            });
+        } elseif ($filter == 2) {
+            // Solo appartamenti senza sponsorizzazione attiva
+            $query->whereDoesntHave('sponsorships', function ($query) {
+                $query->where('end_date', '>', Carbon::now());
+            });
+        }
+
+        $query->with(['services', 'sponsorships' => function ($query) {
+            $query->where('end_date', '>', Carbon::now());
+        }]);
+
+        $apartments = $query->get();
+
+        return view('admin.apartments.index', compact('apartments', 'filter'));
     }
 
     /**
