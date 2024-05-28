@@ -17,17 +17,17 @@
     
     <div class="features mt-5">
       <div class="feature-item mb-5">
-          <h2 class="h4">Gestione Annunci</h2>
+          <h2 class="h4">Annunci</h2>
           <p>Qui puoi gestire tutti i tuoi annunci. Modifica, elimina o aggiungi nuovi appartamenti da affittare su Boolbnb.</p>
           <a href="{{ route('admin.apartments.index') }}" class="btn button-black text-white">I tuoi annunci</a>
       </div>
-      <div class="feature-item">
-          <h2 class="h4">Gestione Messaggi</h2>
+      <div class="feature-item mt-5">
+          <h2 class="h4">Messaggi</h2>
           <p>Visualizza e rispondi ai messaggi ricevuti dai visitatori interessati ai tuoi appartamenti.</p>
           <a href="{{ route('admin.messages.index') }}" class="btn button-black text-white">I tuoi messaggi</a>
       </div>
-      <div class="feature-item">
-          <h2 class="h4">Gestione Sponsorizzate</h2>
+      <div class="feature-item mt-5">
+          <h2 class="h4">Sponsorizzazioni</h2>
           <p>Sponsorizza il tuo appartamento in modo da avere più visibilità.</p>
           <a href="{{ route('admin.sponsorships.index') }}" class="btn button-black text-white">Le tue sponsorizzate</a>
       </div>
