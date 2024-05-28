@@ -123,14 +123,14 @@ class ApartmentController extends Controller
             $months[] = $month;
             $monthCount[] = count($values);
         }
-
+        
         $messages_no = [];
         $messageCount=[];
         foreach($messages as $message => $value){
             $messages_no [] = $month;
             $messageCount[] = count($values);
         }
-
+        $months = array_reverse($months);
         
 
         return view('admin.apartments.show', compact('apartment','views','messages','months','monthCount','messages_no','messageCount',));

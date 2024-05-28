@@ -192,7 +192,7 @@
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels:  {!! json_encode($sortedMonths) !!},
+      labels:  {!! json_encode($months) !!},
       datasets: [{
         label: '# Visualizzazioni di questo appartamento',
         data: {!! json_encode($monthCount) !!},
