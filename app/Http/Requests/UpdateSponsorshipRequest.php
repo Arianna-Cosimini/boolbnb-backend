@@ -22,8 +22,8 @@ class UpdateSponsorshipRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sponsorships' => 'required|array',
-            'sponsorships.*' => 'exists:sponsorships,id',
+            'sponsorship_id' => 'required|exists:sponsorships,id',
+            'end_date' => 'required|date|after:start_date',
         ];
     }
 }

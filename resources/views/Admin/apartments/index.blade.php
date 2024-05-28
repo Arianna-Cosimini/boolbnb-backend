@@ -25,12 +25,24 @@
         </div>
     @endif
 
-    @if (count($apartments) > 0)
-
-    <div class="d-flex justify-content-between">
-        <a href="{{ route('admin.apartments.create') }}" class="btn btn-danger button-red text-white mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <a href="{{ route('admin.apartments.create') }}" class="btn btn-danger button-red text-white">
             <i class="fas fa-plus"></i> Aggiungi
         </a>
+
+        <!-- Filtro per sponsorizzazioni -->
+        <form method="GET" action="{{ route('admin.apartments.index') }}">
+            <div class="input-group">
+                <select name="filter" class="form-select" onchange="this.form.submit()">
+                    <option value="0" {{ $filter == 0 ? 'selected' : '' }}>Tutti gli appartamenti</option>
+                    <option value="1" {{ $filter == 1 ? 'selected' : '' }}>Solo con sponsorizzazione</option>
+                    <option value="2" {{ $filter == 2 ? 'selected' : '' }}>Solo senza sponsorizzazione</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    
+    @if (count($apartments) > 0)
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-danger button-red text-white mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -59,7 +71,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
       <div class="apartments-container d-flex flex-column gap-3">
         @foreach ($apartments as $apartment)
