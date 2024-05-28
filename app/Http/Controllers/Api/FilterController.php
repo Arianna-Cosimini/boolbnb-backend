@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Models\Service;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FilterController extends Controller
@@ -29,10 +30,14 @@ class FilterController extends Controller
         /* $radius = $filters['radius'] ?? 20000; */
 
         $query = Apartment::select('apartments.*')
-        ->selectRaw("(6371 * acos(cos(radians($lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($lon)) + sin(radians($lat)) * sin(radians(latitude)))) AS distance")
-        ->having('distance', '<=', $range)
-        ->orderBy('distance', 'asc')
-        ->with(['user', 'message', 'view', 'services', 'categories', 'sponsorships']);
+            ->selectRaw("(6371 * acos(cos(radians($lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($lon)) + sin(radians($lat)) * sin(radians(latitude)))) AS distance")
+            ->leftJoin('apartment_sponsorship', function($join) {
+                $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
+                     ->where('apartment_sponsorship.end_date', '>', Carbon::now());
+            })
+            ->having('distance', '<=', $range)
+            ->orderByRaw('apartment_sponsorship.sponsorship_id IS NULL, distance')
+            ->with(['user', 'message', 'view', 'services', 'categories', 'sponsorships']);
 
         if(isset($filters['room_number'])){
             $query->where('room_number' , '>=' ,$filters['room_number']) ;
