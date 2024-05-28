@@ -32,7 +32,7 @@ class PaymentController extends Controller
         $privateKey = env("BRAINTREE_PRIVATE_KEY");
 
         // Print the environment variables to verify they are being loaded correctly
-        dd($environment, $merchantId, $publicKey, $privateKey);
+        // dd($environment, $merchantId, $publicKey, $privateKey);
 
             $gateway = new \Braintree\Gateway([
                 'environment' => env("BRAINTREE_ENV"),
