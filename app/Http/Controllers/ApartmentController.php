@@ -112,28 +112,23 @@ class ApartmentController extends Controller
         ->groupBy(function ($message) {
             return Carbon::parse($message->created_at)->format('M');
         });
-
-        /* $views = View::select('id','apartment_id','created_at')->get()
-        ->groupBy(function ($views){
-           return Carbon::parse($views->created_at)->format('M');
-        }); */
         $months = [];
         $monthCount = [];
-        foreach($views as $month => $values){
+        foreach($views as $month => $values ){
             $months[] = $month;
             $monthCount[] = count($values);
         }
         
-        $messages_no = [];
+        /* $messages_no = []; */
         $messageCount=[];
         foreach($messages as $message => $value){
-            $messages_no [] = $month;
+            /* $messages_no [] = $month; */
             $messageCount[] = count($values);
         }
         $months = array_reverse($months);
         
 
-        return view('admin.apartments.show', compact('apartment','views','messages','months','monthCount','messages_no','messageCount',));
+        return view('admin.apartments.show', compact('apartment','views','messages','months','monthCount','messageCount',));
     }
 
     /**
