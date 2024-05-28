@@ -48,8 +48,8 @@ Route::middleware(['auth', 'verified'])
             Route::get('/', [DashboardController::class, 'index'])->name('index');
             
             // Braintree
-            Route::any('payment/token', [PaymentController::class, 'token'])->name('payment.token');
-            Route::post('payment/process', [PaymentController::class, 'process'])->name('payment.process');
+            Route::get('/sponsorships/payment/token', 'SponsorshipController@getClientToken')->name('admin.payment.token');
+            Route::post('/sponsorships/payment/process', 'SponsorshipController@processPayment')->name('admin.payment.process');
             // Route::any('payment', [BraintreeController::class, 'token'])->name('token');
 
             Route::resource('apartments', ApartmentController::class)->parameters(['apartments' =>'apartment:slug']);

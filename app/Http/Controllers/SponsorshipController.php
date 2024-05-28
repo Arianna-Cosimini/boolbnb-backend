@@ -20,10 +20,10 @@ class SponsorshipController extends Controller
     {
         // Recupera gli appartamenti dell'utente autenticato con sponsorizzazioni attive
         $apartments = Apartment::where('user_id', Auth::id())
-            ->whereHas('sponsorships', function($query) {
+            ->whereHas('sponsorships', function ($query) {
                 $query->where('end_date', '>', Carbon::now());
             })
-            ->with(['sponsorships' => function($query) {
+            ->with(['sponsorships' => function ($query) {
                 $query->where('end_date', '>', Carbon::now());
             }])
             ->get();
@@ -38,14 +38,26 @@ class SponsorshipController extends Controller
     public function create()
     {
         $sponsorships = Sponsorship::all();
-
         $apartments = Apartment::where('user_id', Auth::id())
-        ->whereDoesntHave('sponsorships', function($query) {
-            $query->where('end_date', '>', Carbon::now());
-        })->get();
+            ->whereDoesntHave('sponsorships', function ($query) {
+                $query->where('end_date', '>', Carbon::now());
+            })->get();
 
+        // Configurazione di Braintree
+        $gateway = new \Braintree\Gateway([
+            'environment' => config('services.braintree.environment'),
+            'merchantId' => config('services.braintree.merchant_id'),
+            'publicKey' => config('services.braintree.public_key'),
+            'privateKey' => config('services.braintree.private_key')
+        ]);
 
-        return view('admin.sponsorships.create', compact('sponsorships', 'apartments'));
+        // Generazione del client token
+        $clientToken = $gateway->clientToken()->generate();
+
+        // Debug del token
+        // dd($clientToken);
+
+        return view('admin.sponsorships.create', compact('sponsorships', 'apartments', 'clientToken'));
     }
 
     /**
@@ -56,18 +68,52 @@ class SponsorshipController extends Controller
         // Ottenere i dati dalla richiesta
         $data = $request->validated();
 
+        // Verifica se esiste già una sponsorizzazione attiva per l'appartamento specificato
+        $existingSponsorship = ApartmentSponsorship::where('apartment_id', $data['apartment_id'])
+            ->where('end_date', '>', Carbon::now())
+            ->first();
+
+        if ($existingSponsorship) {
+            return back()->withErrors('Esiste già una sponsorizzazione attiva per questo appartamento.');
+        }
+
         // Calcolare il prezzo in base alla sponsorizzazione selezionata
         $sponsorshipPrice = $this->calculateSponsorshipPrice($data['sponsorships'][0]);
 
-        // Creare un nuovo record di ApartmentSponsorship
-        $newSponsorship = new ApartmentSponsorship();
-        $newSponsorship->apartment_id = $data['apartment_id'];
-        $newSponsorship->sponsorship_id = $data['sponsorships'][0];
-        $newSponsorship->start_date = Carbon::now();
-        $newSponsorship->end_date = $this->calculateEndDate($data['sponsorships'][0]);
-        $newSponsorship->save();
+        // Configurazione di Braintree
+        $gateway = new \Braintree\Gateway([
+            'environment' => config('services.braintree.environment'),
+            'merchantId' => config('services.braintree.merchant_id'),
+            'publicKey' => config('services.braintree.public_key'),
+            'privateKey' => config('services.braintree.private_key')
+        ]);
 
-        return redirect()->route('admin.sponsorships.index')->with('success', 'Sponsorizzazione creata con successo.');
+        // Creazione del nonce del cliente
+        $nonce = $request->payment_method_nonce;
+
+        // Creazione della transazione
+        $result = $gateway->transaction()->sale([
+            'amount' => $sponsorshipPrice,
+            'paymentMethodNonce' => $nonce,
+            'options' => [
+                'submitForSettlement' => true
+            ]
+        ]);
+
+        if ($result->success) {
+            // Creare un nuovo record di ApartmentSponsorship
+            $newSponsorship = new ApartmentSponsorship();
+            $newSponsorship->apartment_id = $data['apartment_id'];
+            $newSponsorship->sponsorship_id = $data['sponsorships'][0];
+            $newSponsorship->start_date = Carbon::now();
+            $newSponsorship->end_date = $this->calculateEndDate($data['sponsorships'][0]);
+            $newSponsorship->save();
+
+            return redirect()->route('admin.sponsorships.index')->with('success', 'Sponsorizzazione creata con successo.');
+        } else {
+            // Gestire l'errore di transazione
+            return back()->withErrors('La transazione non è riuscita: ' . $result->message);
+        }
     }
 
     /**
@@ -125,8 +171,8 @@ class SponsorshipController extends Controller
     public function edit($apartment_id, $sponsorship_id)
     {
         $apartmentSponsorship = ApartmentSponsorship::where('apartment_id', $apartment_id)
-                                                     ->where('sponsorship_id', $sponsorship_id)
-                                                     ->firstOrFail();
+            ->where('sponsorship_id', $sponsorship_id)
+            ->firstOrFail();
         $sponsorships = Sponsorship::all();
 
         dd($apartmentSponsorship);
@@ -140,8 +186,8 @@ class SponsorshipController extends Controller
     public function update(UpdateSponsorshipRequest $request, $apartment_id, $sponsorship_id)
     {
         $apartmentSponsorship = ApartmentSponsorship::where('apartment_id', $apartment_id)
-                                                     ->where('sponsorship_id', $sponsorship_id)
-                                                     ->firstOrFail();
+            ->where('sponsorship_id', $sponsorship_id)
+            ->firstOrFail();
 
         $sponsorshipId = $request->input('sponsorship_id');
         $currentDate = Carbon::now();
@@ -162,7 +208,7 @@ class SponsorshipController extends Controller
         $apartmentSponsorship->start_date = $request->input('start_date', $currentDate);
         $apartmentSponsorship->end_date = $endDate;
         $apartmentSponsorship->sponsorship_id = $sponsorshipId;
-        
+
         $apartmentSponsorship->save();
 
         return redirect()->route('admin.sponsorships.index')->with('success', 'Sponsorship updated successfully.');
