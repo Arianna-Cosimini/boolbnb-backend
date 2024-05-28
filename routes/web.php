@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\BraintreeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
@@ -45,11 +46,11 @@ Route::middleware(['auth', 'verified'])
             // Route::get('/users',[DashboardController::class,'users'])->name('users');
         
             Route::get('/', [DashboardController::class, 'index'])->name('index');
-            // Braintree
             
-            Route::any('payment/token', [PaymentController::class, 'token'])->name('payment.token');
-            Route::post('payment/process', [PaymentController::class, 'process'])->name('payment.process');
-
+            // Braintree
+            // Route::any('payment/token', [PaymentController::class, 'token'])->name('payment.token');
+            // Route::post('payment/process', [PaymentController::class, 'process'])->name('payment.process');
+            Route::any('payment', [BraintreeController::class, 'token'])->name('token');
 
             Route::resource('apartments', ApartmentController::class)->parameters(['apartments' =>'apartment:slug']);
 

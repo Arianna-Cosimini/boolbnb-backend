@@ -24,6 +24,16 @@ class PaymentController extends Controller
             if ($apartment->isEmpty() || ($sponsorId > 3 || $sponsorId <= 0)) {
                 return redirect()->route('admin.sponsorships.index')->with('warning', 'Ci dispiace, la pagina non esiste, riprova di nuovo.');
             }
+
+                    // Debugging environment variables
+        $environment = env("BRAINTREE_ENV");
+        $merchantId = env("BRAINTREE_MERCHANT_ID");
+        $publicKey = env("BRAINTREE_PUBLIC_KEY");
+        $privateKey = env("BRAINTREE_PRIVATE_KEY");
+
+        // Print the environment variables to verify they are being loaded correctly
+        dd($environment, $merchantId, $publicKey, $privateKey);
+
             $gateway = new \Braintree\Gateway([
                 'environment' => env("BRAINTREE_ENV"),
                 'merchantId' => env("BRAINTREE_MERCHANT_ID"),

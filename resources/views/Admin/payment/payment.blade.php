@@ -82,7 +82,7 @@
                 instance.requestPaymentMethod(function(err, payload) {
                     $.ajax({
                         type: 'POST',
-                        url: '{{ route('admin.payment.process') }}',
+                        url: `{{ route('admin.payment.process') }}`,
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
