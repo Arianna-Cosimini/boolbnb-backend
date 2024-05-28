@@ -6,6 +6,7 @@ use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Category;
+use App\Models\Message;
 use App\Models\Service;
 use App\Models\Sponsorship;
 use App\Models\User;
@@ -104,6 +105,14 @@ class ApartmentController extends Controller
             return Carbon::parse($view->created_at)->format('M');
         });
 
+        $messages = Message::whereIn('apartment_id', $apartment)
+        ->select('id', 'apartment_id', 'created_at')
+        ->orderBy('created_at', 'desc')  // Optional: Order by creation date (desc)
+        ->get()
+        ->groupBy(function ($message) {
+            return Carbon::parse($message->created_at)->format('M');
+        });
+
         /* $views = View::select('id','apartment_id','created_at')->get()
         ->groupBy(function ($views){
            return Carbon::parse($views->created_at)->format('M');
@@ -115,9 +124,16 @@ class ApartmentController extends Controller
             $monthCount[] = count($values);
         }
 
+        $messages_no = [];
+        $messageCount=[];
+        foreach($messages as $message => $value){
+            $messages_no [] = $month;
+            $messageCount[] = count($values);
+        }
+
         
 
-        return view('admin.apartments.show', compact('apartment','views','months','monthCount'));
+        return view('admin.apartments.show', compact('apartment','views','messages','months','monthCount','messages_no','messageCount',));
     }
 
     /**

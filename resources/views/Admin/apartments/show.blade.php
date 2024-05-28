@@ -130,10 +130,12 @@
           @endforeach
       </div>  --}}
     </div>
+    <div class="d-flex gap-4">
+
     
-          <!-- Button modal -->
+          <!-- Button modal for views-->
     <button type="button" class="btn button-red text-white" data-bs-toggle="modal" data-bs-target="#views">
-      Guarda le visualizzazioni
+      Guartda la Tabella statistiche appartamento
     </button>
 
       <!-- Modal -->
@@ -145,7 +147,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <canvas id="myChart"></canvas>
+            <canvas id="viewsChart"></canvas>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-dark text-white" data-bs-dismiss="modal">Chiudi</button>
@@ -153,9 +155,30 @@
         </div>
       </div>
     </div>
-  
 
+    <!-- Button modal for messages-->
+    <button type="button" class="btn button-red text-white" data-bs-toggle="modal" data-bs-target="#messages">
+      Guarda Tabella messaggi appartamento
+    </button>
 
+      <!-- Modal -->
+    <div class="modal fade" id="messages" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog ">
+        <div class="modal-content modal-content-center">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Tabella messaggi</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <canvas id="messagesChart"></canvas>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark text-white" data-bs-dismiss="modal">Chiudi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
     
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -164,14 +187,12 @@
     let monthCount = '{!! json_encode($monthCount) !!}';
     console.log(months);
     console.log(monthCount) */
-  const ctx = document.getElementById('myChart').getContext('2d');
+  const ctx = document.getElementById('viewsChart').getContext('2d');
 
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago',
-                        'Set', 'Ott', 'Nov', 'Dic'
-                    ] /* {!! json_encode($months) !!} */,
+      labels:  {!! json_encode($sortedMonths) !!},
       datasets: [{
         label: '# Visualizzazioni di questo appartamento',
         data: {!! json_encode($monthCount) !!},
@@ -190,6 +211,37 @@
       scales: {
         y: {
           beginAtZero: true
+        }
+      }
+    }
+  });
+
+
+  const ctxm = document.getElementById('messagesChart').getContext('2d');
+
+  new Chart(ctxm, {
+    type: 'bar',
+    data: {
+      labels:  {!! json_encode($months) !!},
+      datasets: [{
+        label: '# Messaggi a questo appartamento',
+        data: {!! json_encode($messageCount) !!},
+        borderWidth: 3,
+        backgroundColor: [
+            'rgba(0, 0, 0, 0.4)',
+            
+        ],
+        borderColor: [
+            'rgba(0, 0, 0, 1)',
+                           
+      ]
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          suggestedMax: 20,
         }
       }
     }
