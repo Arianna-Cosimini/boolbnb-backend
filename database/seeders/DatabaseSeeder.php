@@ -33,6 +33,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
 
             ApartmentServiceSeeder::class,
+
+            ApartmentCategorySeeder::class,
         ]);
          
        
