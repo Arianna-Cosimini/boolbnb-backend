@@ -72,34 +72,37 @@
             </div>
         </div>
 
-      <div class="apartments-container d-flex flex-column gap-3">
-        @foreach ($apartments as $apartment)
-            <div class="apartment-card d-flex justify-content-between align-items-center p-3 rounded-4">
-                <div class="left d-flex gap-3 align-items-center w-50">
-                    <div class="img-container">
-                        <img src="{{ $apartment->cover_image ? asset('storage/' . $apartment->cover_image) : asset('placeholder/Placeholder.png') }}" class="cover-img rounded-3" style="max-width: 64px; height: 64px;" alt="{{ $apartment->name }}">
+        <div class="apartments-container d-flex flex-column gap-3">
+            @foreach ($apartments as $apartment)
+                <div class="apartment-card d-flex justify-content-between align-items-center p-3 rounded-4">
+                    <div class="left d-flex gap-3 align-items-center w-50">
+                        <div class="img-container">
+                            <img src="{{ $apartment->cover_image ? asset('storage/' . $apartment->cover_image) : asset('placeholder/Placeholder.png') }}" class="cover-img rounded-3" style="max-width: 64px; height: 64px;" alt="{{ $apartment->name }}">
+                        </div>
+                        <div class="apartment-info">
+                            <h6 class="mb-0">{{ $apartment->name }}</h6>
+                            <p class="mb-0">{{ $apartment->address }}</p>
+                            @if ($apartment->sponsorships->isNotEmpty())
+                                @foreach ($apartment->sponsorships as $sponsorship)
+                                    <p class="mb-0">Sponsorizzato fino al: {{ $sponsorship->pivot->end_date }}</p>
+                                @endforeach
+                            @endif
+                        </div>
                     </div>
-                    <div class="apartment-info">
-                        <h6 class="mb-0">{{ $apartment->name }}</h6>
-                        <p class="mb-0">{{ $apartment->address }}</p>
-                        @if ($apartment->sponsorships->isNotEmpty())
-                            @foreach ($apartment->sponsorships as $sponsorship)
-                                <p class="mb-0">Sponsorizzato fino al: {{ $sponsorship->pivot->end_date }}</p>
-                            @endforeach
-                        @endif
-                    </div>
+
+                    <p class="mb-0 w-25">
+                        {{ $apartment->room_number }} {{ $apartment->room_number == 1 ? 'camera' : 'camere' }} &middot; 
+                        {{ $apartment->bed_number }} {{ $apartment->bed_number == 1 ? 'letto' : 'letti' }} &middot; 
+                        {{ $apartment->bathroom_number }} {{ $apartment->bathroom_number == 1 ? 'bagno' : 'bagni' }}
+                    </p>            
+                    <p class="mb-0 w-25">{{ $apartment->square_meters }} metri quadri</p>
+                    @if ($apartment->sponsorships->isNotEmpty())
+                        <a href="#" class="btn btn-secondary bg-black border border-2 text-white border-black">Modifica sponsorizzazione</a>    
+                    @endif
+                    <a href="{{ route('admin.apartments.show', $apartment->slug) }}" class="btn btn-secondary bg-black border border-2 text-white border-black">Dettagli</a>
                 </div>
-    
-                <p class="mb-0 w-25">
-                    {{ $apartment->room_number }} {{ $apartment->room_number == 1 ? 'camera' : 'camere' }} &middot; 
-                    {{ $apartment->bed_number }} {{ $apartment->bed_number == 1 ? 'letto' : 'letti' }} &middot; 
-                    {{ $apartment->bathroom_number }} {{ $apartment->bathroom_number == 1 ? 'bagno' : 'bagni' }}
-                </p>            
-                <p class="mb-0 w-25">{{ $apartment->square_meters }} metri quadri</p>
-                <a href="{{ route('admin.apartments.show', $apartment->slug) }}" class="btn btn-secondary bg-black border border-2 text-white border-black">Dettagli</a>
-            </div>
-        @endforeach
-    </div>
+            @endforeach
+        </div>
 
     @else
     <div class="no-apartments d-flex flex-column justify-content-center align-items-center">
