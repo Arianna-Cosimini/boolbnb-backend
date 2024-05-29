@@ -44,14 +44,14 @@ Route::middleware(['auth', 'verified'])
 
             // Route::get('/admin',[DashboardController::class,'index'])->name('admin');
             // Route::get('/users',[DashboardController::class,'users'])->name('users');
-        
+
             Route::get('/', [DashboardController::class, 'index'])->name('index');
-            
+
             // Braintree
             Route::get('/sponsorships/payment/token', 'SponsorshipController@getClientToken')->name('admin.payment.token');
             Route::post('/sponsorships/payment/process', 'SponsorshipController@processPayment')->name('admin.payment.process');
 
-            Route::resource('apartments', ApartmentController::class)->parameters(['apartments' =>'apartment:slug']);
+            Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
 
             Route::get('users', [DashboardController::class, 'users'])->name('users');
 
@@ -60,6 +60,8 @@ Route::middleware(['auth', 'verified'])
 
             //rotta per i messagges
             Route::resource('messages', MessageController::class);
+            Route::delete('admin/messages/{message}', [MessageController::class, 'destroy'])->name('admin.messages.destroy');
+
             //rotta per il singolo messaggio
             Route::get('messages/{id}', [MessageController::class, 'show'])->name('messages.show');
 
@@ -70,8 +72,7 @@ Route::middleware(['auth', 'verified'])
             Route::get('sponsorships/{apartment_id}/{sponsorship_id}/edit', [SponsorshipController::class, 'edit'])->name('admin.sponsorships.edit');
             //rotta per l'aggiornamento della sponsorizzazione
             Route::put('sponsorships/{apartment_id}/{sponsorship_id}', [SponsorshipController::class, 'update'])->name('admin.sponsorships.update');
-            
         }
     );
-    
+
 require __DIR__ . '/auth.php';
