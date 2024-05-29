@@ -123,7 +123,7 @@
                 <p class="mb-3">Almeno un servizio</p>
                 <div class="d-flex flex-column gap-2">
                     @foreach ($services as $service)
-                        <div class="form-check">
+                        <div class="form-check d-flex">
                             <label for="service-{{ $service->id }}" class="form-check-label">
                                 <div class="text-nowrap">{{ $service->title }}</div>
                             </label>

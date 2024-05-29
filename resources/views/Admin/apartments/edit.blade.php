@@ -132,8 +132,8 @@
                 <p class="mb-3">Almeno un servizio</p>
                 <div class="row px-2 d-flex gap-3">
                     @foreach ($services as $service)
-                        <div class="form-check col-3">
-                            <div class="user-select-none">
+                        <div class="form-check col-3 ">
+                            <div class="user-select-none d-flex">
                                 <label for="service-{{ $service->id }}" class="form-check-label">
                                     <div class="text-nowrap">{{ $service->title }}</div>
                                 </label>
