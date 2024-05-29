@@ -40,7 +40,7 @@ class ViewController extends Controller
         }
 
         
-
+        $months = array_reverse($months);
         return view('admin.visited.index', compact('views','user','months','monthCount'));
         
     }
