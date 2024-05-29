@@ -50,6 +50,7 @@ class ApartmentController extends Controller
         }])->withCount('services');
 
         $apartments = $query->get();
+        
 
         return view('admin.apartments.index', compact('apartments', 'filter'));
     }

@@ -25,11 +25,12 @@
         </div>
     @endif
 
-    <div class="d-flex justify-content-between align-items-center mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
         <a href="{{ route('admin.apartments.create') }}" class="btn btn-danger button-red text-white">
             <i class="fas fa-plus"></i> Aggiungi
         </a>
 
+        
         <!-- Filtro per sponsorizzazioni -->
         <form method="GET" action="{{ route('admin.apartments.index') }}">
             <div class="input-group">
@@ -44,9 +45,26 @@
     
     @if (count($apartments) > 0)
 
-        <a href="{{ route('admin.sponsorships.create') }}" class="btn btn-danger button-red text-white mb-5">
-            Crea Sponsorizzata
-        </a>
+        <div class="mb-3">
+            <div class="d-flex justify-content-between p-3 rounded-4 border border-2 border-black">
+                <div class="left d-flex gap-3 align-items-top w-75 ps-4">
+                    <div class="img-container">
+                        <img src="{{ asset('ads/sponsorship_img.png') }}" class="cover-img rounded-3" style="max-width: 64px; height: 64px;" alt="">
+                    </div>
+                    <div class="d-flex flex-column justify-content-center ps-3">
+                        <h5>Aumenta la visibilità del tuo appartamento</h5>
+                        <p class="m-0">In media un appartamento sponsorizzato ha il 25% di visualizzazioni in più</p>
+                    </div>
+                </div>
+                <div class="d-flex flex-column w-25 justify-content-center align-items-end">
+                    <div>
+                        <a href="{{ route('admin.sponsorships.create') }}" class="btn btn-secondary bg-black border border-2 text-white border-black">
+                            Crea Sponsorizzata
+                        </a>
+                    </div>
+                </div>            
+            </div>
+        </div>
 
         <div class="apartments-container d-flex flex-column gap-3">
             @foreach ($apartments as $apartment)
