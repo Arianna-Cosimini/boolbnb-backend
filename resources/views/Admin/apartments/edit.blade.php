@@ -36,7 +36,8 @@
             <div class="mb-3">
                 <label for="cover_image" class="form-label">Immagine di copertina</label>
                 <div class="rounded-2 overflow-hidden mb-2">
-                    <img class="w-100" src="{{ asset('storage/' . $apartment->cover_image) }}" alt="Copertina immagine" style="height: 600px">
+                    <img class="w-100" src="{{ asset('storage/' . $apartment->cover_image) }}" alt="Copertina immagine"
+                        style="height: 600px">
                 </div>
                 <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image"
                     name="cover_image" value="{{ old('cover_image') ?? $apartment->cover_image }}">
@@ -47,6 +48,15 @@
                 @enderror
             </div>
 
+            {{-- descrizione --}}
+            <div class="form-floating mb-3">
+                <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
+                    placeholder="Descrizione">{{ old('description') ?? $apartment->description }}</textarea>
+                <label for="description">Descrizione<span class="required">*</span></label>
+                @error('description')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
+            </div>
             {{-- indirizzo --}}
             <div class="form-floating mb-3">
                 <input type="text" class="form-control @error('address') is-invalid @enderror" id="address"
@@ -122,16 +132,16 @@
                 <p class="mb-3">Almeno un servizio</p>
                 <div class="row px-2 d-flex gap-3">
                     @foreach ($services as $service)
-                    <div class="form-check col-3">
-                        <div class="user-select-none">
-                            <label for="service-{{ $service->id }}" class="form-check-label">
-                                <div class="text-nowrap">{{ $service->title }}</div>
-                            </label>
-                            <input type="checkbox" name="services[]" value="{{ $service->id }}"
-                                class="form-check-input" id="service-{{ $service->id }}"
-                                {{ in_array($service->id, old('services', $apartment->services->pluck('id')->toArray())) ? 'checked' : '' }}>
+                        <div class="form-check col-3">
+                            <div class="user-select-none">
+                                <label for="service-{{ $service->id }}" class="form-check-label">
+                                    <div class="text-nowrap">{{ $service->title }}</div>
+                                </label>
+                                <input type="checkbox" name="services[]" value="{{ $service->id }}"
+                                    class="form-check-input" id="service-{{ $service->id }}"
+                                    {{ in_array($service->id, old('services', $apartment->services->pluck('id')->toArray())) ? 'checked' : '' }}>
+                            </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
                 @error('services')
@@ -166,15 +176,18 @@
                         </div>
                     @endforeach
                 </div>
-            </div>  
+            </div>
 
             {{-- visibilità --}}
             <div class="mt-5">
                 <label class="mb-4 fw-medium fs-3">Vuoi rendere visibile questo annuncio?</label>
                 <div class="form-check form-switch">
-                    <input class="form-check-input @error('visible') is-invalid @enderror" type="checkbox" role="switch" id="visible" name="visible" value="1" {{ old('visible') ? 'checked' : (isset($apartment) && $apartment->visible ? 'checked' : '') }}>
+                    <input class="form-check-input @error('visible') is-invalid @enderror" type="checkbox"
+                        role="switch" id="visible" name="visible" value="1"
+                        {{ old('visible') ? 'checked' : (isset($apartment) && $apartment->visible ? 'checked' : '') }}>
                     <label class="form-check-label" for="visible">
-                        <span id="visibleLabel">{{ isset($apartment) && $apartment->visible ? 'Visibile' : 'Non visibile' }}</span>
+                        <span
+                            id="visibleLabel">{{ isset($apartment) && $apartment->visible ? 'Visibile' : 'Non visibile' }}</span>
                     </label>
                 </div>
             </div>
@@ -319,7 +332,8 @@
                         longitude.value = risultatoCorrispondente.position.lon;
                         console.log('Latitudine e longitudine impostate:', latitude.value, longitude.value);
                     } else {
-                        console.error("'Nessun risultato corrispondente trovato per l'indirizzo corrente.'");
+                        console.error(
+                            "'Nessun risultato corrispondente trovato per l'indirizzo corrente.'");
                     }
                 });
             }
@@ -363,19 +377,19 @@
         }
     </script>
 
-{{-- etichetta visibilità annuncio --}}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const checkbox = document.getElementById('visible');
-        const label = document.getElementById('visibleLabel');
+    {{-- etichetta visibilità annuncio --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkbox = document.getElementById('visible');
+            const label = document.getElementById('visibleLabel');
 
-        checkbox.addEventListener('change', function() {
-            if (checkbox.checked) {
-                label.textContent = 'Visibile';
-            } else {
-                label.textContent = 'Non visibile';
-            }
+            checkbox.addEventListener('change', function() {
+                if (checkbox.checked) {
+                    label.textContent = 'Visibile';
+                } else {
+                    label.textContent = 'Non visibile';
+                }
+            });
         });
-    });
-</script>
+    </script>
 @endsection
