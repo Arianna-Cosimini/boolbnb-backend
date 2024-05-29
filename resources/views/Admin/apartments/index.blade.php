@@ -89,7 +89,7 @@
                         </div>
                     </div>
 
-                    <div class="w-25 d-flex flex-column">
+                    <div class="w-25 d-flex flex-column ps-4">
                         <h6 class="my-1">Dettagli</h6>
                         <div>
                             <p class="mb-3">
