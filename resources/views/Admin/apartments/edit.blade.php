@@ -51,7 +51,7 @@
             {{-- descrizione --}}
             <div class="form-floating mb-3">
                 <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
-                    placeholder="Descrizione">{{ old('description') ?? $apartment->description }}</textarea>
+                    placeholder="Descrizione" rows="4"  style="height: auto">{{ old('description') ?? $apartment->description }}</textarea>
                 <label for="description">Descrizione<span class="required">*</span></label>
                 @error('description')
                     <p class="text-danger">{{ $message }}</p>
