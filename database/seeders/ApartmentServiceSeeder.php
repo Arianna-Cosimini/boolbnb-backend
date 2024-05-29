@@ -24,7 +24,7 @@ class ApartmentServiceSeeder extends Seeder
         // Loop through each apartment
         foreach ($apartments as $apartment) {
             // Determine the number of services to assign to this apartment (between 1 and 3)
-            $numberOfServicesForApartment = rand(1, 3);
+            $numberOfServicesForApartment = rand(1, 5);
 
             // Select random unique services for this apartment
             $servicesForApartment = $services->random($numberOfServicesForApartment);

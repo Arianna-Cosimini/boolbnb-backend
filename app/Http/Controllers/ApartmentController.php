@@ -47,7 +47,7 @@ class ApartmentController extends Controller
 
         $query->with(['services', 'sponsorships' => function ($query) {
             $query->where('end_date', '>', Carbon::now());
-        }]);
+        }])->withCount('services');
 
         $apartments = $query->get();
 

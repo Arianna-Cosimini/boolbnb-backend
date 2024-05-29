@@ -44,62 +44,64 @@
     
     @if (count($apartments) > 0)
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-danger button-red text-white mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Gestisci Sponsorizzazioni
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Sponsorizzazioni</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Dai al tuo appartmaneto più visibilità crea una nuova sponsorizzazione o accedi alla dashboard per gestire quelle già esistenti
-                    </div>
-                    <div class="modal-footer ">
-                        <a href="{{ route('admin.sponsorships.create') }}" class="btn btn-danger button-red text-white">
-                            Crea Sponsorizzata
-                        </a>
-                        <a href="{{ route('admin.sponsorships.index') }}" class="btn btn-danger button-red text-white">
-                            Dashboard Sponsorizzazioni
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <a href="{{ route('admin.sponsorships.create') }}" class="btn btn-danger button-red text-white mb-5">
+            Crea Sponsorizzata
+        </a>
 
         <div class="apartments-container d-flex flex-column gap-3">
             @foreach ($apartments as $apartment)
-                <div class="apartment-card d-flex justify-content-between align-items-center p-3 rounded-4">
-                    <div class="left d-flex gap-3 align-items-center w-50">
+                <div class="apartment-card d-flex justify-content-between p-3 rounded-4">
+                    <div class="left d-flex gap-3 align-items-top w-50">
                         <div class="img-container">
-                            <img src="{{ $apartment->cover_image ? asset('storage/' . $apartment->cover_image) : asset('placeholder/Placeholder.png') }}" class="cover-img rounded-3" style="max-width: 64px; height: 64px;" alt="{{ $apartment->name }}">
+                            <img src="{{ $apartment->cover_image ? asset('storage/' . $apartment->cover_image) : asset('placeholder/Placeholder.png') }}" class="cover-img rounded-3" style="max-width: 128px; height: 128px;" alt="{{ $apartment->name }}">
                         </div>
-                        <div class="apartment-info">
-                            <h6 class="mb-0">{{ $apartment->name }}</h6>
-                            <p class="mb-0">{{ $apartment->address }}</p>
+                        <div class="apartment-info d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="my-1">{{ $apartment->name }}</h5>
+                                <p class="mb-0">{{ $apartment->address }}</p>
+                            </div>
                             @if ($apartment->sponsorships->isNotEmpty())
                                 @foreach ($apartment->sponsorships as $sponsorship)
-                                    <p class="mb-0">Sponsorizzato fino al: {{ $sponsorship->pivot->end_date }}</p>
+                                <div>
+                                    <p class="mb-0">Pacchetto sponsorizzata: {{ $sponsorship->title }}</p>
+                                    <p class="mb-0">Sponsorizzato fino al: {{ Carbon\Carbon::parse($sponsorship->pivot->end_date)->format('d/m/Y') }}</p>
+                                </div>
                                 @endforeach
                             @endif
                         </div>
                     </div>
 
-                    <p class="mb-0 w-25">
-                        {{ $apartment->room_number }} {{ $apartment->room_number == 1 ? 'camera' : 'camere' }} &middot; 
-                        {{ $apartment->bed_number }} {{ $apartment->bed_number == 1 ? 'letto' : 'letti' }} &middot; 
-                        {{ $apartment->bathroom_number }} {{ $apartment->bathroom_number == 1 ? 'bagno' : 'bagni' }}
-                    </p>            
-                    <p class="mb-0 w-25">{{ $apartment->square_meters }} metri quadri</p>
-                    @if ($apartment->sponsorships->isNotEmpty())
-                        <a href="#" class="btn btn-secondary bg-black border border-2 text-white border-black">Modifica sponsorizzazione</a>    
-                    @endif
-                    <a href="{{ route('admin.apartments.show', $apartment->slug) }}" class="btn btn-secondary bg-black border border-2 text-white border-black">Dettagli</a>
+                    <div class="w-25 d-flex flex-column">
+                        <h6 class="my-1">Dettagli</h6>
+                        <div>
+                            <p class="mb-3">
+                                {{ $apartment->room_number }} {{ $apartment->room_number == 1 ? 'camera' : 'camere' }} &middot; 
+                                {{ $apartment->bed_number }} {{ $apartment->bed_number == 1 ? 'letto' : 'letti' }} &middot; 
+                                {{ $apartment->bathroom_number }} {{ $apartment->bathroom_number == 1 ? 'bagno' : 'bagni' }}
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            @foreach ($apartment->services->take(2) as $service)
+                                <div>
+                                    <img src="{{ $service->icon }}" alt="">
+                                </div>
+                            @endforeach
+                            @if ($apartment->services->count() > 2)
+                                <div>
+                                    + altri {{ $apartment->services->count() - 2 }} servizi
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column w-25 justify-content-between">
+                        <p class="mt-4 mb-0 text-nowrap text-center">{{ $apartment->square_meters }} mq<sup>2</sup></p>
+                        <div class="d-flex gap-3 justify-content-end align-items-end">
+                            @if ($apartment->sponsorships->isNotEmpty())
+                                <a href="#" class="btn btn-secondary bg-black border border-2 text-white border-black">Modifica sponsorizzazione</a>    
+                            @endif
+                            <a href="{{ route('admin.apartments.show', $apartment->slug) }}" class="btn btn-secondary bg-black border border-2 text-white border-black">Dettagli</a>
+                        </div>
+                    </div>            
                 </div>
             @endforeach
         </div>
