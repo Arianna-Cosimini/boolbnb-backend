@@ -101,7 +101,7 @@
                         @endif
                     </div>
                     <div class="d-flex justify-content-start justify-content-md-end align-items-end col-12 col-md-3 px-0 mt-2 mt-md-0">
-                        <a href="{{ route('admin.apartments.show', $apartment->slug) }}" class="btn btn-secondary bg-black border border-2 text-white border-black">Dettagli</a>
+                        <a href="{{ route('admin.apartments.show', $apartment->slug) }}" class="btn btn-secondary bg-black border border-2 text-white border-black">Visualizza</a>
                     </div>
                 </div>
             </div>
