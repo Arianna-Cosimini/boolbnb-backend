@@ -109,7 +109,7 @@ class SponsorshipController extends Controller
             $newSponsorship->end_date = $this->calculateEndDate($data['sponsorships'][0]);
             $newSponsorship->save();
 
-            return redirect()->route('admin.apartments.index')->with('success', 'Sponsorizzazione creata con successo.');
+            return redirect()->route('admin.sponsorships.show', $newSponsorship->id + 1)->with('success', 'Sponsorizzazione creata con successo.');
         } else {
             // Gestire l'errore di transazione
             return back()->withErrors('La transazione non è riuscita: ' . $result->message);
@@ -160,9 +160,10 @@ class SponsorshipController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ApartmentSponsorship $apartmentSponsorship)
+    public function show(Sponsorship $sponsorship)
     {
         // 
+        return view('admin.sponsorships.show', compact('sponsorship'));
     }
 
     /**
