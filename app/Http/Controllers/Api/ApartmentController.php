@@ -40,9 +40,20 @@ class ApartmentController extends Controller
 
     public function show($slug)
     {
-        // $Apartment = Apartment::find($id);
+        // Coordinate di default
+        $lat = 44.4949;
+        $lon = 11.3426;
+        $range = 20; // 20 km
 
-        $apartment = Apartment::with(['user', 'message', 'view', 'services', 'categories', 'sponsorships'])->where('slug', '=', $slug)->first();
+        $apartment = Apartment::select('apartments.*')
+        ->selectRaw("(6371 * acos(cos(radians($lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($lon)) + sin(radians($lat)) * sin(radians(latitude)))) AS distance")
+        ->join('apartment_sponsorship', function($join) {
+            $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
+                 ->where('apartment_sponsorship.end_date', '>', Carbon::now());
+        })
+        ->having('distance', '<=', $range)
+        ->orderBy('distance')
+        ->with(['user', 'message', 'view', 'services', 'categories', 'sponsorships'])->where('slug', '=', $slug)->first();
 
 
         if ($apartment) {
