@@ -34,6 +34,10 @@ $fa-font-path: "~fontawesome/webfonts";
     background-color: #f7f7f7;
 }
 
+.apartment-img {
+    object-fit: cover;
+}
+
 ul.list {
     list-style: none;
     padding: 0;
@@ -82,11 +86,6 @@ label.form-check-label:focus,
 
 .form-check-input:focus-visible {
     color: #ff385c !important;
-}
-
-.cover-img {
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
 }
 
 .my-button-categories {
@@ -196,4 +195,20 @@ label.form-check-label:focus,
     .active-page:hover {
         background-color: black;
     }
+}
+
+.sponsored-start:hover {
+    background-color: #222 !important;
+    border: 2px solid #222 !important;
+    color: white !important;
+    transition: 0.2s ease;
+}
+
+.sponsored-start:not(:hover) {
+    transition: 0.2s ease;
+}
+
+.sponsored-start:hover .cover-img {
+    filter: invert(1);
+    transition: 0.2s ease;
 }
