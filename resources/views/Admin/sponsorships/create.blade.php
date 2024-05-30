@@ -85,8 +85,7 @@
                                 <input type="hidden" name="payment_method_nonce" id="nonce">
                             </div>
                             <div class="modal-footer text-center">
-                                <button type="submit" id="submit-button" class="btn btn-dark">Procedi al
-                                    pagamento</button>
+                                <button type="submit" id="submit-button" class="btn btn-dark">Paga</button>
                             </div>
                         </div>
                     </div>
