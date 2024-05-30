@@ -17,20 +17,20 @@
     
     <div class="features mt-5">
       <div class="feature-item mb-5">
-          <h2 class="h4">Gestione Proprietà</h2>
-          <p>Qui puoi gestire tutti le tue Proprietà. Modifica, elimina o aggiungi nuovi appartamenti da affittare su Boolbnb.</p>
-          <a href="{{ route('admin.apartments.index') }}" class="btn button-black text-white">Le tue Proprietà</a>
+          <h2 class="h4">Le tue Strutture</h2>
+          <p>Qui puoi gestire tutte le tue Strutture.<br> Modifica, elimina o aggiungi nuovi appartamenti da affittare su Boolbnb.</p>
+          <a href="{{ route('admin.apartments.index') }}" class="btn button-black text-white">Strutture</a>
       </div>
       <div class="feature-item mb-5">
-          <h2 class="h4">Gestione Messaggi</h2>
+          <h2 class="h4">I tuoi Messaggi</h2>
           <p>Visualizza e rispondi ai messaggi ricevuti dai visitatori interessati ai tuoi appartamenti.</p>
-          <a href="{{ route('admin.messages.index') }}" class="btn button-black text-white">I tuoi messaggi</a>
+          <a href="{{ route('admin.messages.index') }}" class="btn button-black text-white">Messaggi</a>
       </div>
      
       <div class="feature-item">
-        <h2 class="h4">Gestione Visualizzazioni</h2>
-        <p>Guarda come procede la visualizzazione dei tuoi appatamenti</p>
-        <a href="{{ route('admin.visited.index') }}" class="btn button-black text-white">Le tue visualizzazioni</a>
+        <h2 class="h4">Le tue Visualizzazioni</h2>
+        <p>Guarda come procede la visualizzazione totale dei tuoi appatamenti</p>
+        <a href="{{ route('admin.visited.index') }}" class="btn button-black text-white">Visualizzazioni</a>
     </div>
   </div>
   
