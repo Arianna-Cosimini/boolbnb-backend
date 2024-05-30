@@ -89,6 +89,10 @@
                 {{ $apartment['bathroom_number'] }} {{ $apartment['bathroom_number'] == 1 ? 'bagno' : 'bagni' }}
             </p>
 
+            <!-- Descrizione dell'appartamento -->
+            <label class="mb-1 fw-medium fs-4">Descrizione</label>
+            <p class="fs-5 mb-4">{{ $apartment['description'] }}</p>
+
             <div class="mb-4">
                 <label class="mb-3 fw-medium fs-4">Cosa troverai</label>
                 <div class="row d-flex gap-3">
@@ -108,7 +112,10 @@
         </div>
         <div class="d-flex gap-4">
 
-
+            <button type="button" class="btn button-red text-white"
+                onclick="window.location='{{ route('admin.sponsorships.create') }}'">
+                Sponsorizza struttura
+            </button>
             <!-- Button modal for views-->
             <button type="button" class="btn button-red text-white" data-bs-toggle="modal" data-bs-target="#views">
                 Guarda la Tabella statistiche appartamento
@@ -126,6 +133,10 @@
                             <canvas id="viewsChart"></canvas>
                         </div>
                         <div class="modal-footer">
+                            <button type="button" class="btn btn-danger text-white"
+                                onclick="window.location='{{ route('admin.visited.index') }}'">
+                                Visualizza statistiche
+                            </button>
                             <button type="button" class="btn btn-dark text-white" data-bs-dismiss="modal">Chiudi</button>
                         </div>
                     </div>
@@ -138,7 +149,8 @@
             </button>
 
             <!-- Modal -->
-            <div class="modal fade" id="messages" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="messages" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog ">
                     <div class="modal-content modal-content-center">
                         <div class="modal-header">
@@ -151,7 +163,7 @@
                         </div>
                         <div class="modal-footer">
 
-                            <button type="button" class="btn btn-dark text-white"
+                            <button type="button" class="btn btn-danger text-white"
                                 onclick="window.location='{{ route('admin.messages.index') }}'">
                                 Visualizza messaggi
                             </button>
@@ -169,9 +181,9 @@
 
         <script>
             /*  let months = '{!! json_encode($months) !!}';
-                            let monthCount = '{!! json_encode($monthCount) !!}';
-                            console.log(months);
-                            console.log(monthCount) */
+                                                    let monthCount = '{!! json_encode($monthCount) !!}';
+                                                    console.log(months);
+                                                    console.log(monthCount) */
             const ctx = document.getElementById('viewsChart').getContext('2d');
 
             new Chart(ctx, {
