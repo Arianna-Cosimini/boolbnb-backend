@@ -32,6 +32,10 @@ $fa-font-path: "~fontawesome/webfonts";
     background-color: #f7f7f7;
 }
 
+.apartment-img {
+    object-fit: cover;
+}
+
 ul.list {
     list-style: none;
     padding: 0;
@@ -79,11 +83,6 @@ label.form-check-label:focus,
 
 .form-check-input:focus-visible {
     color: #ff385c !important;
-}
-
-.cover-img {
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
 }
 
 .my-button-categories {
@@ -156,34 +155,50 @@ label.form-check-label:focus,
 .button-nav {
     margin-top: 20px;
     padding-top: 20px;
-  
+
     .pagination-container {
-      display: flex;
-      column-gap: 10px;
+        display: flex;
+        column-gap: 10px;
     }
-  
+
     .paginate-buttons {
-      height: 40px;
-      width: 40px;
-      border-radius: 20px;
-      cursor: pointer;
-      background-color: transparent;
-      border: 1px solid rgb(255, 255, 255);
-      color: rgb(0, 0, 0);
+        height: 40px;
+        width: 40px;
+        border-radius: 20px;
+        cursor: pointer;
+        background-color: transparent;
+        border: 1px solid rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
     }
-  
+
     .paginate-buttons:hover {
-      background-color: #f7f7f7;
+        background-color: #f7f7f7;
     }
-  
+
     .active-page {
-      background-color: black;
-      border: 1px solid black;
-      color: white;
-      pointer-events: none;
+        background-color: black;
+        border: 1px solid black;
+        color: white;
+        pointer-events: none;
     }
-  
+
     .active-page:hover {
-      background-color: black;
+        background-color: black;
     }
-  }
+}
+
+.sponsored-start:hover {
+    background-color: #222 !important;
+    border: 2px solid #222 !important;
+    color: white !important;
+    transition: 0.2s ease;
+}
+
+.sponsored-start:not(:hover) {
+    transition: 0.2s ease;
+}
+
+.sponsored-start:hover .cover-img {
+    filter: invert(1);
+    transition: 0.2s ease;
+}
