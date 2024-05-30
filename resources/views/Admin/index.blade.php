@@ -28,9 +28,9 @@
       </div>
      
       <div class="feature-item">
-        <h2 class="h4">Le tue Visualizzazioni</h2>
+        <h2 class="h4">Le tue Statistiche</h2>
         <p>Guarda come procede la visualizzazione totale dei tuoi appatamenti</p>
-        <a href="{{ route('admin.visited.index') }}" class="btn button-black text-white">Visualizzazioni</a>
+        <a href="{{ route('admin.visited.index') }}" class="btn button-black text-white">Statistiche</a>
     </div>
   </div>
   
