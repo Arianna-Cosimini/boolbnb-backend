@@ -67,7 +67,7 @@ Route::middleware(['auth', 'verified'])
 
 
             //rotta per la sponsorizzazione
-            Route::resource('sponsorships', SponsorshipController::class, ['except' => ['show']]);
+            Route::resource('sponsorships', SponsorshipController::class);
             //rotta per la modifica della sponsorizzazione
             Route::get('sponsorships/{apartment_id}/{sponsorship_id}/edit', [SponsorshipController::class, 'edit'])->name('admin.sponsorships.edit');
             //rotta per l'aggiornamento della sponsorizzazione
