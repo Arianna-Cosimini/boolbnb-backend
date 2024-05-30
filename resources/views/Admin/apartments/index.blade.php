@@ -117,7 +117,7 @@
                             @if ($apartment->sponsorships->isNotEmpty())
                                 <a href="#" class="btn btn-secondary bg-black border border-2 text-white border-black">Modifica sponsorizzazione</a>    
                             @endif
-                            <a href="{{ route('admin.apartments.show', $apartment->slug) }}" class="btn btn-secondary bg-black border border-2 text-white border-black">Dettagli</a>
+                            <a href="{{ route('admin.apartments.show', $apartment->slug) }}" class="btn button-red text-white ">Dettagli</a>
                         </div>
                     </div>            
                 </div>
