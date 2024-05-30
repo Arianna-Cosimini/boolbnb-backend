@@ -8,6 +8,7 @@ use App\Models\Apartment;
 use App\Models\View;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ViewController extends Controller
 {
@@ -17,32 +18,35 @@ class ViewController extends Controller
     public function index(View $view)
     {
         $user = Auth::user();
-        
-        $apartments = Apartment::where('user_id', $user->id)->pluck('id');  
 
-        $views = View::whereIn('apartment_id', $apartments)
-        ->select('id', 'apartment_id', 'created_at')
-        ->orderBy('created_at', 'desc')  // Optional: Order by creation date (desc)
-        ->get()
-        ->groupBy(function ($view) {
-            return Carbon::parse($view->created_at)->format('M');
-        });
+        // Recupera tutti gli appartamenti con le visualizzazioni raggruppate per mese
+        $apartments = Apartment::where('user_id', Auth::id())->with(['view' => function ($query) {
+            $query->select(DB::raw('count(*) as count, month(created_at) as month, apartment_id'))
+                ->groupBy('month', 'apartment_id');
+        }])->get();
 
-        /* $views = View::select('id','apartment_id','created_at')->get()
-        ->groupBy(function ($views){
-           return Carbon::parse($views->created_at)->format('M');
-        }); */
-        $months = [];
-        $monthCount = [];
-        foreach($views as $month => $values){
-            $months[] = $month;
-            $monthCount[] = count($values);
+        // Definisce i mesi
+        $months = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
+
+        // Calcola i totali delle visualizzazioni per ogni appartamento
+        $apartmentViewCounts = [];
+        $apartmentMonthlyCounts = [];
+
+        foreach ($apartments as $apartment) {
+            $totalViews = 0;
+            $monthlyCounts = array_fill(0, 12, 0);
+
+            foreach ($apartment->view as $view) {
+                $monthlyCounts[$view->month - 1] = $view->count;
+                $totalViews += $view->count;
+            }
+
+            $apartmentViewCounts[$apartment->id] = $totalViews;
+            $apartmentMonthlyCounts[$apartment->id] = $monthlyCounts;
         }
 
-        
-        $months = array_reverse($months);
-        return view('admin.visited.index', compact('views','user','months','monthCount'));
-        
+        // Passa gli appartamenti e i dati alla vista
+        return view('admin.visited.index', compact('apartments', 'months', 'apartmentViewCounts', 'apartmentMonthlyCounts'));
     }
 
     /**
