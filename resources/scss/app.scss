@@ -7,8 +7,6 @@ $fa-font-path: "~fontawesome/webfonts";
 @import "~fontawesome/scss/regular";
 @import "~fontawesome/scss/solid";
 
-
-
 .button-red {
     background-color: $primaryColor;
 
@@ -89,13 +87,16 @@ label.form-check-label:focus,
 }
 
 .my-button-categories {
-    width: 100%;
     background-color: transparent !important;
 }
 
 .my-button-categories:hover {
     cursor: pointer;
     border: 2px solid black !important;
+}
+
+.my-show-button:hover {
+    background-color: #f7f7f7 !important;
 }
 
 .my-radio-label {
@@ -150,14 +151,14 @@ label.form-check-label:focus,
 }
 
 /* Aggiustamenti per la maniglia dello switch */
-#visible:not(:checked)+.form-check-label::before {
+#visible:not(:checked) + .form-check-label::before {
     background-color: white;
     /* Colore della maniglia dello switch non selezionato */
     border: 1px solid black;
 }
 
 /* Aggiustamenti per la maniglia dello switch quando è selezionato */
-#visible:checked+.form-check-label::before {
+#visible:checked + .form-check-label::before {
     background-color: white;
     /* Colore della maniglia dello switch selezionato */
 }
