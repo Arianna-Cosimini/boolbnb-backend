@@ -11,44 +11,50 @@
         </div>
     @endif
 
+    <div class="container py-5">
+    <nav aria-label="breadcrumb" class="d-none d-md-block">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{url('admin')}}" class="text-black">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.apartments.index') }}" class="text-black">Le tue strutture</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sponsorizza struttura</li>
+        </ol>
+    </nav>
+    <nav class="d-block d-md-none mb-3">
+        <a href="{{ route('admin.apartments.index') }}" class="text-decoration-none text-black"><i class="fa-solid fa-chevron-left me-2"></i>Indietro</a>
+    </nav>
+
     @if ($apartments->isEmpty())
         <div class="alert alert-warning">Non ci sono appartamenti disponibili per la sponsorizzazione al momento.</div>
     @else
-        <form action="{{ route('admin.sponsorships.store') }}" method="POST" id="payment-form" class="container">
+        <form action="{{ route('admin.sponsorships.store') }}" method="POST" id="payment-form">
             @csrf
+
+            <div>
+                <h1 class="mb-5 fs-2">Sponsorizza struttura</h1>
+                <h5 class="mb-4 fw-medium fs-5">Quale struttura vuoi promuovere?</h5> 
+                <div class="mb-4">
+                    <select name="apartment_id" id="apartment-select" class="form-select">
+                        @foreach ($apartments as $apartment)
+                            <option value="{{ $apartment->id }}">{{ $apartment->name }} - {{ $apartment->address }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
             <div class="mt-5">
-                <label class="mb-4 fw-medium fs-3" for="">Vuoi Sponsorizzare il tuo BnB?</label>
+                <h5 class="mb-4 fw-medium fs-5">Seleziona piano</h5> 
                 <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
                     @foreach ($sponsorships as $sponsorship)
                         <div class="col">
-                            <div class="card h-100 text-center">
+                            <div class="card px-3 h-100 text-center card-selectable sponsorship-card">
                                 <div class="card-body">
                                     <input type="radio" name="sponsorships[]" value="{{ $sponsorship->id }}"
-                                        class="form-check-input" id="sponsorship-{{ $sponsorship->id }}"
+                                        class="form-check-input d-none" id="sponsorship-{{ $sponsorship->id }}"
                                         {{ in_array($sponsorship->id, old('sponsorships', [])) ? 'checked' : '' }}>
                                     <label for="sponsorship-{{ $sponsorship->id }}" class="form-check-label d-block">
                                         <h5 class="card-title">{{ $sponsorship->title }}</h5>
-                                        <p class="card-text">{{ $sponsorship->price }} €</p>
-                                        <p class="card-text">{{ $sponsorship->description }}</p>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            <div class="mt-5">
-                <label class="mb-4 fw-medium fs-3" for="">Seleziona il tuo appartamento</label>
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    @foreach ($apartments as $apartment)
-                        <div class="col">
-                            <div class="card h-100 text-center">
-                                <div class="card-body">
-                                    <input type="radio" class="form-check-input" name="apartment_id"
-                                        id="apartment-{{ $apartment->id }}" value="{{ $apartment->id }}">
-                                    <label for="apartment-{{ $apartment->id }}" class="form-check-label d-block">
-                                        <h5 class="card-title">{{ $apartment->name }}</h5>
-                                        <p class="card-text">{{ $apartment->location }}</p>
+                                        <p class="card-text fw-light">{{ $sponsorship->description }}</p>
+                                        <p class="card-text fs-1">€ {{ $sponsorship->price }}</p>
                                     </label>
                                 </div>
                             </div>
@@ -59,7 +65,7 @@
 
             <!-- Trigger for Modal -->
             <div class="text-center my-3">
-                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#paymentModal">
+                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#paymentModal" disabled>
                     Procedi al pagamento
                 </button>
             </div>
@@ -95,6 +101,7 @@
             </div>
         </div>
     @endif
+</div>
 @endsection
 
 @section('style')
@@ -128,6 +135,25 @@
         .form-check-input {
             margin-right: 10px;
         }
+
+        .card-selectable {
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: border 0.3s ease;
+            border: 1px solid #222;
+
+        }
+
+        .card-selectable:hover {
+            background-color: #f7f7f7;
+        }
+
+        .card-selectable.selected {
+            border: 1px solid #222; /* colore di selezione */
+            background-color: #222;
+            color: white;
+        }
+
     </style>
 @endsection
 
@@ -178,5 +204,33 @@
                 });
             });
         });
+    </script>
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+    const sponsorshipCards = document.querySelectorAll('.sponsorship-card');
+    const proceedButton = document.querySelector('button[data-bs-toggle="modal"]');
+
+    function handleSelection(cards, inputName) {
+        cards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Deseleziona tutte le card
+                cards.forEach(c => c.classList.remove('selected'));
+                // Seleziona la card cliccata
+                this.classList.add('selected');
+                // Seleziona il radio button associato
+                const radioButton = this.querySelector(`input[name="${inputName}"]`);
+                if (radioButton) {
+                    radioButton.checked = true;
+                }
+                // Abilita il pulsante solo se un radio button è selezionato
+                if (document.querySelector('input[name="sponsorships[]"]:checked')) {
+                    proceedButton.disabled = false;
+                }
+            });
+        });
+    }
+
+    handleSelection(sponsorshipCards, 'sponsorships[]');
+});
     </script>
 @endsection
