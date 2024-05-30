@@ -98,10 +98,10 @@
                 <div
                     style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
                     <div class="spinner"></div>
-                    <div id="success-message" class="fw-bold"
-                        style="display: none; font-size: 1.2rem; color: green; position: absolute; top: calc(50% + 50px); left: 50%; transform: translate(-50%, -50%); display: inline-block;">
-                        Transazione effettuata con successo!
-                    </div>
+                </div>
+                <div id="success-message" class="fw-bold"
+                    style="display: none; font-size: 1.2rem; color: black; position: absolute; top: calc(50% + 150px); left: 50%; transform: translate(-50%, -50%); display: inline-block;">
+                    Pagamento in corso...
                 </div>
             </div>
         </div>
