@@ -180,6 +180,4 @@
 
 </div>
 
-<a href="{{route('admin.sponsorships.show', $sponsorship->id)}}" type="button" class="btn my-btn">Torna alla Home</a>
-
 @endsection
