@@ -35,14 +35,14 @@
       position: relative;
     }
     .check{
-     font-size: 110px;
+     font-size: 90px;
      position: absolute;
-     bottom: 0px;
-     left: 10px;
+     bottom: 5px;
+     left: 15px;
      color: white;
     }
     .my-bg-opacity{
-    background-color: rgb(0, 0, 0, .4);
+    background-color: rgb(0, 0, 0, .3);
     
    }
    .my-bg{
