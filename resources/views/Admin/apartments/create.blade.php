@@ -3,16 +3,18 @@
 @section('content')
     <div class="container py-5">
 
-        <nav aria-label="breadcrumb">
+        <nav aria-label="breadcrumb" class="d-none d-md-block">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-black">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.apartments.index') }}" class="text-black">I tuoi
-                        annunci</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Nuovo annuncio</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.apartments.index') }}" class="text-black">Le tue strutture</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Aggiungi struttura</li>
             </ol>
         </nav>
+        <nav class="d-block d-md-none mb-3">
+            <a href="{{ route('admin.apartments.index') }}" class="text-decoration-none text-black"><i class="fa-solid fa-chevron-left me-2"></i>Indietro</a>
+        </nav>
 
-        <h1 class="mb-3 fs-2">Nuovo annuncio</h1>
+        <h1 class="mb-3 fs-2">Aggiungi struttura</h1>
 
         {{-- form --}}
         <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data" class="py-5"
@@ -118,7 +120,7 @@
             </div>
 
             {{-- servizi --}}
-            <div class="mb-4">
+            <div class="container mb-4">
                 <label class="fw-medium fs-3">Servizi</label>
                 <p class="mb-3">Almeno un servizio</p>
                 <div class="d-flex flex-column gap-2">
@@ -139,30 +141,22 @@
             </div>
 
             {{-- categorie --}}
-            <div class="mt-5">
+            <div class="container mt-5">
                 <label class="mb-4 fw-medium fs-3">Quale di queste opzioni descrive meglio il tuo alloggio?</label>
-                <div class="row px-2 d-flex gap-3">
+                <div class="row px-0 gap-0">  
                     @foreach ($categories as $category)
-                        <div class="form-check col-3 px-0">
-                            <button
-                                class="btn border border-2 border-secondary-subtle rounded-4 px-3 py-4 my-button-categories"
-                                type="button" onclick="selectCategory('{{ $category->id }}')">
-                                <label class="d-flex flex-column align-items-center gap-2 my-radio-label form-check-label"
-                                    for="category-{{ $category->id }}">
-                                    <img src="{{ $category->icon }}" class="my-icon" alt="">
-                                    {{-- <i class="{{ $category->icon }} fs-3"></i> --}}
-                                    <div class="fs-5">{{ $category->title }}</div>
-                                    <input type="radio" name="categories[]" value="{{ $category->id }}"
-                                        class="my-radio form-check-input my-input-form fs-5"
-                                        id="category-{{ $category->id }}"
-                                        {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
-                                        {{ $loop->first ? 'checked' : '' }}>
-                                </label>
-                            </button>
-                        </div>
-                    @endforeach
+                    <div class="form-check col-6 col-md-4 col-lg-3 p-2 mx-0"> 
+                        <button class="btn border border-2 border-secondary-subtle rounded-4 py-4 my-button-categories w-100" type="button" onclick="selectCategory('{{ $category->id }}')">
+                        <label class="d-flex flex-column align-items-center gap-2 my-radio-label form-check-label" for="category-{{ $category->id }}">
+                          <img src="{{ $category->icon }}" class="my-icon" alt="">
+                          <div class="fs-6">{{ $category->title }}</div>
+                          <input type="radio" name="categories[]" value="{{ $category->id }}" class="my-radio form-check-input my-input-form fs-5" id="category-{{ $category->id }}" {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }} {{ $loop->first ? 'checked' : '' }}>
+                        </label>
+                      </button>
+                    </div>
+                  @endforeach
                 </div>
-            </div>
+              </div>
 
             {{-- visibilità --}}
 

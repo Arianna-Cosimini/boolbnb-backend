@@ -3,18 +3,21 @@
 @section('content')
     <div class="container py-5">
 
-        <nav aria-label="breadcrumb">
+        <nav aria-label="breadcrumb" class="d-none d-md-block">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-black">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.apartments.index') }}" class="text-black">I tuoi
                         annunci</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.apartments.show', $apartment) }}"
                         class="text-black">{{ $apartment->name }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Modifica annuncio</li>
+                <li class="breadcrumb-item active" aria-current="page">Modifica struttura</li>
             </ol>
         </nav>
+        <nav class="d-block d-md-none mb-3">
+            <a href="{{ route('admin.apartments.show', $apartment) }}" class="text-decoration-none text-black"><i class="fa-solid fa-chevron-left me-2"></i>Indietro</a>
+        </nav>
 
-        <h1 class="mb-3 fs-2">Modifica annuncio</h1>
+        <h1 class="mb-3 fs-2">Modifica struttura</h1>
 
         {{-- form --}}
         <form action="{{ route('admin.apartments.update', $apartment) }}" method="POST" class="py-5"
@@ -35,9 +38,9 @@
             {{-- immagine principale --}}
             <div class="mb-3">
                 <label for="cover_image" class="form-label">Immagine di copertina</label>
-                <div class="rounded-2 overflow-hidden mb-2">
+                <div class="rounded-2 overflow-hidden mb-4">
                     <img class="w-100" src="{{ asset('storage/' . $apartment->cover_image) }}" alt="Copertina immagine"
-                        style="height: 600px">
+                        style="height: 600px; object-fit: cover">
                 </div>
                 <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image"
                     name="cover_image" value="{{ old('cover_image') ?? $apartment->cover_image }}">
@@ -127,10 +130,10 @@
 
 
             {{-- servizi --}}
-            <div class="mb-4">
+            <div class="container mb-4">
                 <label class="fw-medium fs-3">Servizi</label>
                 <p class="mb-3">Almeno un servizio</p>
-                <div class="row px-2 d-flex gap-3">
+                <div class=" d-flex flex-column gap-2">
                     @foreach ($services as $service)
                         <div class="form-check col-3 ">
                             <div class="user-select-none d-flex">
@@ -150,13 +153,12 @@
             </div>
 
             {{-- categorie --}}
-            <div class="mt-5">
+            <div class="container mt-5">
                 <label class="mb-4 fw-medium fs-3">Quale di queste opzioni descrive meglio il tuo alloggio?</label>
-                <div class="row px-2 d-flex gap-3">
+                <div class="row px-0 gap-0">
                     @foreach ($categories as $category)
-                        <div class="form-check col-3 px-0">
-                            <button
-                                class="btn border border-2 border-secondary-subtle rounded-4 px-3 py-4 my-button-categories
+                        <div class="form-check col-6 col-md-4 col-lg-3 p-2 mx-0">
+                            <button class="btn border border-2 border-secondary-subtle rounded-4 py-4 my-button-categories w-100
                             @if ($errors->any()) {{ in_array($category->id, old('categories', [])) ? 'selected-category' : '' }}
                             @else
                                 {{ $apartment->categories->contains($category) ? 'selected-category' : '' }} @endif"
@@ -164,7 +166,7 @@
                                 <label class="d-flex flex-column align-items-center gap-2 my-radio-label form-check-label"
                                     for="category-{{ $category->id }}">
                                     <img src="{{ $category->icon }}" class="my-icon" alt="">
-                                    <div class="fs-5">{{ $category->title }}</div>
+                                    <div class="fs-6">{{ $category->title }}</div>
                                     <input type="radio" name="categories[]" value="{{ $category->id }}"
                                         class="my-radio form-check-input my-input-form fs-5"
                                         id="category-{{ $category->id }}"
