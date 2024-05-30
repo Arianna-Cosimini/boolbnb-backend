@@ -7,6 +7,8 @@ $fa-font-path: "~fontawesome/webfonts";
 @import "~fontawesome/scss/regular";
 @import "~fontawesome/scss/solid";
 
+
+
 .button-red {
     background-color: $primaryColor;
 
@@ -44,6 +46,7 @@ ul.list li {
     border-bottom: 1px solid #d3d3d3;
     cursor: pointer;
 }
+
 ul.list li:first-child {
     border-radius: 0.375rem 0.375rem 0 0;
 }
@@ -116,9 +119,11 @@ label.form-check-label:focus,
     0% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.2);
     }
+
     100% {
         transform: scale(1);
     }
@@ -140,50 +145,55 @@ label.form-check-label:focus,
 }
 
 #visible:not(:checked) {
-    background-color: white; /* Colore di sfondo nero per lo switch non selezionato */
+    background-color: white;
+    /* Colore di sfondo nero per lo switch non selezionato */
     border: 1px solid black;
 }
+
 /* Aggiustamenti per la maniglia dello switch */
-#visible:not(:checked) + .form-check-label::before {
-    background-color: white; /* Colore della maniglia dello switch non selezionato */
+#visible:not(:checked)+.form-check-label::before {
+    background-color: white;
+    /* Colore della maniglia dello switch non selezionato */
     border: 1px solid black;
 }
+
 /* Aggiustamenti per la maniglia dello switch quando è selezionato */
-#visible:checked + .form-check-label::before {
-    background-color: white; /* Colore della maniglia dello switch selezionato */
+#visible:checked+.form-check-label::before {
+    background-color: white;
+    /* Colore della maniglia dello switch selezionato */
 }
 
 .button-nav {
     margin-top: 20px;
     padding-top: 20px;
-  
+
     .pagination-container {
-      display: flex;
-      column-gap: 10px;
+        display: flex;
+        column-gap: 10px;
     }
-  
+
     .paginate-buttons {
-      height: 40px;
-      width: 40px;
-      border-radius: 20px;
-      cursor: pointer;
-      background-color: transparent;
-      border: 1px solid rgb(255, 255, 255);
-      color: rgb(0, 0, 0);
+        height: 40px;
+        width: 40px;
+        border-radius: 20px;
+        cursor: pointer;
+        background-color: transparent;
+        border: 1px solid rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
     }
-  
+
     .paginate-buttons:hover {
-      background-color: #f7f7f7;
+        background-color: #f7f7f7;
     }
-  
+
     .active-page {
-      background-color: black;
-      border: 1px solid black;
-      color: white;
-      pointer-events: none;
+        background-color: black;
+        border: 1px solid black;
+        color: white;
+        pointer-events: none;
     }
-  
+
     .active-page:hover {
-      background-color: black;
+        background-color: black;
     }
-  }
+}
