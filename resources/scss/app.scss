@@ -213,3 +213,25 @@ label.form-check-label:focus,
     filter: invert(1);
     transition: 0.2s ease;
 }
+
+/**************** set Scroll bar style  *************/
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #ccc; 
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #999; 
+}
