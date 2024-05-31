@@ -4,11 +4,14 @@
 
 <div class="container py-5">
       
-    <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb" class="d-none d-md-block">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{url('admin')}}" class="text-black">Dashboard</a></li>
         <li class="breadcrumb-item active" aria-current="page">Le tue strutture</li>
       </ol>
+    </nav>
+    <nav class="d-block d-md-none mb-3">
+        <a href="{{ route('admin.index') }}" class="text-decoration-none text-black"><i class="fa-solid fa-chevron-left me-2"></i>Indietro</a>
     </nav>
 
     <h1 class="mb-4 fs-2">Le tue strutture</h1>
@@ -64,7 +67,7 @@
         @foreach ($apartments as $apartment)
         <div class="row apartment-card d-flex flex-column flex-md-row p-3 rounded-4">
             <div class="left col-12 col-md-2 mb-3 mb-md-0 px-0">
-                <img src="{{ $apartment->cover_image ? asset('storage/' . $apartment->cover_image) : asset('placeholder/Placeholder.png') }}" class="apartment-img w-100 rounded-3" style="height: 144px;" alt="{{ $apartment->name }}">
+                <a href="{{ route('admin.apartments.show', $apartment->slug) }}"><img src="{{ $apartment->cover_image ? asset('storage/' . $apartment->cover_image) : asset('placeholder/Placeholder.png') }}" class="apartment-img w-100 rounded-3" style="height: 144px;" alt="{{ $apartment->name }}"></a>
             </div>
             <div class="right position-relative col-12 col-md-10 ps-0 ps-md-4 pe-0">
                 <h6 class="my-1">{{ $apartment->name }}</h6>

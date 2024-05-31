@@ -59,7 +59,7 @@ Route::middleware(['auth', 'verified'])
         Route::get('messages/{id}', [MessageController::class, 'show'])->name('messages.show');
 
         // Rotta per la sponsorizzazione
-        Route::resource('sponsorships', SponsorshipController::class, ['except' => ['show']]);
+        Route::resource('sponsorships', SponsorshipController::class);
         // Rotta per la modifica della sponsorizzazione
         Route::get('sponsorships/{apartment_id}/{sponsorship_id}/edit', [SponsorshipController::class, 'edit'])->name('sponsorships.edit');
         // Rotta per l'aggiornamento della sponsorizzazione

@@ -6,7 +6,7 @@
         <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
       </ol>
       
-      <div class="cover w-100 d-flex flex-column-reverse bg-body-secondary p-5 rounded-4 position-relative" style="height: 350px;">
+      <div class="cover w-100 d-flex flex-column-reverse bg-body-secondary p-4 p-md-5 rounded-4 position-relative" style="height: 350px;">
         <div class="background-image position-absolute w-100 h-100" style="background-image: url('./Illustration_cover.webp'); background-size: cover; filter: brightness(0.8); top: 0; left: 0; z-index: 0; border-radius: 0.5rem;"></div>
 
         <div class="content position-relative">
@@ -29,10 +29,12 @@
      
       <div class="feature-item">
         <h2 class="h4">Le tue Statistiche</h2>
-        <p>Guarda come procede la visualizzazione totale dei tuoi appatamenti</p>
+        <p>Guarda come procede la visualizzazione dei tuoi appatamenti</p>
         <a href="{{ route('admin.visited.index') }}" class="btn button-black text-white">Statistiche</a>
     </div>
   </div>
   
 </div>
+
+
 @endsection
