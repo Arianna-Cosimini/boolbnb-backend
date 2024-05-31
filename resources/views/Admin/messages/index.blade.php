@@ -81,7 +81,8 @@
 
                                                     
                                                     
-                                                    <div class="modal-message-detail-content px-3 py-4 border border-1 rounded-2 mb-4 text-white" style="background-color: #222">
+                                                    <div class="modal-message-detail-content px-3 py-4 border border-1 rounded-2 mb-4 text-white position-relative" style="background-color: #222">
+                                                        <span class="message-text text-white small message-date position-absolute" style="right: 20px; top: 28px">{{ $message->created_at->format('H:i') }}</span>
                                                     <p class="message-name mb-1 fs-5">{{ $message->name }} {{ $message->surname }}</p>
                                                     <p class="message-text mb-0 text-white"
                                                         id="modal-message-text{{ $message->id }}"
@@ -219,6 +220,9 @@
                 const content = message.querySelector('.message-content').innerText;
 
                 const date = new Date(dateTimeString);
+
+                date.setHours(date.getHours() + 2);
+
                 const formattedDate = date.toLocaleDateString('it-IT', {
                     day: '2-digit',
                     month: 'short',
