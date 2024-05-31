@@ -50,7 +50,7 @@ class ApartmentController extends Controller
         }])->withCount('services');
 
         $apartments = $query->get();
-        
+
 
         return view('admin.apartments.index', compact('apartments', 'filter'));
     }
@@ -108,47 +108,52 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        if (Auth::user()->id != $apartment->user_id)
-        return redirect()->route('admin.apartments.index', compact('apartment'))->with('warning', 'Ci dispiace, questo appartamento non esiste');
+        if (Auth::user()->id != $apartment->user_id) {
+            return redirect()->route('admin.apartments.index')->with('warning', 'Ci dispiace, questo appartamento non esiste');
+        }
 
-        $user = User::where('user_id', $apartment->user_id);
+        // Ottieni le visualizzazioni per questo appartamento
+        $views = View::where('apartment_id', $apartment->id)
+            ->select('id', 'apartment_id', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->groupBy(function ($view) {
+                return Carbon::parse($view->created_at)->format('M');
+            });
 
-        /* $apartments = Apartment::where('user_id', $user->id)->pluck('id');   */
+        // Ottieni i messaggi per questo appartamento
+        $messages = Message::where('apartment_id', $apartment->id)
+            ->select('id', 'apartment_id', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->groupBy(function ($message) {
+                return Carbon::parse($message->created_at)->format('M');
+            });
 
-        $views = View::whereIn('apartment_id', $apartment)
-        ->select('id', 'apartment_id', 'created_at')
-        ->orderBy('created_at', 'desc')  // Optional: Order by creation date (desc)
-        ->get()
-        ->groupBy(function ($view) {
-            return Carbon::parse($view->created_at)->format('M');
-        });
-
-        $messages = Message::whereIn('apartment_id', $apartment)
-        ->select('id', 'apartment_id', 'created_at')
-        ->orderBy('created_at', 'desc')  // Optional: Order by creation date (desc)
-        ->get()
-        ->groupBy(function ($message) {
-            return Carbon::parse($message->created_at)->format('M');
-        });
+        // Preparare i dati per i grafici
         $months = [];
         $monthCount = [];
-        foreach($views as $month => $values ){
+        foreach ($views as $month => $values) {
             $months[] = $month;
             $monthCount[] = count($values);
         }
-        
-        /* $messages_no = []; */
-        $messageCount=[];
-        foreach($messages as $message => $value){
-            /* $messages_no [] = $month; */
-            $messageCount[] = count($values);
+
+        $messageCount = [];
+        foreach ($messages as $message => $value) {
+            $messageCount[] = count($value);
         }
+
         $months = array_reverse($months);
-        
+
+        // Calcolare i totali
+        $totalViews = array_sum($monthCount);
+        $totalMessages = array_sum($messageCount);
+
         $serviceCount = $apartment->services->count();
 
-        return view('admin.apartments.show', compact('apartment','views','messages','months','monthCount','messageCount', 'serviceCount'));
+        return view('admin.apartments.show', compact('apartment', 'views', 'messages', 'months', 'monthCount', 'messageCount', 'totalViews', 'totalMessages', 'serviceCount'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -156,7 +161,7 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         if (Auth::user()->id != $apartment->user_id)
-        return redirect()->route('admin.apartments.index', compact('apartment'))->with('warning', 'Ci dispiace, questo appartamento non esiste');
+            return redirect()->route('admin.apartments.index', compact('apartment'))->with('warning', 'Ci dispiace, questo appartamento non esiste');
 
         $user = User::where('user_id', $apartment->user_id);
         $services = Service::all();
@@ -193,7 +198,6 @@ class ApartmentController extends Controller
 
         $apartment->save();
         return redirect()->route('admin.apartments.show', compact('apartment'))->with('success', 'Annuncio aggiornato con successo');
-
     }
 
     /**
