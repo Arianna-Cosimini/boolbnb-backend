@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Boolbnb | Admin</title>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -19,6 +19,7 @@
     <!-- Bootstrap JavaScript (Popper.js included) -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
+    <link rel="icon" href="{{Vite::asset('/resources/img/favicon.svg')}}" type="logo">
 
 
     <!-- Fonts -->
@@ -40,7 +41,7 @@
     <div id="app">
 
 
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm px-5">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm px-2 px-sm-3 px-md-4 px-lg-5">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('http://localhost:5174/') }}">
                     <div class="logo_laravel">
