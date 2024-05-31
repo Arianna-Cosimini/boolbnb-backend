@@ -145,8 +145,9 @@ class ApartmentController extends Controller
         }
         $months = array_reverse($months);
         
+        $serviceCount = $apartment->services->count();
 
-        return view('admin.apartments.show', compact('apartment','views','messages','months','monthCount','messageCount',));
+        return view('admin.apartments.show', compact('apartment','views','messages','months','monthCount','messageCount', 'serviceCount'));
     }
 
     /**
