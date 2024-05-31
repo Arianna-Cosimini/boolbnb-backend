@@ -113,7 +113,7 @@
                     <div class="ps-2">
                         <!-- Button trigger modal -->
                         <button type="button" class="my-show-button btn bg-white text-black border border-1 border-black" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                            Mostra tutti e i servizi
+                            Mostra tutti e {{ $serviceCount }} i servizi
                         </button>
     
                         <!-- Modal -->
