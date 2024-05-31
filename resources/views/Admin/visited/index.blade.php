@@ -5,18 +5,18 @@
         <nav aria-label="breadcrumb" class="d-none d-md-block">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-black">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Visualizzazioni</li>
+                <li class="breadcrumb-item active" aria-current="page">Statistiche</li>
             </ol>
         </nav>
         <nav class="d-block d-md-none mb-3">
             <a href="{{ route('admin.apartments.index') }}" class="text-decoration-none text-black"><i class="fa-solid fa-chevron-left me-2"></i>Indietro</a>
         </nav>
 
-        <div class="row flex-column align-items-center">
+        <div class="row flex-column">
             <!-- Colonna degli Appartamenti -->
-            <div class="apartments-column d-flex flex-column align-items-center col-12 col-lg-6 py-3 pe-4">
-                <h1 class="fs-3 mb-5">Appartamenti</h1>
-                <select id="apartmentSelect" class="form-select w-100">
+            <div class="apartments-column d-flex flex-column py-3 pe-4">
+                <h1 class="fs-3 mb-4 mb-md-5">Statistiche</h1>
+                <select id="apartmentSelect" class="form-select">
                     @if ($apartments->isEmpty())
                         <option value="">Non ci sono appartamenti da visualizzare</option>
                     @else
@@ -33,16 +33,14 @@
             </div>
 
             <!-- Colonna delle Visualizzazioni -->
-            <div class="col-12 col-lg-9">
-                <div class="views-column text-center w-100 py-3 pe-4">
-                    <h1 class="fs-3 mb-5">Visualizzazioni</h1>
+            <div class="col-12">
+                <div class="views-column mt-5">
                     <canvas id="viewsChart"></canvas>
                     <div id="apartmentTotalViews" class="apartment-total-views mt-4 text-center">
                     </div>
                     <div id="viewsCount" class="views-count mt-2 text-end text-center">
-                        Il tuo appartamento ha ottenuto: <br>
                         <span id="viewsCountValue" class="display-1 fw-bold">0</span> <br>
-                        Visualizzazioni
+                        visualizzazioni negli ultimi 12 mesi
                     </div>
                 </div>
             </div>

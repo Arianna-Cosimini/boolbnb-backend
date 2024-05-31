@@ -5,8 +5,7 @@
         <nav aria-label="breadcrumb" class="d-none d-md-block">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-black">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.apartments.index') }}" class="text-black">I tuoi
-                        annunci</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.apartments.index') }}" class="text-black">Le tue strutture</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $apartment->name }}</li>
             </ol>
         </nav>
@@ -152,11 +151,23 @@
                 <div class="modal-body col-12 col-lg-6 pe-lg-5 px-3 px-lg-0 mb-5">
                     <p class="fs-6">Visite</p>
                     <canvas id="viewsChart"></canvas>
+                    <div id="apartmentTotalViews" class="apartment-total-views mt-4 text-center">
+                    </div>
+                    <div id="viewsCount" class="views-count mt-2 text-end text-center">
+                        <span id="viewsCountValue" class="display-1 fw-bold">0</span> <br>
+                        visualizzazioni negli ultimi 12 mesi
+                    </div>
                 </div>
 
                 <div class="modal-body col-12 col-lg-6 ps-lg-5 px-3 px-lg-0 mb-5">
                     <p class="fs-6">Messaggi</p>
                     <canvas id="messagesChart"></canvas>
+                    <div id="apartmentTotalViews" class="apartment-total-views mt-4 text-center">
+                    </div>
+                    <div id="viewsCount" class="views-count mt-2 text-end text-center">
+                        <span id="viewsCountValue" class="display-1 fw-bold">0</span> <br>
+                        Messaggi negli ultimi 12 mesi
+                    </div>
                 </div>
               
         </div>
