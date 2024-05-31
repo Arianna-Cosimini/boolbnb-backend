@@ -103,12 +103,41 @@
             <div class="mb-4">
                 <label class="mb-3 fw-medium fs-5">Servizi</label>
                 <div class="row d-flex row-gap-3">
-                    @foreach ($apartment->services as $key => $service)
+                    @foreach ($apartment->services->take(6) as $key => $service)
                         <div class="col-6 col-lg-4 d-flex gap-2 align-items-center">
                             <img src="{{ $service->icon }}" alt="">
                             <span>{{ $service->title }}</span>
                         </div>
                     @endforeach
+
+                    <div class="ps-2">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="my-show-button btn bg-white text-black border border-1 border-black" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                            Mostra tutti e i servizi
+                        </button>
+    
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content vw-100">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Servizi</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row d-flex row-gap-3">
+                                        @foreach ($apartment->services as $key => $service)
+                                            <div class="col-6 d-flex gap-2 align-items-center">
+                                                <img src="{{ $service->icon }}" alt="">
+                                                <span>{{ $service->title }}</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>

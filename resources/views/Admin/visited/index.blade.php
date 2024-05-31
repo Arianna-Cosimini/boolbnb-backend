@@ -33,7 +33,7 @@
             </div>
 
             <!-- Colonna delle Visualizzazioni -->
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-9">
                 <div class="views-column text-center w-100 py-3 pe-4">
                     <h1 class="fs-3 mb-5">Visualizzazioni</h1>
                     <canvas id="viewsChart"></canvas>
