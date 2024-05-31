@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        <div class="apartment-title d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 align-items-md-end mb-4">
+        <div class="apartment-title d-flex flex-column flex-lg-row justify-content-between align-items-start gap-3 align-items-lg-end mb-4">
             <div class="header">
                 <h1 class="fs-3 mb-0">{{ $apartment['name'] }}</h1>
 
