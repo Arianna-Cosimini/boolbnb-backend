@@ -14,10 +14,10 @@
             <a href="{{ route('admin.apartments.index') }}" class="text-decoration-none text-black"><i class="fa-solid fa-chevron-left me-2"></i>Indietro</a>
         </nav>
 
-        <h1 class="mb-3 fs-2">Aggiungi struttura</h1>
+        <h1 class="mb-4 fs-2">Aggiungi struttura</h1>
 
         {{-- form --}}
-        <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data" class="py-5"
+        <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data" class="pb-5"
             onsubmit="return validateForm()">
             @csrf
 

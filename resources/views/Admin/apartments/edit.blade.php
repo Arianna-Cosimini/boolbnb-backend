@@ -6,8 +6,7 @@
         <nav aria-label="breadcrumb" class="d-none d-md-block">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-black">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.apartments.index') }}" class="text-black">I tuoi
-                        annunci</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.apartments.index') }}" class="text-black">Le tue strutture</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.apartments.show', $apartment) }}"
                         class="text-black">{{ $apartment->name }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Modifica struttura</li>
@@ -17,10 +16,10 @@
             <a href="{{ route('admin.apartments.show', $apartment) }}" class="text-decoration-none text-black"><i class="fa-solid fa-chevron-left me-2"></i>Indietro</a>
         </nav>
 
-        <h1 class="mb-3 fs-2">Modifica struttura</h1>
+        <h1 class="mb-4 fs-2">Modifica struttura</h1>
 
         {{-- form --}}
-        <form action="{{ route('admin.apartments.update', $apartment) }}" method="POST" class="py-5"
+        <form action="{{ route('admin.apartments.update', $apartment) }}" method="POST" class="pb-5"
             enctype="multipart/form-data" onsubmit="return validateForm()">
             @csrf
             @method('PUT')
