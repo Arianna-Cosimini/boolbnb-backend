@@ -44,6 +44,7 @@
                                 data-message-id="{{ $message->id }}" data-apartment-id="{{ $message->apartment_id }}">
                                 <div class="name-date d-flex justify-content-between">
                                     <span class="message-text text-black message-name"
+                                    
                                         style="overflow: hidden; text-black text-overflow: ellipsis; white-space: nowrap;"><span class="fw-normal" style="font-size: 18px">{{ $message->name }} {{ $message->surname }}</span></span>
                                     <span
                                         class="message-text small message-date">{{ $message->created_at->format('d-m-Y') }}</span>
@@ -82,7 +83,13 @@
                                                     
                                                     
                                                     <div class="modal-message-detail-content px-3 py-4 border border-1 rounded-2 mb-4 text-white position-relative" style="background-color: #222">
-                                                        <span class="message-text text-white small message-date position-absolute" style="right: 20px; top: 28px">{{ $message->created_at->format('H:i') }}</span>
+                                                        <?php
+                                                        $created_at = $message->created_at; 
+                                                            $timestamp = strtotime($created_at);
+                                                            $righthour = $timestamp + 2 * 3600;
+                                                            $formattedtime = date('H:i', $righthour);
+                                                        ?>
+                                                        <span class="message-text text-white small message-date position-absolute" style="right: 20px; top: 28px">{{ $formattedtime }}</span>
                                                     <p class="message-name mb-1 fs-5">{{ $message->name }} {{ $message->surname }}</p>
                                                     <p class="message-text mb-0 text-white"
                                                         id="modal-message-text{{ $message->id }}"
