@@ -19,9 +19,9 @@ class ApartmentController extends Controller
 
         $query = Apartment::select('apartments.*')
             ->selectRaw("(6371 * acos(cos(radians($lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($lon)) + sin(radians($lat)) * sin(radians(latitude)))) AS distance")
-            ->join('apartment_sponsorship', function($join) {
+            ->join('apartment_sponsorship', function ($join) {
                 $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
-                     ->where('apartment_sponsorship.end_date', '>', Carbon::now());
+                    ->where('apartment_sponsorship.end_date', '>', Carbon::now());
             })
             ->having('distance', '<=', $range)
             ->orderBy('distance')
@@ -29,7 +29,7 @@ class ApartmentController extends Controller
 
         $query->where('visible', 1);
 
-        $apartments = $query->paginate(12); 
+        $apartments = $query->paginate(12);
 
         return response()->json([
             "success" => true,
@@ -40,21 +40,17 @@ class ApartmentController extends Controller
 
     public function show($slug)
     {
+
         // Coordinate di default
         $lat = 44.4949;
         $lon = 11.3426;
-        $range = 20; // 20 km
-
+       
         $apartment = Apartment::select('apartments.*')
-        ->selectRaw("(6371 * acos(cos(radians($lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($lon)) + sin(radians($lat)) * sin(radians(latitude)))) AS distance")
-        ->join('apartment_sponsorship', function($join) {
-            $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
-                 ->where('apartment_sponsorship.end_date', '>', Carbon::now());
-        })
-        ->having('distance', '<=', $range)
-        ->orderBy('distance')
-        ->with(['user', 'message', 'view', 'services', 'categories', 'sponsorships'])->where('slug', '=', $slug)->first();
-
+            ->selectRaw("(6371 * acos(cos(radians($lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($lon)) + sin(radians($lat)) * sin(radians(latitude)))) AS distance")
+            ->where('slug', '=', $slug)
+            ->orderBy('distance')
+            ->with(['user', 'message', 'view', 'services', 'categories', 'sponsorships'])
+            ->first();
 
         if ($apartment) {
             return response()->json([
@@ -64,7 +60,7 @@ class ApartmentController extends Controller
         } else {
             return response()->json([
                 "success" => false,
-                "error" => "Progetto non trovato"
+                "error" => "Appartamento non trovato"
             ]);
         }
     }
