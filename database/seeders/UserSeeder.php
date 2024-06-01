@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
                 'name' => 'Gian Marco',
                 'surname' => 'Pimentel',
                 'email' => 'gian@gmail.com',
-                'photo' => '',
+                'photo' => 'users/gian-marco.png',
                 'birth_date' => '1996/12/11',
                 'password' => '$2y$10$XoHFKD0.f4e83Cb.HPemcea1M13wrqV12cq0Yt8cLCSk4OO96lt4e',
                 // pass=>12345678
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
                 'name' => 'Vincenzo',
                 'surname' => 'Sergi',
                 'email' => 'vin@gmail.com',
-                'photo' => '',
+                'photo' => 'users/vincenzo.jpeg',
                 'birth_date' => '1996/12/11',
                 'password' => '$2y$10$XoHFKD0.f4e83Cb.HPemcea1M13wrqV12cq0Yt8cLCSk4OO96lt4e',
                 // pass=>12345678
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
                 'name' => 'Arianna',
                 'surname' => 'Cosimini',
                 'email' => 'ari@gmail.com',
-                'photo' => '',
+                'photo' => 'users/arianna.jpeg',
                 'birth_date' => '1996/12/11',
                 'password' => '$2y$10$XoHFKD0.f4e83Cb.HPemcea1M13wrqV12cq0Yt8cLCSk4OO96lt4e',
                 // pass=>12345678
@@ -52,7 +52,7 @@ class UserSeeder extends Seeder
                 'name' => 'Federico',
                 'surname' => 'Dibitonto',
                 'email' => 'fe@gmail.com',
-                'photo' => '',
+                'photo' => 'users/federico.jpeg',
                 'birth_date' => '1996/12/11',
                 'password' => '$2y$10$XoHFKD0.f4e83Cb.HPemcea1M13wrqV12cq0Yt8cLCSk4OO96lt4e',
                 // pass=>12345678
@@ -60,8 +60,8 @@ class UserSeeder extends Seeder
             ],
 
         ];
-        
-        foreach($users as $user) {
+
+        foreach ($users as $user) {
             $newUser = new User();
 
             $newUser->name = $user['name'];
@@ -72,6 +72,6 @@ class UserSeeder extends Seeder
             $newUser->password = $user['password'];
 
             $newUser->save();
-        } 
+        }
     }
 }

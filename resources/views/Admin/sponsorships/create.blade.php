@@ -46,15 +46,16 @@
                 <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
                     @foreach ($sponsorships as $sponsorship)
                         <div class="col">
-                            <div class="card px-3 h-100 text-center card-selectable sponsorship-card">
+                            <div class="card px-3 pt-2 pb-4 h-100 text-center rounded-4 card-selectable sponsorship-card">
                                 <div class="card-body">
                                     <input type="radio" name="sponsorships[]" value="{{ $sponsorship->id }}"
                                         class="form-check-input d-none" id="sponsorship-{{ $sponsorship->id }}"
                                         {{ in_array($sponsorship->id, old('sponsorships', [])) ? 'checked' : '' }}>
                                     <label for="sponsorship-{{ $sponsorship->id }}" class="form-check-label d-block">
-                                        <h5 class="card-title">{{ $sponsorship->title }}</h5>
+                                        <h4 class="card-title">{{ $sponsorship->title }}</h4>
+                                        <hr class="opacity-100">
+                                        <p class="card-text display-4">€ {{ $sponsorship->price }}</p>
                                         <p class="card-text fw-light">{{ $sponsorship->description }}</p>
-                                        <p class="card-text fs-1">€ {{ $sponsorship->price }}</p>
                                     </label>
                                 </div>
                             </div>

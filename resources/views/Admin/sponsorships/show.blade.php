@@ -14,7 +14,7 @@
     
         <p>Ora il tuo appartamento avrà una visibilità maggiore del 25%</p>
       
-        <a href="{{route('admin.index')}}" type="button" class="btn my-btn">Torna alla Home</a>
+        <a href="{{route('admin.apartments.index')}}" type="button" class="btn my-btn">Torna alle tue strutture</a>
       </div>
       
       
@@ -54,9 +54,8 @@
     transition: 0.3 ease;
    }
    .my-btn:hover{
-    background-color: #ff385c;
+    background-color: #de1361;
     color: white;
-    transform: scale(1.1);
    }
    
   

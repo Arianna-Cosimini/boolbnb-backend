@@ -11,20 +11,22 @@ class Apartment extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['name','room_number','bed_number','bathroom_number','square_meters','address','latitude','longitude','visible'];
+    protected $fillable = ['name', 'description', 'room_number', 'bed_number', 'bathroom_number', 'square_meters', 'address', 'latitude', 'longitude', 'visible'];
 
     //chance to read the connected tables:
-    
+
     //connection one-to many :
 
     //with users
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
     //with messages
-    public function message() {
+    public function message()
+    {
 
         // add connection one to many to the apartments
 
@@ -32,7 +34,8 @@ class Apartment extends Model
     }
 
     //with views
-    public function view() {
+    public function view()
+    {
 
         // add connection one to many to the apartments
 
@@ -40,16 +43,19 @@ class Apartment extends Model
     }
 
 
-    public function services() {
+    public function services()
+    {
         return $this->belongsToMany(Service::class);
     }
 
-    public function categories() {
+    public function categories()
+    {
         return $this->belongsToMany(Category::class);
     }
 
-    public function sponsorships() {
+    public function sponsorships()
+    {
         return $this->belongsToMany(Sponsorship::class, 'apartment_sponsorship')
-                    ->withPivot('start_date', 'end_date', 'apartment_id', 'sponsorship_id');
+            ->withPivot('start_date', 'end_date', 'apartment_id', 'sponsorship_id');
     }
 }

@@ -55,8 +55,8 @@
                 <div class="left d-flex gap-3 align-items-top ps-0 ps-md-4">
                         <img src="{{ asset('ads/sponsorship_img.svg') }}" class="cover-img d-none d-md-inline-block" style="width: 40px;" alt="">
                     <div class="ps-3">
-                        <h5 class="fs-6 mb-0">Aumenta la visibilità del tuo appartamento</h5>
-                        <p class="m-0">In media un appartamento sponsorizzato ha il 25% di visualizzazioni in più</p>
+                        <h5 class="fs-6 mb-0">Aumenta la visibilità della tua struttura</h5>
+                        <p class="m-0">In media una struttura sponsorizzata ha il 25% di visualizzazioni in più</p>
                     </div>
                 </div>        
             </div>

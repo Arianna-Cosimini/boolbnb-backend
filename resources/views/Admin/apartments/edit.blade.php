@@ -88,7 +88,7 @@
                 <input type="number" class="form-control @error('room_number') is-invalid @enderror" id="room_number"
                     name="room_number" placeholder="0" min="0" max="10"
                     value="{{ old('room_number') ?? $apartment->room_number }}">
-                <label for="room_number">Numero di stanze<span class="required">*</span></label>
+                <label for="room_number">Numero di camere da letto<span class="required">*</span></label>
                 @error('room_number')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -99,7 +99,7 @@
                 <input type="number" class="form-control @error('bed_number') is-invalid @enderror" id="bed_number"
                     name="bed_number" placeholder="0" min="0" max="20"
                     value="{{ old('bed_number') ?? $apartment->bed_number }}">
-                <label for="bed_number">Numero di posti letto<span class="required">*</span></label>
+                <label for="bed_number">Numero di letti<span class="required">*</span></label>
                 @error('bed_number')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -181,7 +181,8 @@
 
             {{-- visibilità --}}
             <div class="mt-5">
-                <label class="mb-4 fw-medium fs-3">Vuoi rendere visibile questo annuncio?</label>
+                <label class="mb-4 fw-medium fs-3">Visibilità</label>
+                <p>Puoi decidere se mostrare o meno la tua struttura nei risultati di ricerca</p>
                 <div class="form-check form-switch">
                     <input class="form-check-input @error('visible') is-invalid @enderror" type="checkbox"
                         role="switch" id="visible" name="visible" value="1"

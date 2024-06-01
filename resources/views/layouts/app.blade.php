@@ -41,7 +41,7 @@
     <div id="app">
 
 
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm px-2 px-sm-3 px-md-4 px-lg-5">
+        <nav class="navbar navbar-expand-md navbar-light bg-white px-2 px-sm-3 px-md-4 px-lg-5">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('http://localhost:5174/') }}">
                     <div class="logo_laravel">
