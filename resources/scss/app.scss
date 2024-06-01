@@ -214,6 +214,10 @@ label.form-check-label:focus,
     transition: 0.2s ease;
 }
 
+.btn-register:hover {
+    background-color: #f7f7f7 !important;
+}
+
 /**************** set Scroll bar style  *************/
 /* width */
 ::-webkit-scrollbar {
@@ -227,11 +231,11 @@ label.form-check-label:focus,
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #ccc; 
+    background: #ccc;
     border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #999; 
+    background: #999;
 }

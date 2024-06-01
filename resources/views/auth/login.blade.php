@@ -64,7 +64,7 @@
                                 @endif
                             </div>
                             <div class="col-md-8 mt-4 offset-md-4   ">
-                            <a href="{{route('register')}}" type="submit" class="btn border border-1  a-red">
+                            <a href="{{route('register')}}" type="submit" class="btn-register btn border border-1  a-red">
                                 Non hai un account? Registrati
                             </a>
                             </div>
@@ -76,3 +76,5 @@
     </div>
 </div>
 @endsection
+
+

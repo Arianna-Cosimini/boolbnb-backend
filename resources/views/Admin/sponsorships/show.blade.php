@@ -54,9 +54,8 @@
     transition: 0.3 ease;
    }
    .my-btn:hover{
-    background-color: #ff385c;
+    background-color: #de1361;
     color: white;
-    transform: scale(1.1);
    }
    
   
