@@ -14,7 +14,7 @@
     
         <p>Ora il tuo appartamento avrà una visibilità maggiore del 25%</p>
       
-        <a href="{{route('admin.index')}}" type="button" class="btn my-btn">Torna alla Home</a>
+        <a href="{{route('admin.apartments.index')}}" type="button" class="btn my-btn">Torna alle tue strutture</a>
       </div>
       
       
