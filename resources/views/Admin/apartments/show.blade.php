@@ -176,9 +176,11 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
-            const months = {!! json_encode($months) !!};
-            const monthCount = {!! json_encode($monthCount) !!};
-            const messageCount = {!! json_encode($messageCount) !!};
+            const months = ['Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic', 'Gen', 'Feb',
+                'Mar', 'Apr', 'Mag'
+            ];
+            const monthCount = {!! json_encode($monthCount) !!}; // Adjust this data to match the new order if needed
+            const messageCount = {!! json_encode($messageCount) !!}; // Adjust this data to match the new order if needed
             const totalViews = {{ $totalViews }};
             const totalMessages = {{ $totalMessages }};
 
