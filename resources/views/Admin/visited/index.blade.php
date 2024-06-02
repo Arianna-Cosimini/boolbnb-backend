@@ -9,7 +9,8 @@
             </ol>
         </nav>
         <nav class="d-block d-md-none mb-3">
-            <a href="{{ route('admin.apartments.index') }}" class="text-decoration-none text-black"><i class="fa-solid fa-chevron-left me-2"></i>Indietro</a>
+            <a href="{{ route('admin.apartments.index') }}" class="text-decoration-none text-black"><i
+                    class="fa-solid fa-chevron-left me-2"></i>Indietro</a>
         </nav>
 
         <div class="row flex-column">
@@ -52,7 +53,6 @@
             display: none;
         }
 
-
         /* Classe per l'appartamento selezionato */
         .selected-apartment {
             background-color: #f0f0f0;
@@ -69,11 +69,15 @@
             const viewsCountElement = document.getElementById('viewsCount');
             const viewsCountValueElement = document.getElementById('viewsCountValue');
 
+            const months = ['Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre', 'Gennaio',
+                'Febbraio', 'Marzo', 'Aprile', 'Maggio'
+            ];
+
             // Inizializza il grafico
             let viewsChart = new Chart(viewsChartElement, {
                 type: 'bar',
                 data: {
-                    labels: {!! json_encode($months) !!},
+                    labels: months,
                     datasets: [{
                         label: '# Visualizzazioni',
                         data: [],
@@ -94,9 +98,6 @@
 
             // Funzione per aggiornare il grafico e le visualizzazioni
             function updateChartAndViews(apartmentName, apartmentViews, monthlyCounts) {
-                // apartmentTotalViewsElement.innerHTML =
-                //     // `Il tuo appartamento ${apartmentName} ha ottenuto: <br> ${apartmentViews} visualizzazioni`;
-
                 viewsChart.data.datasets[0].data = monthlyCounts;
                 viewsChart.update();
 
