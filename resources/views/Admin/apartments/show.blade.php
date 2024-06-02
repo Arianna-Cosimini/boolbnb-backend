@@ -135,32 +135,24 @@
 
         <h1 class="fs-5 mb-3">Statistiche</h1>
 
-        <div class="row d-flex">
-            <div class="modal-body col-12 col-lg-6 px-3 px-lg-0 mb-5">
+        <div class="d-flex flex-wrap">
+            <div class="modal-body col-12 col-lg-6 pe-lg-5 px-3 px-lg-0 mb-5">
                 <p class="fs-6">Visualizzazioni</p>
-                <div class="graphic-views" style="height: 260px">
                     <canvas id="viewsChart"></canvas>
-                </div>
 
-                <div id="apartmentTotalViews" class="apartment-total-views mt-4 text-center">
+                <div id="apartmentTotalViews" class="apartment-total-views mt-2 text-center">
                     <!-- Contatore delle visualizzazioni totali -->
                     <span id="totalViewsCounter" class="display-1 fw-bold">{{ $totalViews }}</span>
                     <br>
                     visualizzazioni negli ultimi 12 mesi
                 </div>
-                {{-- <div id="viewsCount" class="views-count mt-2 text-end text-center">
-                    <span id="viewsCountValue" class="display-1 fw-bold">{{ $totalViews }}</span> <br>
-                    visualizzazioni negli ultimi 12 mesi
-                </div> --}}
             </div>
 
-            <div class="modal-body col-12 col-lg-6 ps-lg-5 px-3 px-lg-0 mb-5">
+            <div class="modal-body col-12 col-lg-6 pe-lg-5 px-3 px-lg-0 mb-5">
                 <p class="fs-6">Messaggi</p>
-                <div class="messages-graphic" style="height: 260px">
                     <canvas id="messagesChart"></canvas>
-                </div>
 
-                <div id="apartmentTotalMessages" class="apartment-total-messages mt-4 text-center">
+                <div id="apartmentTotalMessages" class="apartment-total-messages mt-2 text-center">
                     <!-- Contatore dei messaggi totali -->
                     <span id="totalMessagesCounter" class="display-1 fw-bold">{{ $totalMessages }}</span>
                     <br>
@@ -176,11 +168,9 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
-            const months = ['Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic', 'Gen', 'Feb',
-                'Mar', 'Apr', 'Mag'
-            ];
-            const monthCount = {!! json_encode($monthCount) !!}; // Adjust this data to match the new order if needed
-            const messageCount = {!! json_encode($messageCount) !!}; // Adjust this data to match the new order if needed
+            const months = {!! json_encode($months) !!};
+            const monthCount = {!! json_encode($monthCount) !!};
+            const messageCount = {!! json_encode($messageCount) !!};
             const totalViews = {{ $totalViews }};
             const totalMessages = {{ $totalMessages }};
 
