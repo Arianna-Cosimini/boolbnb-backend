@@ -69,9 +69,9 @@
 
                         <div class="mb-4 row">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Conferma Password') }}<span class="required">*</span></label>
-
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <span id="password-error" class="text-danger" style="display: none;"></span>
                             </div>
                         </div>
 
@@ -124,13 +124,18 @@
     });
 </script>
 <script>
-    document.getElementById("my-form").addEventListener("submit", function(event) {
+       document.getElementById("my-form").addEventListener("submit", function(event) {
         var password = document.getElementById("password").value;
         var confirmPassword = document.getElementById("password-confirm").value;
+        var passwordError = document.getElementById("password-error");
 
         if (password !== confirmPassword) {
-            alert("Le password non corrispondono!");
-            event.preventDefault(); // Previene l'invio del modulo se le password non corrispondono
+            passwordError.textContent = "Le password non corrispondono!";
+            passwordError.style.display = "block";
+            event.preventDefault();
+        } else {
+            passwordError.textContent = "";
+            passwordError.style.display = "none";
         }
     });
 </script>

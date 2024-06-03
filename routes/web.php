@@ -4,7 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserDatasController;
+use App\Http\Controllers\SponsorshipController;
 use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,30 +36,34 @@ require __DIR__ . '/auth.php';
 Route::middleware(['auth', 'verified'])
     ->name('admin.')
     ->prefix('admin')
-    ->group(
-        function () {
+    ->group(function () {
 
-            // Route::get('/admin',[DashboardController::class,'index'])->name('admin');
-            // Route::get('/users',[DashboardController::class,'users'])->name('users');
-        
-            Route::get('/', [DashboardController::class, 'index'])->name('index');
-            Route::resource('apartments', ApartmentController::class)->parameters(['apartments' =>'apartment:slug']);
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
 
-            Route::get('users', [DashboardController::class, 'users'])->name('users');
+        // Braintree
+        Route::get('/sponsorships/payment/token', [SponsorshipController::class, 'getClientToken'])->name('payment.token');
+        Route::post('/sponsorships/payment/process', [SponsorshipController::class, 'processPayment'])->name('payment.process');
 
+        Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
 
+        Route::get('users', [DashboardController::class, 'users'])->name('users');
 
-            //rotta per le views
-            Route::resource('views', ViewController::class);
+        // Rotta per le views
+        Route::resource('visited', ViewController::class);
 
-            //rotta per i messagges
-            Route::resource('messages', MessageController::class);
+        // Rotta per i messaggi
+        Route::resource('messages', MessageController::class);
+        Route::delete('admin/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
 
+        // Rotta per il singolo messaggio
+        Route::get('messages/{id}', [MessageController::class, 'show'])->name('messages.show');
 
-
-        }
-    );
-
-
+        // Rotta per la sponsorizzazione
+        Route::resource('sponsorships', SponsorshipController::class);
+        // Rotta per la modifica della sponsorizzazione
+        Route::get('sponsorships/{apartment_id}/{sponsorship_id}/edit', [SponsorshipController::class, 'edit'])->name('sponsorships.edit');
+        // Rotta per l'aggiornamento della sponsorizzazione
+        Route::put('sponsorships/{apartment_id}/{sponsorship_id}', [SponsorshipController::class, 'update'])->name('sponsorships.update');
+    });
 
 require __DIR__ . '/auth.php';

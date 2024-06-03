@@ -15,41 +15,106 @@ class ServiceSeeder extends Seeder
     {
         $services = [
             [
-                "title"=> "Wi-Fi",
-                "icon"=> "fa-solid fa-wifi",
+                "title" => "Wi-fi",
+                "icon" => "/services/wifi.svg",
             ],
             [
-                "title"=> "TV",
-                "icon"=> "fa-solid fa-tv",
+                "title" => "Aria condizionata",
+                "icon" => "/services/air-conditioning.svg",
             ],
             [
-                "title"=> "Cucina",
-                "icon"=> "fa-solid fa-kitchen-set",
+                "title" => "Barbeque",
+                "icon" => "/services/bbq.svg",
             ],
             [
-                "title"=> "Parcheggio",
-                "icon"=> "fa-solid fa-square-parking",
+                "title" => "Spiaggia",
+                "icon" => "/services/beach-area.svg",
             ],
             [
-                "title"=> "Piscina",
-                "icon"=> "fa-solid fa-water-ladder",
+                "title" => "Estintore",
+                "icon" => "/services/fire-ext.svg",
             ],
             [
-                "title"=> "Ascensore",
-                "icon"=> "fa-solid fa-elevator",
+                "title" => "Camino",
+                "icon" => "/services/fireplace.svg",
             ],
             [
-                "title"=> "Aria condizionata",
-                "icon"=> "fa-solid fa-temperature-arrow-down",
+                "title" => "Kit di pronto soccorso",
+                "icon" => "/services/first-aid-kit.svg",
             ],
             [
-                "title"=> "Vasca da bagno",
-                "icon"=> "fa-solid fa-bath",
+                "title" => "Palestra",
+                "icon" => "/services/gym.svg",
             ],
- 
+            [
+                "title" => "Cucina",
+                "icon" => "/services/kitchen.svg",
+            ],
+            [
+                "title" => "Idromassaggio",
+                "icon" => "/services/hot-tub.svg",
+            ],
+            [
+                "title" => "Lago",
+                "icon" => "/services/lake-area.svg",
+            ],
+            [
+                "title" => "Cena all'aperto",
+                "icon" => "/services/outdoor-dining.svg",
+            ],
+            [
+                "title" => "Parcheggio",
+                "icon" => "/services/parking.svg",
+            ],
+            [
+                "title" => "Parcheggio a pagamento",
+                "icon" => "/services/paid-parking.svg",
+            ],
+            [
+                "title" => "Patio o balcone",
+                "icon" => "/services/patio.svg",
+            ],
+            [
+                "title" => "Pianoforte",
+                "icon" => "/services/piano.svg",
+            ],
+            [
+                "title" => "Tavolo da biliardo",
+                "icon" => "/services/pool-table.svg",
+            ],
+            [
+                "title" => "Piscina",
+                "icon" => "/services/pool.svg",
+            ],
+            [
+                "title" => "Doccia",
+                "icon" => "/services/shower.svg",
+            ],
+            [
+                "title" => "Sci",
+                "icon" => "/services/ski.svg",
+            ],
+            [
+                "title" => "Allarme antifumo",
+                "icon" => "/services/smoke-alarm.svg",
+            ],
+            [
+                "title" => "TV",
+                "icon" => "/services/tv.svg",
+            ],
+            [
+                "title" => "Lavatrice",
+                "icon" => "/services/washing-machine.svg",
+            ],
+            [
+                "title" => "Spazio di lavoro dedicato",
+                "icon" => "/services/workspace.svg",
+            ],
+
+
         ];
 
-        foreach($services as $service) {
+        foreach ($services as $service) {
             $newService = new Service();
             $newService->title = $service['title'];
             $newService->icon = $service['icon'];

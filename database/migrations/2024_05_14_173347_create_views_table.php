@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->date('date');
-            $table->string('id_address', 15);
+            $table->string('ip_address', 20);
             
             $table->timestamps();
         });

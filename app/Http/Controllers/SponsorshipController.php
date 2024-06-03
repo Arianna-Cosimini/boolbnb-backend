@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Sponsorship;
 use App\Http\Requests\StoreSponsorshipRequest;
 use App\Http\Requests\UpdateSponsorshipRequest;
+use App\Models\Apartment;
 use App\Models\ApartmentSponsorship;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class SponsorshipController extends Controller
 {
@@ -15,7 +18,18 @@ class SponsorshipController extends Controller
      */
     public function index()
     {
-        //
+        // Recupera gli appartamenti dell'utente autenticato con sponsorizzazioni attive
+        $apartments = Apartment::where('user_id', Auth::id())
+            ->whereHas('sponsorships', function ($query) {
+                $query->where('end_date', '>', Carbon::now());
+            })
+            ->with(['sponsorships' => function ($query) {
+                $query->where('end_date', '>', Carbon::now());
+            }])
+            ->get();
+
+
+        return view('admin.sponsorships.index', compact('apartments'));
     }
 
     /**
@@ -23,7 +37,27 @@ class SponsorshipController extends Controller
      */
     public function create()
     {
-        //
+        $sponsorships = Sponsorship::all();
+        $apartments = Apartment::where('user_id', Auth::id())
+            ->whereDoesntHave('sponsorships', function ($query) {
+                $query->where('end_date', '>', Carbon::now());
+            })->get();
+
+        // Configurazione di Braintree
+        $gateway = new \Braintree\Gateway([
+            'environment' => config('services.braintree.environment'),
+            'merchantId' => config('services.braintree.merchant_id'),
+            'publicKey' => config('services.braintree.public_key'),
+            'privateKey' => config('services.braintree.private_key')
+        ]);
+
+        // Generazione del client token
+        $clientToken = $gateway->clientToken()->generate();
+
+        // Debug del token
+        // dd($clientToken);
+
+        return view('admin.sponsorships.create', compact('sponsorships', 'apartments', 'clientToken'));
     }
 
     /**
@@ -31,58 +65,154 @@ class SponsorshipController extends Controller
      */
     public function store(StoreSponsorshipRequest $request)
     {
-        $validatedData = $request->validate([
-            'apartment_id' => 'required|integer',
-            'sponsorship_id' => 'required|integer',
-            'end_date' => 'required|date',
+        // Ottenere i dati dalla richiesta
+        $data = $request->validated();
+
+        // Check if the sponsorship for this apartment already exists
+        $existingSponsorship = ApartmentSponsorship::where('apartment_id', $data['apartment_id'])
+            ->where('sponsorship_id', $data['sponsorships'][0])
+            ->first();
+
+        if ($existingSponsorship) {
+            return back()->withErrors('La sponsorizzazione per questo appartamento è già presente.');
+        }
+
+        // Calcolare il prezzo in base alla sponsorizzazione selezionata
+        $sponsorshipPrice = $this->calculateSponsorshipPrice($data['sponsorships'][0]);
+
+        // Configurazione di Braintree
+        $gateway = new \Braintree\Gateway([
+            'environment' => config('services.braintree.environment'),
+            'merchantId' => config('services.braintree.merchant_id'),
+            'publicKey' => config('services.braintree.public_key'),
+            'privateKey' => config('services.braintree.private_key')
         ]);
 
-        $sponsorship = new ApartmentSponsorship($validatedData);
+        // Creazione del nonce del cliente
+        $nonce = $request->payment_method_nonce;
 
+        // Creazione della transazione
+        $result = $gateway->transaction()->sale([
+            'amount' => $sponsorshipPrice,
+            'paymentMethodNonce' => $nonce,
+            'options' => [
+                'submitForSettlement' => true
+            ]
+        ]);
 
+        if ($result->success) {
+            // Creare un nuovo record di ApartmentSponsorship
+            $newSponsorship = new ApartmentSponsorship();
+            $newSponsorship->apartment_id = $data['apartment_id'];
+            $newSponsorship->sponsorship_id = $data['sponsorships'][0];
+            $newSponsorship->start_date = Carbon::now();
+            $newSponsorship->end_date = $this->calculateEndDate($data['sponsorships'][0]);
+            $newSponsorship->save();
 
-        $endDate = Carbon::parse($sponsorship->start_date)->addDays(1);
-        $sponsorship->end_date = $endDate;
-
-        // $currentDate = date("Y-m-d H:i:s");
-
-        // if ($sponsorship->sponsorship_id == 1) {
-        //     $sponsorDate = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($currentDate)));
-        // } else if ($sponsorship->sponsorship_id == 2) {
-        //     $sponsorDate = date("Y-m-d H:i:s", strtotime('+72 hours', strtotime($currentDate)));
-        // } else if ($sponsorship->sponsorship_id == 3) {
-        //     $sponsorDate = date("Y-m-d H:i:s", strtotime('+144 hours', strtotime($currentDate)));
-        // }
-
-        // $sponsorship->end_date = $sponsorDate;
-
-        $sponsorship->save();
-
-        return redirect()->route('admin.apartments.index')->with('success', 'Sponsorship created successfully!');
+            return redirect()->route('admin.sponsorships.show', $newSponsorship->id + 1)->with('success', 'Sponsorizzazione creata con successo.');
+        } else {
+            // Gestire l'errore di transazione
+            return back()->withErrors('La transazione non è riuscita: ' . $result->message);
+        }
     }
+
+    /**
+     * Calcola il prezzo della sponsorizzazione in base all'ID della sponsorizzazione.
+     */
+    private function calculateSponsorshipPrice($sponsorshipId)
+    {
+        // Implementa la logica per calcolare il prezzo in base all'ID della sponsorizzazione
+        // Questo è solo un esempio, sostituiscilo con la tua logica effettiva
+        switch ($sponsorshipId) {
+            case 1:
+                return 2.99; // Prezzo per la sponsorizzazione 1
+            case 2:
+                return 5.99; // Prezzo per la sponsorizzazione 2
+            case 3:
+                return 9.99; // Prezzo per la sponsorizzazione 3
+            default:
+                return 0.00; // Prezzo predefinito nel caso di ID non valido
+        }
+    }
+
+    /**
+     * Calcola la data di fine sponsorizzazione in base all'ID della sponsorizzazione.
+     */
+    private function calculateEndDate($sponsorshipId)
+    {
+        // Implementa la logica per calcolare la data di fine sponsorizzazione
+        // in base all'ID della sponsorizzazione
+        // Questo è solo un esempio, sostituiscilo con la tua logica effettiva
+        $currentDate = Carbon::now();
+        switch ($sponsorshipId) {
+            case 1:
+                return $currentDate->copy()->addHours(24); // Durata di 24 ore
+            case 2:
+                return $currentDate->copy()->addHours(72); // Durata di 72 ore
+            case 3:
+                return $currentDate->copy()->addHours(144); // Durata di 144 ore (6 giorni)
+            default:
+                return null;
+        }
+    }
+
 
     /**
      * Display the specified resource.
      */
     public function show(Sponsorship $sponsorship)
     {
-        //
+        // 
+        return view('admin.sponsorships.show', compact('sponsorship'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Sponsorship $sponsorship)
+    public function edit($apartment_id, $sponsorship_id)
     {
-        //
+        $apartmentSponsorship = ApartmentSponsorship::where('apartment_id', $apartment_id)
+            ->where('sponsorship_id', $sponsorship_id)
+            ->firstOrFail();
+        $sponsorships = Sponsorship::all();
+
+        // dd($apartmentSponsorship);
+
+        return view('admin.sponsorships.edit', compact('apartmentSponsorship', 'sponsorships'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSponsorshipRequest $request, Sponsorship $sponsorship)
+    public function update(UpdateSponsorshipRequest $request, $apartment_id, $sponsorship_id)
     {
-        //
+        $apartmentSponsorship = ApartmentSponsorship::where('apartment_id', $apartment_id)
+            ->where('sponsorship_id', $sponsorship_id)
+            ->firstOrFail();
+
+        $sponsorshipId = $request->input('sponsorship_id');
+        $currentDate = Carbon::now();
+        $endDate = null;
+
+        switch ($sponsorshipId) {
+            case 1:
+                $endDate = $currentDate->copy()->addHours(24);
+                break;
+            case 2:
+                $endDate = $currentDate->copy()->addHours(72);
+                break;
+            case 3:
+                $endDate = $currentDate->copy()->addHours(144);
+                break;
+        }
+
+        $apartmentSponsorship->start_date = $request->input('start_date', $currentDate);
+        $apartmentSponsorship->end_date = $endDate;
+        $apartmentSponsorship->sponsorship_id = $sponsorshipId;
+        
+        $apartmentSponsorship->save();
+
+        return redirect()->route('admin.sponsorships.index')->with('success', 'Sponsorship updated successfully.');
     }
 
     /**

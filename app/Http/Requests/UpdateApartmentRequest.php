@@ -24,15 +24,16 @@ class UpdateApartmentRequest extends FormRequest
         return [
             'name' => 'required | max:255',
             'address' => 'required | max:5000',
+            'description' => 'required | max:5000',
             'room_number' => 'required | integer | between:0,10',
             'bed_number' => 'required | integer | between:0,20',
             'bathroom_number' => 'required | integer | between:0,5',
             'square_meters' => 'required | integer | between:0,500',
-            'cover_image' => 'file|max:1024|nullable|mimes:jpg,bmp,png',
+            'cover_image' => 'file|max:2048|nullable|mimes:jpg,bmp,png',
             'services' => [
                 'required',
                 function ($attribute, $value, $fail) {
-                    if (empty ($value)) {
+                    if (empty($value)) {
                         $fail('È necessario selezionare almeno un servizio.');
                     }
                 },
@@ -48,6 +49,8 @@ class UpdateApartmentRequest extends FormRequest
             'name.max' => 'Il nome supera il numero di caratteri consentiti (:max)',
             'address.required' => "L'indirizzo è obbligatorio",
             'address.max' => "Il campo indirizzo supera il numero di caratteri consentiti (:max)",
+            'description.required' => "La descrizione è obbligatoria",
+            'description.max' => "Il campo descrizione supera il numero di caratteri consentiti (:max)",
             'room_number.required' => 'È necessario indicare il numero di stanze',
             'room_number.integer' => 'Il numero di stanze deve essere intero',
             'room_number.min' => 'Il numero di stanze deve essere almeno :min',
@@ -65,7 +68,7 @@ class UpdateApartmentRequest extends FormRequest
             'square_meters.min' => 'Il numero di metri quadri deve essere almeno :min',
             'square_meters.max' => 'Il numero di metri quadri non può essere superiore a :max',
             'cover_image.mimes' => "Il file deve essere un'immagine",
-            'cover_image.max' => "La dimensione del file non deve superare i 1024 KB",
+            'cover_image.max' => "La dimensione del file non deve superare i 2048 KB",
             'services.required' => "È necessario selezionare almeno un servizio",
         ];
 
@@ -76,6 +79,7 @@ class UpdateApartmentRequest extends FormRequest
         return [
             'name' => 'nome',
             'address' => 'indirizzo',
+            'description' => 'descrizione',
             'room_number' => 'numero di stanze',
             'bed_number' => 'numero di letti',
             'bathroom_number' => 'numero di bagni',

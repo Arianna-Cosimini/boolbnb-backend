@@ -4,6 +4,7 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -37,13 +38,28 @@ class NewContact extends Mailable
         );
     }
 
+   /*  public function build(Request $request)
+    {
+        $data = [
+            'name' => $request->input('name'),
+            'surname' => $request->input('surname'),
+            'address' => $request->input('address'),
+            'message' => $request->input('messaggio'),
+        ];
+
+        return $this->from($data['address'], $data['name'])
+            ->subject($data['message'])
+            ->view('admin.messages.mail.messages');
+
+    } */
+
     /**
      * Get the message content definition.
      */
     public function content(): Content
     {
         return new Content(
-            view: 'admin.messages.index',
+            view: 'admin.messages.mail.messages',
         );
     }
 

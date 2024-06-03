@@ -3,21 +3,23 @@
 @section('content')
     <div class="container py-5">
 
-        <nav aria-label="breadcrumb">
+        <nav aria-label="breadcrumb" class="d-none d-md-block">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-black">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.apartments.index') }}" class="text-black">I tuoi
-                        annunci</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.apartments.index') }}" class="text-black">Le tue strutture</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.apartments.show', $apartment) }}"
                         class="text-black">{{ $apartment->name }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Modifica annuncio</li>
+                <li class="breadcrumb-item active" aria-current="page">Modifica struttura</li>
             </ol>
         </nav>
+        <nav class="d-block d-md-none mb-3">
+            <a href="{{ route('admin.apartments.show', $apartment) }}" class="text-decoration-none text-black"><i class="fa-solid fa-chevron-left me-2"></i>Indietro</a>
+        </nav>
 
-        <h1 class="mb-3 fs-2">Modifica annuncio</h1>
+        <h1 class="mb-4 fs-2">Modifica struttura</h1>
 
         {{-- form --}}
-        <form action="{{ route('admin.apartments.update', $apartment) }}" method="POST" class="py-5"
+        <form action="{{ route('admin.apartments.update', $apartment) }}" method="POST" class="pb-5"
             enctype="multipart/form-data" onsubmit="return validateForm()">
             @csrf
             @method('PUT')
@@ -35,8 +37,9 @@
             {{-- immagine principale --}}
             <div class="mb-3">
                 <label for="cover_image" class="form-label">Immagine di copertina</label>
-                <div class="rounded-2 overflow-hidden mb-2">
-                    <img class="w-100" src="{{ asset('storage/' . $apartment->cover_image) }}" alt="Copertina immagine">
+                <div class="rounded-2 overflow-hidden mb-4">
+                    <img class="w-100" src="{{ asset('storage/' . $apartment->cover_image) }}" alt="Copertina immagine"
+                        style="height: 600px; object-fit: cover">
                 </div>
                 <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image"
                     name="cover_image" value="{{ old('cover_image') ?? $apartment->cover_image }}">
@@ -47,6 +50,15 @@
                 @enderror
             </div>
 
+            {{-- descrizione --}}
+            <div class="form-floating mb-3">
+                <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
+                    placeholder="Descrizione" rows="4"  style="height: auto">{{ old('description') ?? $apartment->description }}</textarea>
+                <label for="description">Descrizione<span class="required">*</span></label>
+                @error('description')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
+            </div>
             {{-- indirizzo --}}
             <div class="form-floating mb-3">
                 <input type="text" class="form-control @error('address') is-invalid @enderror" id="address"
@@ -76,7 +88,7 @@
                 <input type="number" class="form-control @error('room_number') is-invalid @enderror" id="room_number"
                     name="room_number" placeholder="0" min="0" max="10"
                     value="{{ old('room_number') ?? $apartment->room_number }}">
-                <label for="room_number">Numero di stanze<span class="required">*</span></label>
+                <label for="room_number">Numero di camere da letto<span class="required">*</span></label>
                 @error('room_number')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -87,7 +99,7 @@
                 <input type="number" class="form-control @error('bed_number') is-invalid @enderror" id="bed_number"
                     name="bed_number" placeholder="0" min="0" max="20"
                     value="{{ old('bed_number') ?? $apartment->bed_number }}">
-                <label for="bed_number">Numero di posti letto<span class="required">*</span></label>
+                <label for="bed_number">Numero di letti<span class="required">*</span></label>
                 @error('bed_number')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -117,18 +129,20 @@
 
 
             {{-- servizi --}}
-            <div class="mb-4">
+            <div class="container mb-4">
                 <label class="fw-medium fs-3">Servizi</label>
                 <p class="mb-3">Almeno un servizio</p>
-                <div class="d-flex flex-column gap-2">
+                <div class=" d-flex flex-column gap-2">
                     @foreach ($services as $service)
-                        <div class="form-check">
-                            <label for="service-{{ $service->id }}" class="form-check-label">
-                                <div class="text-nowrap">{{ $service->title }}</div>
-                            </label>
-                            <input type="checkbox" name="services[]" value="{{ $service->id }}"
-                                class="form-check-input" id="service-{{ $service->id }}"
-                                {{ in_array($service->id, old('services', $apartment->services->pluck('id')->toArray())) ? 'checked' : '' }}>
+                        <div class="form-check col-3 ">
+                            <div class="user-select-none d-flex">
+                                <label for="service-{{ $service->id }}" class="form-check-label">
+                                    <div class="text-nowrap">{{ $service->title }}</div>
+                                </label>
+                                <input type="checkbox" name="services[]" value="{{ $service->id }}"
+                                    class="form-check-input" id="service-{{ $service->id }}"
+                                    {{ in_array($service->id, old('services', $apartment->services->pluck('id')->toArray())) ? 'checked' : '' }}>
+                            </div>
                         </div>
                     @endforeach
                 </div>
@@ -138,13 +152,12 @@
             </div>
 
             {{-- categorie --}}
-            <div class="mt-5">
+            <div class="container mt-5">
                 <label class="mb-4 fw-medium fs-3">Quale di queste opzioni descrive meglio il tuo alloggio?</label>
-                <div class="row px-2 d-flex gap-3">
+                <div class="row px-0 gap-0">
                     @foreach ($categories as $category)
-                        <div class="form-check col-3 px-0">
-                            <button
-                                class="btn border border-2 border-secondary-subtle rounded-4 px-3 py-4 my-button-categories
+                        <div class="form-check col-6 col-md-4 col-lg-3 p-2 mx-0">
+                            <button class="btn border border-2 border-secondary-subtle rounded-4 py-4 my-button-categories w-100
                             @if ($errors->any()) {{ in_array($category->id, old('categories', [])) ? 'selected-category' : '' }}
                             @else
                                 {{ $apartment->categories->contains($category) ? 'selected-category' : '' }} @endif"
@@ -152,7 +165,7 @@
                                 <label class="d-flex flex-column align-items-center gap-2 my-radio-label form-check-label"
                                     for="category-{{ $category->id }}">
                                     <img src="{{ $category->icon }}" class="my-icon" alt="">
-                                    <div class="fs-5">{{ $category->title }}</div>
+                                    <div class="fs-6">{{ $category->title }}</div>
                                     <input type="radio" name="categories[]" value="{{ $category->id }}"
                                         class="my-radio form-check-input my-input-form fs-5"
                                         id="category-{{ $category->id }}"
@@ -164,44 +177,22 @@
                         </div>
                     @endforeach
                 </div>
-            </div>  
+            </div>
 
             {{-- visibilità --}}
             <div class="mt-5">
-                <label class="mb-4 fw-medium fs-3">Vuoi rendere visibile questo annuncio?</label>
+                <label class="mb-4 fw-medium fs-3">Visibilità</label>
+                <p>Puoi decidere se mostrare o meno la tua struttura nei risultati di ricerca</p>
                 <div class="form-check form-switch">
-                    <input class="form-check-input @error('visible') is-invalid @enderror" type="checkbox" role="switch" id="visible" name="visible" value="1" {{ old('visible') ? 'checked' : (isset($apartment) && $apartment->visible ? 'checked' : '') }}>
+                    <input class="form-check-input @error('visible') is-invalid @enderror" type="checkbox"
+                        role="switch" id="visible" name="visible" value="1"
+                        {{ old('visible') ? 'checked' : (isset($apartment) && $apartment->visible ? 'checked' : '') }}>
                     <label class="form-check-label" for="visible">
-                        <span id="visibleLabel">{{ isset($apartment) && $apartment->visible ? 'Visibile' : 'Non visibile' }}</span>
+                        <span
+                            id="visibleLabel">{{ isset($apartment) && $apartment->visible ? 'Visibile' : 'Non visibile' }}</span>
                     </label>
                 </div>
             </div>
-
-            {{-- sponsorizzazione --}}
-            {{-- <div class="mb-3">
-                <label class="mb-2" for="">Vuoi Sponsorizzare il tuo BnB?</label>
-                <div class="d-flex gap-4">
-
-                    @foreach ($sponsorships as $sponsorship)
-                    <div class="form-check ">
-                        <input type="radio" name="sponsorships[]" value="{{$sponsorship->id}}" class="form-check-input" id="sponsorship-{{$sponsorship->id}}"
-                            
-                            @if ($errors->any())
-
-                            {{ in_array($sponsorship->id, old('sponsorships', [])) ? 'checked' : '' }}
-
-                            @else 
-
-                            {{ $apartment->sponsorships->contains($sponsorship) ? 'checked' : '' }}
-                            
-                            @endif
-                        > 
-                        
-                        <label for="sponsorship-{{$sponsorship->id}}" class="form-check-label">{{$sponsorship->title}}</label>
-                    </div>
-                    @endforeach
-                </div>
-            </div> --}}
 
             <div class="bnt-container">
                 <button type="submit" class="btn btn-danger button-red justify mt-5">Salva modifiche</button>
@@ -343,7 +334,8 @@
                         longitude.value = risultatoCorrispondente.position.lon;
                         console.log('Latitudine e longitudine impostate:', latitude.value, longitude.value);
                     } else {
-                        console.error("'Nessun risultato corrispondente trovato per l'indirizzo corrente.'");
+                        console.error(
+                            "'Nessun risultato corrispondente trovato per l'indirizzo corrente.'");
                     }
                 });
             }
@@ -387,19 +379,19 @@
         }
     </script>
 
-{{-- etichetta visibilità annuncio --}}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const checkbox = document.getElementById('visible');
-        const label = document.getElementById('visibleLabel');
+    {{-- etichetta visibilità annuncio --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkbox = document.getElementById('visible');
+            const label = document.getElementById('visibleLabel');
 
-        checkbox.addEventListener('change', function() {
-            if (checkbox.checked) {
-                label.textContent = 'Visibile';
-            } else {
-                label.textContent = 'Non visibile';
-            }
+            checkbox.addEventListener('change', function() {
+                if (checkbox.checked) {
+                    label.textContent = 'Visibile';
+                } else {
+                    label.textContent = 'Non visibile';
+                }
+            });
         });
-    });
-</script>
+    </script>
 @endsection

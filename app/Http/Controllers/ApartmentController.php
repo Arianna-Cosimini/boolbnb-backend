@@ -6,9 +6,13 @@ use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Category;
+use App\Models\Message;
 use App\Models\Service;
 use App\Models\Sponsorship;
 use App\Models\User;
+use App\Models\View;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,10 +24,35 @@ class ApartmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $apartments = Apartment::where('user_id', Auth::id())->get();
-        return view('admin.apartments.index', compact('apartments'));
+        // Recupera il filtro dal request, di default mostra tutti gli appartamenti
+        $filter = $request->input('filter', 0);
+
+        // Recupera gli appartamenti dell'utente autenticato
+        $query = Apartment::where('user_id', Auth::id());
+
+        // Aggiungi le relazioni e i filtri in base al valore del filtro
+        if ($filter == 1) {
+            // Solo appartamenti con sponsorizzazione attiva
+            $query->whereHas('sponsorships', function ($query) {
+                $query->where('end_date', '>', Carbon::now());
+            });
+        } elseif ($filter == 2) {
+            // Solo appartamenti senza sponsorizzazione attiva
+            $query->whereDoesntHave('sponsorships', function ($query) {
+                $query->where('end_date', '>', Carbon::now());
+            });
+        }
+
+        $query->with(['services', 'sponsorships' => function ($query) {
+            $query->where('end_date', '>', Carbon::now());
+        }])->withCount('services');
+
+        $apartments = $query->get();
+
+
+        return view('admin.apartments.index', compact('apartments', 'filter'));
     }
 
     /**
@@ -79,13 +108,52 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        if (Auth::user()->id != $apartment->user_id)
-        return redirect()->route('admin.apartments.index', compact('apartment'))->with('warning', 'Ci dispiace, questo appartamento non esiste');
+        if (Auth::user()->id != $apartment->user_id) {
+            return redirect()->route('admin.apartments.index')->with('warning', 'Ci dispiace, questo appartamento non esiste');
+        }
 
-        $user = User::where('user_id', $apartment->user_id);
+        // Ottieni le visualizzazioni per questo appartamento
+        $views = View::where('apartment_id', $apartment->id)
+            ->select('id', 'apartment_id', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->groupBy(function ($view) {
+                return Carbon::parse($view->created_at)->format('M');
+            });
 
-        return view('admin.apartments.show', compact('apartment'));
+        // Ottieni i messaggi per questo appartamento
+        $messages = Message::where('apartment_id', $apartment->id)
+            ->select('id', 'apartment_id', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->groupBy(function ($message) {
+                return Carbon::parse($message->created_at)->format('M');
+            });
+
+        // Preparare i dati per i grafici
+        $months = [];
+        $monthCount = [];
+        foreach ($views as $month => $values) {
+            $months[] = $month;
+            $monthCount[] = count($values);
+        }
+
+        $messageCount = [];
+        foreach ($messages as $message => $value) {
+            $messageCount[] = count($value);
+        }
+
+        $months = array_reverse($months);
+
+        // Calcolare i totali
+        $totalViews = array_sum($monthCount);
+        $totalMessages = array_sum($messageCount);
+
+        $serviceCount = $apartment->services->count();
+
+        return view('admin.apartments.show', compact('apartment', 'views', 'messages', 'months', 'monthCount', 'messageCount', 'totalViews', 'totalMessages', 'serviceCount'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -93,7 +161,7 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         if (Auth::user()->id != $apartment->user_id)
-        return redirect()->route('admin.apartments.index', compact('apartment'))->with('warning', 'Ci dispiace, questo appartamento non esiste');
+            return redirect()->route('admin.apartments.index', compact('apartment'))->with('warning', 'Ci dispiace, questo appartamento non esiste');
 
         $user = User::where('user_id', $apartment->user_id);
         $services = Service::all();
@@ -130,7 +198,6 @@ class ApartmentController extends Controller
 
         $apartment->save();
         return redirect()->route('admin.apartments.show', compact('apartment'))->with('success', 'Annuncio aggiornato con successo');
-
     }
 
     /**
